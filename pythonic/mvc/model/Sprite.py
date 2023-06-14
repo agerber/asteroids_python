@@ -1,0 +1,172 @@
+import dataclasses
+from typing import List, Dict, Any
+from PIL import Image, ImageOps,ImageDraw
+import math
+from scipy import ndimage as ndi
+from pythonic.mvc.controller.Utils import Utils
+from pythonic.mvc.model.Movable import Movable
+from pythonic.mvc.model.prime.Point import Point
+from pythonic.mvc.model.prime.PolarPoint import PolarPoint
+from functional import seq
+from abc import abstractmethod
+from pythonic.mvc.model.prime.Color import Color
+from pythonic.mvc.model.prime.Constants import DIM
+from pythonic.mvc.controller.GameOp import GameOp
+
+import random
+
+@dataclasses.dataclass
+class Sprite(Movable):
+
+    def __init__(self):
+
+        self.alive = True
+        self.center: Point = Point(random.randint(0, DIM.width), random.randint(0, DIM.height))
+        self.deltaX: float = 0
+        self.deltaY: float = 0
+        self.team: Movable.Team = Movable.Team.DEBRIS
+        self.radius: int = 0
+        self.orientation: int = 0
+        self.expiry: int = 0
+        self.spin: int = 0
+
+        # members used for vector sprites
+        self.cartesians: List[Point] = []
+        self.color: Color.WHITE
+
+        # raster map for raster sprites
+        self.rasterMap: Dict[Any, Image.Image] = {}
+
+
+
+    # contract methods - required overriding in extending classes
+    def getRadius(self) -> int:
+        return self.radius
+
+    def getTeam(self) -> Movable.Team:
+        return self.team
+
+    def getCenter(self):
+        return self.center
+
+    def isProtected(self) -> bool:
+        return False
+
+    @abstractmethod
+    def draw(self, g):
+        pass
+
+    def loadGraphic(self, image_path: str) -> Image.Image:
+        try:
+            buffered_image = Image.open(image_path)
+        except IOError as e:
+            raise Exception(f"Cannot open image: {image_path}")
+        return buffered_image
+
+    def move(self) -> None:
+        # right - bounds reached
+        if self.center.x  > DIM.width:
+            self.center = Point(1, self.center.y)
+        # left - bounds reached
+        elif self.center.x < 0:
+            self.center = Point(DIM.width - 1, self.center.y)
+        # bottom - bounds reached
+        elif self.center.y > DIM.height:
+            self.center = Point(self.center.x, 1)
+        # top - bounds reached
+        elif self.center.y < 0:
+            self.center = Point(self.center.x, DIM.height - 1)
+        else:
+            new_x_pos = self.center.x + self.deltaX
+            new_y_pos = self.center.y + self.deltaY
+            self.center = Point(int(new_x_pos), int(new_y_pos))
+
+
+        if self.expiry > 0: self.expire()
+        if self.spin != 0: self.orientation += self.spin
+
+    def somePosNegValue(self, seed: int) -> int:
+        random_number = random.randint(0, seed - 1)
+        return random_number if random_number % 2 == 0 else -random_number
+
+    def expire(self):
+        # imported in function to avoid circular import
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        if self.expiry == 1:
+            CommandCenter.getInstance().opsQueue.enqueue(self, GameOp.Action.REMOVE)
+
+        self.expiry -= 1
+
+    def renderRaster(self, imgOff, bufferedImage):
+
+        if bufferedImage is None:
+            return
+
+        width = self.radius * 2
+        height = self.radius * 2
+
+        try:
+            scaleX = width * 1.0 / bufferedImage.size[0]
+            scaleY = height * 1.0 / bufferedImage.size[1]
+            transformed = bufferedImage
+            transformed = transformed.resize((int(bufferedImage.size[0] * scaleX),
+                                              int(bufferedImage.size[1] * scaleY)))
+
+            if self.orientation != 0:
+                transformed = ndi.rotate(transformed, self.orientation, reshape=False)
+
+            if not isinstance(transformed, Image.Image):
+                transformed = Image.fromarray(transformed.astype("uint8"), "RGBA")
+
+            transformed = ImageOps.flip(transformed)
+            imgOff.paste(transformed, (round(self.center.x - width / 2.0), round(self.center.y - height / 2.0)))
+        except Exception as e:
+            print(e.args)
+
+    def renderVector(self, imgOff):
+
+        g = ImageDraw.Draw(imgOff) # get graphics context from the off-screen-image
+
+        # To render this Sprite in vector mode, we need to, 1: convert raw cartesians to raw polars, 2: rotate polars
+        # for orientation of sprite. 3: Convert back to cartesians 4: adjust for center-point (location).
+        # and 5: pass the cartesian-x and cartesian-y coords as arrays, along with color, to g.polygon().
+
+        # 1: convert raw cartesians to raw polars (used later in seq below).
+        # The reason we convert cartesian-points to polar-points is that it's much easier to rotate polar-points
+        polars = Utils.cartesianToPolar(self.cartesians)
+
+        # 2: rotate raw polars given the orientation of the sprite.
+        def rotatePolarByOrientation(pp: PolarPoint):
+            return PolarPoint(pp.r, pp.theta + math.radians(self.orientation))  # rotated Theta
+
+        # 3: convert the rotated polars back to cartesians
+        def polarToCartesian(pp: PolarPoint):
+            return Point(int(pp.r * self.radius * math.sin(pp.theta)),
+                         int(pp.r * self.radius * math.cos(pp.theta)))
+
+        # 4: adjust the cartesians for the location (center-point) of the sprite.
+        # the reason we subtract the y-value has to do with how Python plots the vertical axis for
+        # graphics (from top to bottom)
+        def adjustForLocation(pnt: Point):
+            return Point(self.center.x + pnt.x,
+                         self.center.y - pnt.y)
+
+        # 5: draw the polygon using the List of raw polars from above, applying mapping transforms as required
+
+        g.polygon(
+            list(zip(
+                seq(polars)
+                .map(rotatePolarByOrientation)  # seq<PolarPoint>
+                .map(polarToCartesian)  # seq<Point>
+                .map(adjustForLocation)  # seq<Point>
+                .map(lambda pnt: pnt.x)  # seq<int>
+                .list(),
+
+                seq(polars)
+                .map(rotatePolarByOrientation)  # seq<PolarPoint>
+                .map(polarToCartesian)  # seq<Point>
+                .map(adjustForLocation)  # seq<Point>
+                .map(lambda pnt: pnt.y)  # seq<int>
+                .list()
+            )),
+            outline=self.color)

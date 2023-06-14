@@ -1,0 +1,1 @@
+Run the Game.py file from pyCharm or other python IDE

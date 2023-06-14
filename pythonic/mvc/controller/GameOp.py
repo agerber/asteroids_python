@@ -1,0 +1,15 @@
+from enum import Enum
+from dataclasses import dataclass
+
+from pythonic.mvc.model.Movable import Movable
+
+@dataclass
+class GameOp:
+
+    class Action(Enum):
+        ADD = 1
+        REMOVE = 2
+
+    movable: Movable
+    action: Action
+
