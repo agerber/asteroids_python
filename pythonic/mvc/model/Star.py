@@ -39,3 +39,10 @@ class Star(Movable):
 
     def isProtected(self) -> bool:
         return False
+
+
+    def add(self, *list):
+        list.append(self)
+
+    def remove(self, *list):
+        list.remove(self)
