@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Dict
 from PIL import Image, ImageDraw
 
+
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.prime.Color import Color
@@ -124,5 +125,11 @@ class Falcon(Sprite):
                    self.getCenter().x + self.getRadius(), self.getCenter().y + self.getRadius())
                   , outline=Color.CYAN)
 
+    def add(self, list):
+        list.append(self)
 
-
+    def remove(self, list):
+        # import locally to avoid circular import
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        #list.remove(self)
+        CommandCenter.getInstance().initFalconAndDecrementFalconNum()

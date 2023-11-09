@@ -53,5 +53,6 @@ class Bullet(Sprite):
         print("add Bullet")
 
     def remove(self, list):
-        list.remove(self)
+        #list.remove(self)
+        self.alive = False
         print("remove Bullet")

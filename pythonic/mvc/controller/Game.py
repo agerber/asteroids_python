@@ -161,6 +161,7 @@ class Game (threading.Thread):
 
 
 
+
             # if mov.getTeam() == Movable.Team.FOE:
             #     if action == GameOp.Action.ADD:
             #         CommandCenter.getInstance().movFoes.append(mov)

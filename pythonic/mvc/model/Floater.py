@@ -34,3 +34,5 @@ class Floater(Sprite):
 
     def draw(self, imgOff):
         self.renderVector(imgOff)
+
+

@@ -61,7 +61,7 @@ class Asteroid(Sprite):
         list.append(self)
 
     def remove(self, list):
-        list.remove(self)
+        self.alive = False
         self.spawnSmallerAsteroidOrDebris(self)
 
 
