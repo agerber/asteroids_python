@@ -1,11 +1,19 @@
 import random
 import math
+
+from pythonic.mvc.controller.CommandCenter import CommandCenter
+from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
+from pythonic.mvc.model.WhiteCloudDebris import WhiteCloudDebris
 from pythonic.mvc.model.prime.Color import Color
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.PolarPoint import PolarPoint
 from functional import seq
+
+
+
+
 class Asteroid(Sprite):
 
     def __init__(self, value):
@@ -48,6 +56,28 @@ class Asteroid(Sprite):
         return value
     def draw(self, imgOff):
         self.renderVector(imgOff)
+
+    def add(self, list):
+        list.append(self)
+
+    def remove(self, list):
+        list.remove(self)
+        self.spawnSmallerAsteroidOrDebris(self)
+
+
+    def spawnSmallerAsteroidOrDebris(self, originalAsteroid):
+        size = originalAsteroid.getSize()
+        if size > 1:
+            CommandCenter.getInstance(). \
+                opsQueue. \
+                enqueue(WhiteCloudDebris(originalAsteroid), GameOp.Action.ADD)
+        else:
+            size += 2
+            while size > 0:
+                CommandCenter.getInstance().opsQueue \
+                    .enqueue(Asteroid(originalAsteroid), GameOp.Action.ADD)
+                size -= 1
+
 
     def generateVertices(self):
         # 6.283 is the max radians

@@ -159,6 +159,8 @@ class Game (threading.Thread):
             else:
                 mov.remove(list)
 
+
+
             # if mov.getTeam() == Movable.Team.FOE:
             #     if action == GameOp.Action.ADD:
             #         CommandCenter.getInstance().movFoes.append(mov)
@@ -259,18 +261,6 @@ class Game (threading.Thread):
         if CommandCenter.getInstance().frame % SPAWN_SHIELD_FLOATER == 0:
             CommandCenter.getInstance().opsQueue.enqueue(ShieldFloater(), GameOp.Action.ADD)
 
-    def spawnSmallerAsteroidOrDebris(self, originalAsteroid: Asteroid):
-        size = originalAsteroid.getSize()
-        if size > 1:
-            CommandCenter.getInstance(). \
-                opsQueue. \
-                enqueue(WhiteCloudDebris(originalAsteroid), GameOp.Action.ADD)
-        else:
-            size += 2
-            while size > 0:
-                CommandCenter.getInstance().opsQueue \
-                    .enqueue(Asteroid(originalAsteroid), GameOp.Action.ADD)
-                size -= 1
 
     def stopLoopingSounds(self,*sounds):
         [sound.stop() for sound in sounds if hasattr(sound, "stop") ]
