@@ -34,5 +34,12 @@ class Movable(ABC):
         pass
 
     @abstractmethod
-    def isProtected(self) -> bool:
+    def add(self, *list):
         pass
+
+
+    @abstractmethod
+    def remove(self, *list):
+        pass
+
+

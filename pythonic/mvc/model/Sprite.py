@@ -49,8 +49,14 @@ class Sprite(Movable):
     def getCenter(self):
         return self.center
 
-    def isProtected(self) -> bool:
-        return False
+
+    def add(self, *list):
+        list.append(self)
+
+    def remove(self, *list):
+        list.remove(self)
+
+
 
     @abstractmethod
     def draw(self, g):

@@ -54,8 +54,6 @@ class Falcon(Sprite):
 
     # METHODS
 
-    def isProtected(self) -> bool:
-        return self.shield > 0
 
 
 
@@ -111,14 +109,14 @@ class Falcon(Sprite):
         imageState = None
         if self.invisible > 0:
             imageState = ImageState.FALCON_INVISIBLE
-        elif self.isProtected():
+        elif self.shield > 0:
             imageState = ImageState.FALCON_PRO_THR if self.thrusting else ImageState.FALCON_PRO
         else:
             imageState = ImageState.FALCON_THR if self.thrusting else ImageState.FALCON
 
         self.renderRaster(imgOff, self.rasterMap[imageState])
         # draw vector shield on top of raster
-        if self.isProtected() and imageState != ImageState.FALCON_INVISIBLE:
+        if self.shield > 0 and imageState != ImageState.FALCON_INVISIBLE:
             self.drawShield(ImageDraw.Draw(imgOff))
 
     def drawShield(self, g):

@@ -98,8 +98,7 @@ class Game (threading.Thread):
                 radFriend = movFriend.getRadius()
                 radFoe = movFoe.getRadius()
                 if pntFriendCenter.distance(pntFoeCenter) < (radFoe + radFriend):
-                    if not movFriend.isProtected():
-                        CommandCenter.getInstance().opsQueue.enqueue(movFriend, GameOp.Action.REMOVE)
+                    CommandCenter.getInstance().opsQueue.enqueue(movFriend, GameOp.Action.REMOVE)
 
 
                     CommandCenter.getInstance().opsQueue.enqueue(movFoe, GameOp.Action.REMOVE)

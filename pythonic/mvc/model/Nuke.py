@@ -36,9 +36,6 @@ class Nuke(Sprite):
         self.deltaX = falcon.deltaX + vectorX
         self.deltaY = falcon.deltaY + vectorY
 
-    # a nuke is invincible while it is alive
-    def isProtected(self) -> bool:
-        return True
 
     def draw(self, imgOff):
         #get the graphics context of the imgOff
