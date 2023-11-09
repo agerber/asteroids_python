@@ -1,3 +1,4 @@
+import os
 from math import cos, sin, radians
 
 from PIL import Image, ImageOps,ImageDraw
@@ -14,7 +15,7 @@ class Nuke(Sprite):
     EXPIRE = 60
     def __init__(self, falcon: Falcon):
         super().__init__()
-
+        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.nukeState = 0
 
         self.team = Movable.Team.FRIEND
@@ -70,5 +71,6 @@ class Nuke(Sprite):
 
 
     def remove(self, list):
-        self.alive = False
+        if (self.expiry == 0):
+            self.alive = False
 

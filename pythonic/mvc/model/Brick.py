@@ -1,4 +1,7 @@
 from math import cos, sin, radians
+
+from pythonic.mvc.controller.CommandCenter import CommandCenter
+from pythonic.mvc.controller.Sound import Sound
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Sprite import Sprite
@@ -20,7 +23,7 @@ class Brick(Sprite):
     BRICK_IMAGE = 0
     def __init__(self, upperLeftCorner: Point, size: int):
         super().__init__()
-
+        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.team = Movable.Team.FOE
 
         self.center = Point(int(upperLeftCorner.x + size/2), int(upperLeftCorner.y + size/2))
@@ -46,3 +49,5 @@ class Brick(Sprite):
 
     def remove(self, list):
         self.alive = False
+        CommandCenter.getInstance().score += 1000
+        Sound.playSound(self.cwd + "rock.wav")

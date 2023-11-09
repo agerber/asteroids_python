@@ -1,8 +1,10 @@
+import os
 import random
 import math
 
 from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.controller.GameOp import GameOp
+from pythonic.mvc.controller.Sound import Sound
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.WhiteCloudDebris import WhiteCloudDebris
@@ -19,7 +21,7 @@ class Asteroid(Sprite):
     def __init__(self, value):
         super().__init__()
         self.LARGE_RADIUS = 110
-
+        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         # There is no method overloading in python. We must check the parameter type to differentiate the calls
         # and then use conditional logic to call the appropriate logic within the constructor
         if isinstance(value, int):
@@ -63,6 +65,8 @@ class Asteroid(Sprite):
     def remove(self, list):
         self.alive = False
         self.spawnSmallerAsteroidOrDebris(self)
+        CommandCenter.getInstance().score += + 10
+        Sound.playSound(self.cwd + "kapow.wav")
 
 
     def spawnSmallerAsteroidOrDebris(self, originalAsteroid):

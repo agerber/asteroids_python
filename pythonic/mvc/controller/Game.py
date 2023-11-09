@@ -99,15 +99,7 @@ class Game (threading.Thread):
                 radFoe = movFoe.getRadius()
                 if pntFriendCenter.distance(pntFoeCenter) < (radFoe + radFriend):
                     CommandCenter.getInstance().opsQueue.enqueue(movFriend, GameOp.Action.REMOVE)
-
-
                     CommandCenter.getInstance().opsQueue.enqueue(movFoe, GameOp.Action.REMOVE)
-                    if isinstance(movFoe,Brick):
-                        CommandCenter.getInstance().score += + 1000
-                        Sound.playSound(self.cwd+"rock.wav")
-                    else:
-                        CommandCenter.getInstance().score += + 10
-                        Sound.playSound(self.cwd+"kapow.wav")
 
 
         pntFalcon = CommandCenter.getInstance().falcon.center
@@ -116,19 +108,7 @@ class Game (threading.Thread):
             if not movFloater.alive: continue
             pntFloaterCenter = movFloater.getCenter()
             radFloater = movFloater.getRadius()
-
             if (pntFalcon.distance(pntFloaterCenter) < (radFalcon + radFloater)):
-                if isinstance(movFloater, ShieldFloater):
-                    Sound.playSound(self.cwd+"shieldup.wav")
-                    CommandCenter.getInstance().falcon.shield = MAX_SHIELD
-                elif isinstance(movFloater, NewWallFloater):
-                    Sound.playSound(self.cwd+"insect.wav")
-                    self.buildWall()
-                #the only other kind of floater is a nukeFloater
-                else:
-                    CommandCenter.getInstance().falcon.nukeMeter = MAX_NUKE
-                    Sound.playSound(self.cwd + "nuke-up.wav")
-
                 CommandCenter.getInstance().opsQueue.enqueue(movFloater, GameOp.Action.REMOVE)
 
 
@@ -160,36 +140,6 @@ class Game (threading.Thread):
                 mov.remove(list)
 
 
-
-
-            # if mov.getTeam() == Movable.Team.FOE:
-            #     if action == GameOp.Action.ADD:
-            #         CommandCenter.getInstance().movFoes.append(mov)
-            #     else:  # GameOp.Operation.REMOVE
-            #         mov.alive = False
-            #         if isinstance(mov, Asteroid):
-            #             self.spawnSmallerAsteroidOrDebris(mov)
-            #
-            # elif mov.getTeam() == Movable.Team.FRIEND:
-            #     if action == GameOp.Action.ADD:
-            #         CommandCenter.getInstance().movFriends.append(mov)
-            #     else:  # GameOp.Operation.REMOVE
-            #         if isinstance(mov, Falcon.Falcon):
-            #             CommandCenter.getInstance().initFalconAndDecrementFalconNum()
-            #         else:
-            #             mov.alive = False
-            #
-            #
-            # elif mov.getTeam() == Movable.Team.FLOATER:
-            #     if action == GameOp.Action.ADD:
-            #         CommandCenter.getInstance().movFloaters.append(mov)
-            #     else:  # GameOp.Operation.REMOVE
-            #         mov.alive = False
-            # elif mov.getTeam() == Movable.Team.DEBRIS:
-            #     if action == GameOp.Action.ADD:
-            #         CommandCenter.getInstance().movDebris.append(mov)
-            #     else:  # GameOp.Operation.REMOVE
-            #         mov.alive = False
 
 
     def processRemoves(self):

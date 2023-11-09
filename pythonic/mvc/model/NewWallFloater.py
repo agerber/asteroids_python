@@ -1,8 +1,12 @@
+import os
+
 from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.controller.GameOp import GameOp
+from pythonic.mvc.controller.Sound import Sound
 from pythonic.mvc.model.Brick import Brick
 from pythonic.mvc.model.Floater import Floater
 from pythonic.mvc.model.prime.Color import Color
+from pythonic.mvc.model.prime.Constants import DIM
 from pythonic.mvc.model.prime.Point import Point
 
 
@@ -10,7 +14,7 @@ class NewWallFloater(Floater):
 
     def __init__(self):
         super().__init__()
-
+        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.color = Color.from_RGB(186, 0, 22)
         self.expiry = 230
     def add(self, list):
@@ -19,7 +23,9 @@ class NewWallFloater(Floater):
 
     def remove(self, list):
         self.alive = False
-        self.buildWall()
+        if (self.expiry > 0):
+            self.buildWall()
+            Sound.playSound(self.cwd + "insect.wav")
 
 
     def buildWall(self):
