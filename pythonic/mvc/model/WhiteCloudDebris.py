@@ -29,3 +29,10 @@ class WhiteCloudDebris(Sprite):
     def draw(self, imgOff):
         index = len(self.rasterMap) - self.expiry - 1
         self.renderRaster(imgOff, self.rasterMap[index])
+
+    def add(self, list):
+        list.append(self)
+
+
+    def remove(self, list):
+        self.alive = False

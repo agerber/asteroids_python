@@ -10,3 +10,9 @@ class NukeFloater(Floater):
         #yellow
         self.color = Color.YELLOW
         self.expiry = 350
+    def add(self, list):
+        list.append(self)
+
+
+    def remove(self, list):
+        self.alive = False

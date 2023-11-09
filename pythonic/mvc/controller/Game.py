@@ -196,16 +196,6 @@ class Game (threading.Thread):
         CommandCenter.getInstance().purgeDeadMovables()
 
 
-    def buildWall(self):
-        BRICK_SIZE = int(DIM.width / 30)
-        ROWS = 2
-        COLS = 20
-        X_OFFSET = int(BRICK_SIZE * 5)
-        Y_OFFSET = 50
-
-        for nCol in range(0, COLS):
-            for nRow in range(0, ROWS):
-                    CommandCenter.getInstance().opsQueue.enqueue(Brick(Point(int(nCol * BRICK_SIZE + X_OFFSET), int(nRow * BRICK_SIZE + Y_OFFSET)), BRICK_SIZE), GameOp.Action.ADD)
 
 
     def main(self):
@@ -273,15 +263,12 @@ class Game (threading.Thread):
         if keyCode == Game.START and CommandCenter.getInstance().isGameOver():
             CommandCenter.getInstance().initGame()
             return
-
         if keyCode == Game.PAUSE:
             CommandCenter.getInstance().paused = not CommandCenter.getInstance().paused
-
         elif keyCode == Game.QUIT:
             sys.exit(0)
         elif keyCode == Game.UP:
             falcon.thrusting = True
-
         elif keyCode == Game.LEFT:
             falcon.turnState = Falcon.TurnState.LEFT
         elif keyCode == Game.RIGHT:
@@ -292,20 +279,12 @@ class Game (threading.Thread):
         keyCode = event.keysym
         if keyCode == Game.FIRE:
             CommandCenter.getInstance().opsQueue.enqueue(Bullet(falcon), GameOp.Action.ADD)
-            Sound.playSound(self.cwd+"thump.wav")
-
         elif keyCode == Game.NUKE:
-            if (CommandCenter.getInstance().falcon.nukeMeter > 0):
-                CommandCenter.getInstance().opsQueue.enqueue(Nuke(falcon), GameOp.Action.ADD)
-                CommandCenter.getInstance().falcon.nukeMeter = 0
-                Sound.playSound(self.cwd + "nuke.wav")
-
-
+            CommandCenter.getInstance().opsQueue.enqueue(Nuke(falcon), GameOp.Action.ADD)
         elif keyCode == Game.RIGHT or keyCode == Game.LEFT:
             falcon.turnState = Falcon.TurnState.IDLE
         elif keyCode == Game.UP:
             falcon.thrusting = False
-
         elif keyCode == Game.MUTE:
             CommandCenter.getInstance().getInstance().muted = not CommandCenter.getInstance().muted
 

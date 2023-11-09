@@ -39,3 +39,10 @@ class Brick(Sprite):
     def move(self):
         pass
 
+
+    def add(self, list):
+        list.append(self)
+
+
+    def remove(self, list):
+        self.alive = False

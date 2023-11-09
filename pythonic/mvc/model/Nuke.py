@@ -2,6 +2,8 @@ from math import cos, sin, radians
 
 from PIL import Image, ImageOps,ImageDraw
 
+from pythonic.mvc.controller.CommandCenter import CommandCenter
+from pythonic.mvc.controller.Sound import Sound
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Sprite import Sprite
@@ -59,3 +61,14 @@ class Nuke(Sprite):
             self.radius = self.radius + 16
         else:
             self.radius = self.radius -22
+
+    def add(self, list):
+        list.append(self)
+        if (CommandCenter.getInstance().falcon.nukeMeter > 0):
+            CommandCenter.getInstance().falcon.nukeMeter = 0
+            Sound.playSound(self.cwd + "nuke.wav")
+
+
+    def remove(self, list):
+        self.alive = False
+

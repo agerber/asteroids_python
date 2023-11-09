@@ -9,3 +9,9 @@ class ShieldFloater(Floater):
 
         self.color = Color.CYAN
         self.expiry = 260
+    def add(self, list):
+        list.append(self)
+
+
+    def remove(self, list):
+        self.alive = False
