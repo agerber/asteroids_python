@@ -50,10 +50,10 @@ class Sprite(Movable):
         return self.center
 
 
-    def add(self, *list):
+    def add(self, list):
         list.append(self)
 
-    def remove(self, *list):
+    def remove(self, list):
         list.remove(self)
 
 

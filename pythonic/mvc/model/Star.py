@@ -41,8 +41,8 @@ class Star(Movable):
         return False
 
 
-    def add(self, *list):
+    def add(self, list):
         list.append(self)
 
-    def remove(self, *list):
+    def remove(self, list):
         list.remove(self)

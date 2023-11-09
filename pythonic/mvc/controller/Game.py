@@ -143,35 +143,50 @@ class Game (threading.Thread):
             gameOp = CommandCenter.getInstance().opsQueue.dequeue()
             mov = gameOp.movable
             action = gameOp.action
+            list = None
 
             if mov.getTeam() == Movable.Team.FOE:
-                if action == GameOp.Action.ADD:
-                    CommandCenter.getInstance().movFoes.append(mov)
-                else:  # GameOp.Operation.REMOVE
-                    mov.alive = False
-                    if isinstance(mov, Asteroid):
-                        self.spawnSmallerAsteroidOrDebris(mov)
-
+                list = CommandCenter.getInstance().movFoes
             elif mov.getTeam() == Movable.Team.FRIEND:
-                if action == GameOp.Action.ADD:
-                    CommandCenter.getInstance().movFriends.append(mov)
-                else:  # GameOp.Operation.REMOVE
-                    if isinstance(mov, Falcon.Falcon):
-                        CommandCenter.getInstance().initFalconAndDecrementFalconNum()
-                    else:
-                        mov.alive = False
-
-
+                list = CommandCenter.getInstance().movFriends
             elif mov.getTeam() == Movable.Team.FLOATER:
-                if action == GameOp.Action.ADD:
-                    CommandCenter.getInstance().movFloaters.append(mov)
-                else:  # GameOp.Operation.REMOVE
-                    mov.alive = False
+                list = CommandCenter.getInstance().movFloaters
             elif mov.getTeam() == Movable.Team.DEBRIS:
-                if action == GameOp.Action.ADD:
-                    CommandCenter.getInstance().movDebris.append(mov)
-                else:  # GameOp.Operation.REMOVE
-                    mov.alive = False
+                list = CommandCenter.getInstance().movDebris
+
+            if action == GameOp.Action.ADD:
+                mov.add(list)
+            else:
+                mov.remove(list)
+
+            # if mov.getTeam() == Movable.Team.FOE:
+            #     if action == GameOp.Action.ADD:
+            #         CommandCenter.getInstance().movFoes.append(mov)
+            #     else:  # GameOp.Operation.REMOVE
+            #         mov.alive = False
+            #         if isinstance(mov, Asteroid):
+            #             self.spawnSmallerAsteroidOrDebris(mov)
+            #
+            # elif mov.getTeam() == Movable.Team.FRIEND:
+            #     if action == GameOp.Action.ADD:
+            #         CommandCenter.getInstance().movFriends.append(mov)
+            #     else:  # GameOp.Operation.REMOVE
+            #         if isinstance(mov, Falcon.Falcon):
+            #             CommandCenter.getInstance().initFalconAndDecrementFalconNum()
+            #         else:
+            #             mov.alive = False
+            #
+            #
+            # elif mov.getTeam() == Movable.Team.FLOATER:
+            #     if action == GameOp.Action.ADD:
+            #         CommandCenter.getInstance().movFloaters.append(mov)
+            #     else:  # GameOp.Operation.REMOVE
+            #         mov.alive = False
+            # elif mov.getTeam() == Movable.Team.DEBRIS:
+            #     if action == GameOp.Action.ADD:
+            #         CommandCenter.getInstance().movDebris.append(mov)
+            #     else:  # GameOp.Operation.REMOVE
+            #         mov.alive = False
 
 
     def processRemoves(self):

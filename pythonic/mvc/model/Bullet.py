@@ -48,10 +48,10 @@ class Bullet(Sprite):
     def draw(self, imgOff):
         self.renderVector(imgOff)
 
-    def add(self, *list):
+    def add(self, list):
         list.append(self)
         print("add Bullet")
 
-    def remove(self, *list):
+    def remove(self, list):
         list.remove(self)
         print("remove Bullet")

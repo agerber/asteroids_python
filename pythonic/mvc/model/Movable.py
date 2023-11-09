@@ -34,12 +34,12 @@ class Movable(ABC):
         pass
 
     @abstractmethod
-    def add(self, *list):
+    def add(self, list):
         pass
 
 
     @abstractmethod
-    def remove(self, *list):
+    def remove(self, list):
         pass
 
 
