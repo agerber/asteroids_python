@@ -59,7 +59,7 @@ class CommandCenter:
         self.score = 0
         self.paused = False
         self.numFalcons = 4
-        self.initFalconAndDecrementFalconNum()
+        self.falcon.decrementFalconNumAndSpawn()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.createStarField()
 
@@ -70,24 +70,7 @@ class CommandCenter:
         self.movFoes.clear()
         self.movFloaters.clear()
 
-    # this method is called when a falcon dies. It allows you to re-initialize the falcon settings without
-    # removing him from the movFriends list. Therefore, falcon is never null, which is a good thing.
-    def initFalconAndDecrementFalconNum(self):
-        # import locally to avoid circular import
-        from pythonic.mvc.controller.Sound import Sound
-        self.numFalcons -= 1
-        if self.isGameOver(): return
-        Sound.playSound(self.cwd + "shipspawn.wav")
-        self.falcon.shield = INITIAL_SPAWN_TIME
-        self.falcon.invisible = INITIAL_SPAWN_TIME / 4
-        self.falcon.center = Point(DIM.width/2, DIM.height/2)
-        self.falcon.orientation = random.randint(
-            0, int(360/Falcon.TURN_STEP))*Falcon.TURN_STEP
-        self.falcon.deltaX = 0
-        self.falcon.deltaY = 0
-        self.falcon.radius = Falcon.MIN_RADIUS
-        self.falcon.maxSpeedAttained = False
-        self.falcon.nukeMeter = 0
+
 
     def createStarField(self):
         count = 100

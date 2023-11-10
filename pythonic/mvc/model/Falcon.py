@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import random
 from typing import Dict
 from PIL import Image, ImageDraw
 
@@ -9,6 +10,10 @@ from pythonic.mvc.model.prime.Color import Color
 from enum import Enum
 import math
 import os
+
+from pythonic.mvc.model.prime.Constants import INITIAL_SPAWN_TIME, DIM
+from pythonic.mvc.model.prime.Point import Point
+
 
 class TurnState(Enum):
     IDLE = 0
@@ -23,15 +28,16 @@ class ImageState(Enum):
     FALCON_PRO = 3  # protected ship (green)
     FALCON_PRO_THR = 4  # protected ship (green) thrusting
 
+
 @dataclass
 class Falcon(Sprite):
-
     # number of degrees the falcon will turn at each animation cycle if the turnState is LEFT or RIGHT
     TURN_STEP = 11
     MIN_RADIUS = 28
 
     def __init__(self):
         super().__init__()
+        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.shield = 0
         self.nukeMeter = 0
         self.invisible = 0
@@ -55,9 +61,6 @@ class Falcon(Sprite):
 
     # METHODS
 
-
-
-
     def move(self):
         super().move()
 
@@ -68,19 +71,18 @@ class Falcon(Sprite):
         # move() method is being called every frame (~40ms); and the falcon reference is never null.
         if self.showLevel > 0: self.showLevel -= 1
 
-        #adjust orientation
+        # adjust orientation
         adjustOr = self.orientation
 
         if self.turnState == TurnState.LEFT:
             adjustOr = 360 - Falcon.TURN_STEP if self.orientation <= 0 else self.orientation - Falcon.TURN_STEP
 
         elif self.turnState == TurnState.RIGHT:
-                adjustOr = Falcon.TURN_STEP if self.orientation >= 360 else self.orientation + Falcon.TURN_STEP
+            adjustOr = Falcon.TURN_STEP if self.orientation >= 360 else self.orientation + Falcon.TURN_STEP
 
         self.orientation = adjustOr
 
-
-        #apply thrust if thrusting
+        # apply thrust if thrusting
         THRUST = 0.85
         MAX_VELOCITY = 40
 
@@ -102,9 +104,6 @@ class Falcon(Sprite):
                 self.maxSpeedAttained = False
             else:
                 self.maxSpeedAttained = True
-
-
-
 
     def draw(self, imgOff):
         imageState = None
@@ -129,8 +128,27 @@ class Falcon(Sprite):
         list.append(self)
 
     def remove(self, list):
+        # The falcon is never actually removed from the game-space; instead we decrement numFalcons
+        # only execute the decrementFalconNumAndSpawn() method if shield is down.
+        if (self.shield == 0):
+            self.decrementFalconNumAndSpawn()
+
+    # this method is called when a falcon dies. It allows you to re-initialize the falcon settings without
+    # removing him from the movFriends list. Therefore, falcon is never null, which is a good thing.
+    def decrementFalconNumAndSpawn(self):
         # import locally to avoid circular import
         from pythonic.mvc.controller.CommandCenter import CommandCenter
-        #list.remove(self)
-        if (self.shield == 0):
-            CommandCenter.getInstance().initFalconAndDecrementFalconNum()
+        from pythonic.mvc.controller.Sound import Sound
+        CommandCenter.getInstance().numFalcons -= 1
+        if CommandCenter.getInstance().isGameOver(): return
+        Sound.playSound(self.cwd + "shipspawn.wav")
+        self.shield = INITIAL_SPAWN_TIME
+        self.invisible = INITIAL_SPAWN_TIME / 4
+        self.center = Point(DIM.width / 2, DIM.height / 2)
+        self.orientation = random.randint(
+            0, int(360 / Falcon.TURN_STEP)) * Falcon.TURN_STEP
+        self.deltaX = 0
+        self.deltaY = 0
+        self.radius = Falcon.MIN_RADIUS
+        self.maxSpeedAttained = False
+        self.nukeMeter = 0
