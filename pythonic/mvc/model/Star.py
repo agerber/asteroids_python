@@ -37,12 +37,9 @@ class Star(Movable):
         return self.center
 
 
-    def isProtected(self) -> bool:
-        return False
-
 
     def add(self, list):
         list.append(self)
 
     def remove(self, list):
-        list.remove(self)
+        self.alive = False
