@@ -112,11 +112,11 @@ class Game (threading.Thread):
                 CommandCenter.getInstance().opsQueue.enqueue(movFloater, GameOp.Action.REMOVE)
 
 
-        self.processAddsAndMarkRemoves()
-        self.processRemoves()
+        self.processGameOpsQueue()
+        self.purgeDeadMovables()
 
 
-    def processAddsAndMarkRemoves(self):
+    def processGameOpsQueue(self):
         # deferred mutation: these operations are done AFTER we have completed our collision detection to avoid
         # mutating the movable linkedlists while iterating them above.
         while len(CommandCenter.getInstance().opsQueue) > 0:
@@ -142,7 +142,7 @@ class Game (threading.Thread):
 
 
 
-    def processRemoves(self):
+    def purgeDeadMovables(self):
         CommandCenter.getInstance().purgeDeadMovables()
 
 
