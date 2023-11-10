@@ -58,9 +58,9 @@ class Nuke(Sprite):
         if self.nukeState  == 0:
             self.radius = 2
         elif self.nukeState < 4:
-            self.radius = self.radius + 16
+            self.radius = self.radius + 8
         else:
-            self.radius = self.radius -22
+            self.radius = self.radius -11
 
     def add(self, list):
         if (CommandCenter.getInstance().falcon.nukeMeter > 0):

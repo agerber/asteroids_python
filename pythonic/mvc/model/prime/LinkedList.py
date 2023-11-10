@@ -21,13 +21,11 @@ class LinkedList:
             self.tail.next = new_node
             self.tail = new_node
 
-
     def __iter__(self):
         current = self.head
         while current:
             yield current.data
             current = current.next
-
 
     def remove(self, data):
         current = self.head
