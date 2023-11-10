@@ -132,4 +132,5 @@ class Falcon(Sprite):
         # import locally to avoid circular import
         from pythonic.mvc.controller.CommandCenter import CommandCenter
         #list.remove(self)
-        CommandCenter.getInstance().initFalconAndDecrementFalconNum()
+        if (self.shield == 0):
+            CommandCenter.getInstance().initFalconAndDecrementFalconNum()
