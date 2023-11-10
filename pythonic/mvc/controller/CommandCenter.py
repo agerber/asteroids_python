@@ -6,8 +6,9 @@ from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.Star import Star
-from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.LinkedList import LinkedList
+from pythonic.mvc.model.prime.Point import Point
+from pythonic.mvc.model.prime.Stack import Stack
 from functional import seq
 from pythonic.mvc.model.prime.Constants import DIM, MAX_SHIELD, INITIAL_SPAWN_TIME
 from concurrent.futures import ThreadPoolExecutor
@@ -36,10 +37,10 @@ class CommandCenter:
         self.falcon = Falcon()
         self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
 
-        self.movDebris = []
-        self.movFriends = []
-        self.movFoes = []
-        self.movFloaters = []
+        self.movDebris = LinkedList()
+        self.movFriends = LinkedList()
+        self.movFoes = LinkedList()
+        self.movFloaters = LinkedList()
 
         self.opsQueue = GameOpsQueue()
         self.soundExecutor = ThreadPoolExecutor(max_workers=5)
