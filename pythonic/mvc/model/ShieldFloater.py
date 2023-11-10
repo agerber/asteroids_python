@@ -3,7 +3,7 @@ import os
 
 from pythonic.mvc.controller.Sound import Sound
 
-from pythonic.mvc.model.prime.Constants import DIM, MAX_SHIELD, INITIAL_SPAWN_TIME
+from pythonic.mvc.model.prime.Constants import MAX_SHIELD
 from pythonic.mvc.model.Floater import Floater
 
 from pythonic.mvc.model.prime.Color import Color

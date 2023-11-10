@@ -1,14 +1,13 @@
 import os
 from math import cos, sin, radians
 
-from PIL import Image, ImageOps,ImageDraw
+from PIL import ImageDraw
 
 from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.controller.Sound import Sound
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Sprite import Sprite
-from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.Color import Color
 class Nuke(Sprite):
 
