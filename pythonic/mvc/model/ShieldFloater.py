@@ -20,7 +20,7 @@ class ShieldFloater(Floater):
 
     def remove(self, list):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
-        self.alive = False
+        list.remove(self)
         if (self.expiry > 0):
             Sound.playSound(self.cwd + "shieldup.wav")
             CommandCenter.getInstance().falcon.shield = MAX_SHIELD

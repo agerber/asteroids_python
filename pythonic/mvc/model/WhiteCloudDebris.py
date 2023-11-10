@@ -35,4 +35,4 @@ class WhiteCloudDebris(Sprite):
 
 
     def remove(self, list):
-        self.alive = False
+        list.remove(self)

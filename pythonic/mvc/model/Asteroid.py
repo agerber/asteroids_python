@@ -63,7 +63,7 @@ class Asteroid(Sprite):
         list.append(self)
 
     def remove(self, list):
-        self.alive = False
+        list.remove(self)
         self.spawnSmallerAsteroidOrDebris(self)
         CommandCenter.getInstance().score += + 10
         Sound.playSound(self.cwd + "kapow.wav")

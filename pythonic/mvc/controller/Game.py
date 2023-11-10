@@ -113,7 +113,7 @@ class Game (threading.Thread):
 
 
         self.processGameOpsQueue()
-        self.purgeDeadMovables()
+        #self.purgeDeadMovables()
 
 
     def processGameOpsQueue(self):

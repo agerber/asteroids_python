@@ -20,7 +20,7 @@ class NukeFloater(Floater):
 
 
     def remove(self, list):
-        self.alive = False
+        list.remove(self)
         if (self.expiry > 0):
             CommandCenter.getInstance().falcon.nukeMeter = MAX_NUKE
             Sound.playSound(self.cwd + "nuke-up.wav")

@@ -22,7 +22,7 @@ class NewWallFloater(Floater):
 
 
     def remove(self, list):
-        self.alive = False
+        list.remove(self)
         if (self.expiry > 0):
             self.buildWall()
             Sound.playSound(self.cwd + "insect.wav")

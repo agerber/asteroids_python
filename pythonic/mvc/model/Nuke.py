@@ -71,5 +71,5 @@ class Nuke(Sprite):
 
     def remove(self, list):
         if (self.expiry == 0):
-            self.alive = False
+            list.remove(self)
 
