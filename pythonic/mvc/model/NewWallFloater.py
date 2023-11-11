@@ -17,12 +17,12 @@ class NewWallFloater(Floater):
         self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.color = Color.from_RGB(186, 0, 22)
         self.expiry = 230
-    def add(self, list):
-        list.append(self)
+
 
 
     def remove(self, list):
         self.alive = False
+        # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):
             self.buildWall()
             Sound.playSound(self.cwd + "insect.wav")

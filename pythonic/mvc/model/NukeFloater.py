@@ -15,12 +15,12 @@ class NukeFloater(Floater):
         #yellow
         self.color = Color.YELLOW
         self.expiry = 350
-    def add(self, list):
-        list.append(self)
+
 
 
     def remove(self, list):
         self.alive = False
+        # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):
             CommandCenter.getInstance().falcon.nukeMeter = MAX_NUKE
             Sound.playSound(self.cwd + "nuke-up.wav")

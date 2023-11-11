@@ -13,14 +13,13 @@ class ShieldFloater(Floater):
         self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.color = Color.CYAN
         self.expiry = 260
-    def add(self, list):
-        list.append(self)
 
 
 
     def remove(self, list):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
         self.alive = False
+        # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):
             Sound.playSound(self.cwd + "shieldup.wav")
             CommandCenter.getInstance().falcon.shield = MAX_SHIELD
