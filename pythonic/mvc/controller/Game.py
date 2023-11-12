@@ -207,7 +207,7 @@ class Game (threading.Thread):
     def keyPressed(self, event):
         falcon = CommandCenter.getInstance().falcon
         keyCode = event.keysym
-        print(keyCode)
+        #print(keyCode)
         if keyCode == Game.START and CommandCenter.getInstance().isGameOver():
             CommandCenter.getInstance().initGame()
             return
