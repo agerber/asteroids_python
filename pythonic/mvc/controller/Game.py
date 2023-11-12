@@ -110,7 +110,7 @@ class Game (threading.Thread):
 
 
         self.processGameOpsQueue()
-        #self.purgeDeadMovables()
+
 
 
     def processGameOpsQueue(self):
@@ -136,14 +136,6 @@ class Game (threading.Thread):
             else:
                 mov.remove(list)
                 
-
-
-
-
-    def purgeDeadMovables(self):
-        CommandCenter.getInstance().purgeDeadMovables()
-
-
 
 
     def main(self):

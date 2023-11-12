@@ -78,15 +78,6 @@ class CommandCenter:
             self.opsQueue.enqueue(Star(), GameOp.Action.ADD)
             count -= 1
 
-    def purgeDeadMovables(self):
-
-        isAlive = lambda mov: mov.alive
-
-        self.movDebris = seq(self.movDebris).filter(isAlive).list()
-        self.movFriends = seq(self.movFriends).filter(isAlive).list()
-        self.movFoes = seq(self.movFoes).filter(isAlive).list()
-        self.movFloaters = seq(self.movFloaters).filter(isAlive).list()
-
 
     def incrementFrame(self):
         # use of ternary expression to simplify the logic to one line
