@@ -43,9 +43,6 @@ class Brick(Sprite):
         pass
 
 
-    def add(self, list):
-        list.append(self)
-
 
     def remove(self, list):
         self.alive = False

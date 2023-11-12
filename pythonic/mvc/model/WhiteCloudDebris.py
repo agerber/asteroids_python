@@ -36,9 +36,3 @@ class WhiteCloudDebris(Sprite):
         if self.expiry % 2 == 0:
             self.index = self.index + 1
 
-    def add(self, list):
-        list.append(self)
-
-
-    def remove(self, list):
-        self.alive = False

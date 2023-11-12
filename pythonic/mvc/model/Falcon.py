@@ -124,8 +124,6 @@ class Falcon(Sprite):
                    self.getCenter().x + self.getRadius(), self.getCenter().y + self.getRadius())
                   , outline=Color.CYAN)
 
-    def add(self, list):
-        list.append(self)
 
     def remove(self, list):
         # The falcon is never actually removed from the game-space; instead we decrement numFalcons

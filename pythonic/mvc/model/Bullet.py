@@ -56,6 +56,5 @@ class Bullet(Sprite):
         list.append(self)
         Sound.playSound(self.cwd+"thump.wav")
 
-    def remove(self, list):
-        self.alive = False
+
 
