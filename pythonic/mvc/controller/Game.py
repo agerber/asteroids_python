@@ -90,9 +90,7 @@ class Game (threading.Thread):
     def checkCollisions(self):
 
         for movFriend in CommandCenter.getInstance().movFriends:
-            if not movFriend.alive: continue
             for movFoe in CommandCenter.getInstance().movFoes:
-                if not movFoe.alive: continue
                 pntFriendCenter = movFriend.getCenter()
                 pntFoeCenter = movFoe.getCenter()
                 radFriend = movFriend.getRadius()
@@ -105,7 +103,6 @@ class Game (threading.Thread):
         pntFalcon = CommandCenter.getInstance().falcon.center
         radFalcon = CommandCenter.getInstance().falcon.getRadius()
         for movFloater in CommandCenter.getInstance().movFloaters:
-            if not movFloater.alive: continue
             pntFloaterCenter = movFloater.getCenter()
             radFloater = movFloater.getRadius()
             if (pntFalcon.distance(pntFloaterCenter) < (radFalcon + radFloater)):
@@ -210,7 +207,7 @@ class Game (threading.Thread):
     def keyPressed(self, event):
         falcon = CommandCenter.getInstance().falcon
         keyCode = event.keysym
-        # print(keyCode)
+        print(keyCode)
         if keyCode == Game.START and CommandCenter.getInstance().isGameOver():
             CommandCenter.getInstance().initGame()
             return

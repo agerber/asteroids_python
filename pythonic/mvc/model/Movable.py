@@ -5,7 +5,6 @@ from pythonic.mvc.model.prime.Point import Point
 
 
 class Movable(ABC):
-    alive = True
 
     class Team(Enum):
         FRIEND = 0
