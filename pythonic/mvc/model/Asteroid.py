@@ -20,6 +20,7 @@ class Asteroid(Sprite):
 
     def __init__(self, value):
         super().__init__()
+        self.value = value
         self.LARGE_RADIUS = 110
         self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         # There is no method overloading in python. We must check the parameter type to differentiate the calls
@@ -83,6 +84,9 @@ class Asteroid(Sprite):
                 size -= 1
 
 
+    def __str__(self):
+            return "Asteroid(" + str(self.value) + ")"
+    
     def generateVertices(self):
         # 6.283 is the max radians
         MAX_RADIANS_X1000 = 6283
@@ -95,6 +99,7 @@ class Asteroid(Sprite):
             r = (800 + random.randint(0, 199)) / 1000.0  # number between 0.8 and 0.999
             theta = random.randint(0, MAX_RADIANS_X1000-1) / 1000.0  # number between 0 and 6.282
             return PolarPoint(r, theta)
+        
 
         def polarToCartesian(pp: PolarPoint):
             return Point(

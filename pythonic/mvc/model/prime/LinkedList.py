@@ -39,7 +39,7 @@ class LinkedList:
             current = self.head
             previous = None
             while current:
-                if current.data == data:
+                if id(current.data) == id(data):
                     if previous:
                         previous.next = current.next
                         if current == self.tail:
@@ -57,6 +57,6 @@ class LinkedList:
     def print_list(self):
         current = self.head
         while current:
-            print(current.data, end=" -> ")
+            print(str(current.data), end=" -> ")
             current = current.next
         print("None")
