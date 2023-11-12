@@ -4,6 +4,7 @@ from PIL import ImageFont, ImageTk, ImageDraw
 
 from pythonic.mvc.controller.CommandCenter import CommandCenter, DIM
 from pythonic.mvc.controller.Utils import Utils
+from pythonic.mvc.model.prime.LinkedList import LinkedList
 from pythonic.mvc.model.prime.PolarPoint import PolarPoint
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.view.GameFrame import GameFrame
@@ -229,14 +230,11 @@ class GamePanel:
         self.drawOneMeter(imgOff, color=Color.YELLOW, offSet=2, percent=nukeValue)
 
 
-
-
-
     def moveDrawMovables(self, imgOff, *teams: list):
-        flatList = sum(teams, [])
-        for mov in flatList:
-                mov.move()
-                mov.draw(imgOff)
+        for team in teams:
+            for mov in team:
+                    mov.move()
+                    mov.draw(imgOff)
 
     def displayTextOnScreen(self, imgOff, *lines):
         y = 0

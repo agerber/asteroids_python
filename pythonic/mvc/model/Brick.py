@@ -45,6 +45,6 @@ class Brick(Sprite):
 
 
     def remove(self, list):
-        self.alive = False
+        list.remove(self)
         CommandCenter.getInstance().score += 1000
         Sound.playSound(self.cwd + "rock.wav")

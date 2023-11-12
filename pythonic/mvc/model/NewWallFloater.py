@@ -21,7 +21,7 @@ class NewWallFloater(Floater):
 
 
     def remove(self, list):
-        self.alive = False
+        list.remove(self)
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):
             self.buildWall()

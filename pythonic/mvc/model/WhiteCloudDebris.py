@@ -4,7 +4,6 @@ import os
 
 class WhiteCloudDebris(Sprite):
 
-
     def __init__(self, explodingSprite: Sprite):
         super().__init__()
         self.team = Movable.Team.DEBRIS
@@ -36,3 +35,7 @@ class WhiteCloudDebris(Sprite):
         if self.expiry % 2 == 0:
             self.index = self.index + 1
 
+
+
+    def remove(self, list):
+        list.remove(self)

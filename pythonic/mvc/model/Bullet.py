@@ -57,4 +57,3 @@ class Bullet(Sprite):
         Sound.playSound(self.cwd+"thump.wav")
 
 
-
