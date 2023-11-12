@@ -4,7 +4,7 @@ import math
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.PolarPoint import PolarPoint
 from functional import seq
-
+from PIL import Image
 class Utils:
 
 
@@ -23,3 +23,13 @@ class Utils:
                    .list()
 
 
+
+    @staticmethod
+    def transparent(img) -> Image:
+        if img.mode != 'RGBA':
+            img = img.convert('RGBA')
+
+        transparent_img = Image.new("RGBA", img.size, (0, 0, 0, 0))
+        # Paste the original image onto the transparent image
+        transparent_img.paste(img, (0, 0), img)
+        return transparent_img

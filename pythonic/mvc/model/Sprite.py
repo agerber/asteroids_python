@@ -125,6 +125,7 @@ class Sprite(Movable):
                 transformed = Image.fromarray(transformed.astype("uint8"), "RGBA")
 
             transformed = ImageOps.flip(transformed)
+            transformed = Utils.transparent(transformed)
             imgOff.paste(transformed, (round(self.center.x - width / 2.0), round(self.center.y - height / 2.0)))
         except Exception as e:
             print(e.args)
