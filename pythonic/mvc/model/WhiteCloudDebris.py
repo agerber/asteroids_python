@@ -1,3 +1,4 @@
+from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 import os
@@ -8,17 +9,15 @@ class WhiteCloudDebris(Sprite):
         super().__init__()
         self.team = Movable.Team.DEBRIS
         self.index = 0
-
-        root_path = "/".join(os.getcwd().split("/")[:-2])+"/"+"resources"
-        self.rasterMap[0] = self.loadGraphic(root_path+"/imgs/exp/row-1-column-1.png")
-        self.rasterMap[1] = self.loadGraphic(root_path+"/imgs/exp/row-1-column-2.png")
-        self.rasterMap[2] = self.loadGraphic(root_path+"/imgs/exp/row-1-column-3.png")
-        self.rasterMap[3] = self.loadGraphic(root_path+"/imgs/exp/row-2-column-1.png")
-        self.rasterMap[4] = self.loadGraphic(root_path+"/imgs/exp/row-2-column-2.png")
-        self.rasterMap[5] = self.loadGraphic(root_path+"/imgs/exp/row-2-column-3.png")
-        self.rasterMap[6] = self.loadGraphic(root_path+"/imgs/exp/row-3-column-1.png")
-        self.rasterMap[7] = self.loadGraphic(root_path+"/imgs/exp/row-3-column-2.png")
-        self.rasterMap[8] = self.loadGraphic(root_path+"/imgs/exp/row-3-column-3.png")
+        self.rasterMap[0] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-1-column-1.png")
+        self.rasterMap[1] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-1-column-2.png")
+        self.rasterMap[2] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-1-column-3.png")
+        self.rasterMap[3] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-2-column-1.png")
+        self.rasterMap[4] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-2-column-2.png")
+        self.rasterMap[5] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-2-column-3.png")
+        self.rasterMap[6] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-3-column-1.png")
+        self.rasterMap[7] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-3-column-2.png")
+        self.rasterMap[8] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-3-column-3.png")
 
         #expire it out after it has done its animation. Multiply by 2 to slow down the animation
         self.expiry = len(self.rasterMap) * 2

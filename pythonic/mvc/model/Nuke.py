@@ -1,8 +1,6 @@
 import os
 from math import cos, sin, radians
-
 from PIL import ImageDraw
-
 from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.controller.Sound import Sound
 from pythonic.mvc.model.Falcon import Falcon
@@ -14,7 +12,6 @@ class Nuke(Sprite):
     EXPIRE = 60
     def __init__(self, falcon: Falcon):
         super().__init__()
-        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.nukeState = 0
 
         self.team = Movable.Team.FRIEND
@@ -66,7 +63,7 @@ class Nuke(Sprite):
         if (CommandCenter.getInstance().falcon.nukeMeter > 0):
             list.append(self)
             CommandCenter.getInstance().falcon.nukeMeter = 0
-            Sound.playSound(self.cwd + "nuke.wav")
+            Sound.playSound(CommandCenter.getInstance().snd + "nuke.wav")
 
 
     def remove(self, list):

@@ -11,15 +11,9 @@ from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.model import Falcon, Brick
 from pythonic.mvc.model.Bullet import Bullet
 from pythonic.mvc.model.Brick import Brick
-from functional import seq
-import gc
-
-from pythonic.mvc.controller.Sound import Sound
 from pythonic.mvc.model.Asteroid import Asteroid
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.WhiteCloudDebris import WhiteCloudDebris
 from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, SPAWN_NEW_WALL_FLOATER, MAX_SHIELD,MAX_NUKE, INITIAL_SPAWN_TIME
 from PIL import Image
 import sys
@@ -60,9 +54,6 @@ class Game (threading.Thread):
         self.gamePanel = GamePanel(DIM)
         self.gamePanel.gameFrame.bind("<KeyPress>", self.keyPressed)
         self.gamePanel.gameFrame.bind("<KeyRelease>", self.keyReleased)
-        self.cwd = "/".join(os.getcwd().split("/")[:-2])+"/resources/sounds/"
-        # self.soundThrust = Sound.clipForLoopFactory(self.cwd+"whitenoise.wav")
-        # self.soundBackground = Sound.clipForLoopFactory(self.cwd+"music-background.wav")
         self.animationThread = self
         self.animationThread.daemon = True ## kills thread with main thread
         self.animationThread.start()

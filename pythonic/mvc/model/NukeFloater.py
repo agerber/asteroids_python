@@ -1,4 +1,3 @@
-import os
 
 from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.controller.Sound import Sound
@@ -11,7 +10,6 @@ class NukeFloater(Floater):
 
     def __init__(self):
         super().__init__()
-        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         #yellow
         self.color = Color.YELLOW
         self.expiry = 350
@@ -23,4 +21,4 @@ class NukeFloater(Floater):
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):
             CommandCenter.getInstance().falcon.nukeMeter = MAX_NUKE
-            Sound.playSound(self.cwd + "nuke-up.wav")
+            Sound.playSound(CommandCenter.getInstance().snd + "nuke-up.wav")

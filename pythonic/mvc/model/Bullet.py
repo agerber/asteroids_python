@@ -1,6 +1,7 @@
 import os
 from math import cos, sin, radians
 
+from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.controller.Sound import Sound
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.model.Movable import Movable
@@ -10,8 +11,6 @@ from pythonic.mvc.model.prime.Color import Color
 class Bullet(Sprite):
     def __init__(self, falcon: Falcon):
         super().__init__()
-        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
-
         self.team = Movable.Team.FRIEND
         self.color = Color.ORANGE  # orange
 
@@ -54,6 +53,6 @@ class Bullet(Sprite):
 
     def add(self, list):
         list.append(self)
-        Sound.playSound(self.cwd+"thump.wav")
+        Sound.playSound(CommandCenter.getInstance().snd +"thump.wav")
 
 

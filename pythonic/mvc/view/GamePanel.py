@@ -2,8 +2,9 @@ from typing import Tuple
 
 from PIL import ImageFont, ImageTk, ImageDraw
 
-from pythonic.mvc.controller.CommandCenter import CommandCenter, DIM
+from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.controller.Utils import Utils
+from pythonic.mvc.model.prime.Constants import DIM
 from pythonic.mvc.model.prime.LinkedList import LinkedList
 from pythonic.mvc.model.prime.PolarPoint import PolarPoint
 from pythonic.mvc.model.prime.Point import Point

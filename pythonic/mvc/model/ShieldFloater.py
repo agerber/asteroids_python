@@ -1,6 +1,3 @@
-import os
-
-
 from pythonic.mvc.controller.Sound import Sound
 
 from pythonic.mvc.model.prime.Constants import MAX_SHIELD
@@ -10,7 +7,6 @@ from pythonic.mvc.model.prime.Color import Color
 class ShieldFloater(Floater):
     def __init__(self):
         super().__init__()
-        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.color = Color.CYAN
         self.expiry = 260
 
@@ -21,5 +17,5 @@ class ShieldFloater(Floater):
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         list.remove(self)
         if (self.expiry > 0):
-            Sound.playSound(self.cwd + "shieldup.wav")
+            Sound.playSound(CommandCenter.getInstance().snd + "shieldup.wav")
             CommandCenter.getInstance().falcon.shield = MAX_SHIELD

@@ -22,7 +22,6 @@ class Asteroid(Sprite):
         super().__init__()
         self.value = value
         self.LARGE_RADIUS = 110
-        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         # There is no method overloading in python. We must check the parameter type to differentiate the calls
         # and then use conditional logic to call the appropriate logic within the constructor
         if isinstance(value, int):
@@ -67,7 +66,7 @@ class Asteroid(Sprite):
         list.remove(self)
         self.spawnSmallerAsteroidOrDebris(self)
         CommandCenter.getInstance().score += + 10
-        Sound.playSound(self.cwd + "kapow.wav")
+        Sound.playSound(CommandCenter.getInstance().snd + "kapow.wav")
 
 
     def spawnSmallerAsteroidOrDebris(self, originalAsteroid):

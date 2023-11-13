@@ -23,17 +23,13 @@ class Brick(Sprite):
     BRICK_IMAGE = 0
     def __init__(self, upperLeftCorner: Point, size: int):
         super().__init__()
-        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.team = Movable.Team.FOE
-
         self.center = Point(int(upperLeftCorner.x + size/2), int(upperLeftCorner.y + size/2))
         self.radius = int(size / 2)
-
-        rootPath = "/".join(os.getcwd().split("/")[:-2])
         # We use a dictionary that has a seek-time of O(1)
         # Using enums as keys is safer b/c we know the value exists when we reference the consts later in code.
         self.rasterMap: Dict[int, Image.Image] = {
-            Brick.BRICK_IMAGE: self.loadGraphic(rootPath + "/resources/imgs/brick/Brick_Block100.png")
+            Brick.BRICK_IMAGE: self.loadGraphic(CommandCenter.getInstance().img + "brick/Brick_Block100.png")
         }
 
     def draw(self, imgOff):
@@ -47,4 +43,4 @@ class Brick(Sprite):
     def remove(self, list):
         list.remove(self)
         CommandCenter.getInstance().score += 1000
-        Sound.playSound(self.cwd + "rock.wav")
+        Sound.playSound(CommandCenter.getInstance().snd + "rock.wav")

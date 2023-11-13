@@ -3,7 +3,6 @@ import random
 from typing import Dict
 from PIL import Image, ImageDraw
 
-
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.prime.Color import Color
@@ -37,7 +36,6 @@ class Falcon(Sprite):
 
     def __init__(self):
         super().__init__()
-        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.shield = 0
         self.nukeMeter = 0
         self.invisible = 0
@@ -47,16 +45,16 @@ class Falcon(Sprite):
         self.turnState = TurnState.IDLE
         self.team = Movable.Team.FRIEND
         self.radius = Falcon.MIN_RADIUS
-
-        root_path = "/".join(os.getcwd().split("/")[:-2])
         # We use a dictionary that has a seek-time of O(1)
         # Using enums as keys is safer b/c we know the value exists when we reference the consts later in code.
+        #avoid circular import
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
         self.rasterMap: Dict[ImageState, Image.Image] = {
             ImageState.FALCON_INVISIBLE: None,
-            ImageState.FALCON: self.loadGraphic(root_path + "/resources/imgs/fal/falcon125.png"),
-            ImageState.FALCON_THR: self.loadGraphic(root_path + "/resources/imgs/fal/falcon125_thr.png"),
-            ImageState.FALCON_PRO: self.loadGraphic(root_path + "/resources/imgs/fal/falcon125_PRO.png"),
-            ImageState.FALCON_PRO_THR: self.loadGraphic(root_path + "/resources/imgs/fal/falcon125_PRO_thr.png")
+            ImageState.FALCON: self.loadGraphic(CommandCenter.getInstance().img + "fal/falcon125.png"),
+            ImageState.FALCON_THR: self.loadGraphic(CommandCenter.getInstance().img + "fal/falcon125_thr.png"),
+            ImageState.FALCON_PRO: self.loadGraphic(CommandCenter.getInstance().img+ "fal/falcon125_PRO.png"),
+            ImageState.FALCON_PRO_THR: self.loadGraphic(CommandCenter.getInstance().img + "fal/falcon125_PRO_thr.png")
         }
 
     # METHODS
@@ -139,7 +137,7 @@ class Falcon(Sprite):
         from pythonic.mvc.controller.Sound import Sound
         CommandCenter.getInstance().numFalcons -= 1
         if CommandCenter.getInstance().isGameOver(): return
-        Sound.playSound(self.cwd + "shipspawn.wav")
+        Sound.playSound(CommandCenter.getInstance().snd + "shipspawn.wav")
         self.shield = INITIAL_SPAWN_TIME
         self.invisible = INITIAL_SPAWN_TIME / 4
         self.center = Point(DIM.width / 2, DIM.height / 2)

@@ -7,10 +7,6 @@ from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.LinkedList import LinkedList
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.Stack import Stack
-from functional import seq
-from pythonic.mvc.model.prime.Constants import DIM, MAX_SHIELD, INITIAL_SPAWN_TIME
 from concurrent.futures import ThreadPoolExecutor
 import sys
 
@@ -34,8 +30,9 @@ class CommandCenter:
         self.paused = False
         self.muted = False
         self.frame = 0
+        self.snd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
+        self.img = "/".join(os.getcwd().split("/")[:-2]) + "/resources/imgs/"
         self.falcon = Falcon()
-        self.cwd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
 
         self.movDebris = LinkedList()
         self.movFriends = LinkedList()
