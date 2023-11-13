@@ -20,7 +20,7 @@ class Sprite(Movable):
 
     def __init__(self):
 
-        self.alive = True
+
         self.center: Point = Point(random.randint(0, DIM.width), random.randint(0, DIM.height))
         self.deltaX: float = 0
         self.deltaY: float = 0
