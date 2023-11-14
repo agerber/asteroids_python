@@ -39,7 +39,8 @@ class LinkedList:
             current = self.head
             previous = None
             while current:
-                if id(current.data) == id(data):
+                #same as -> if id(current.data) == id(data):
+                if current.data is data:
                     if previous:
                         previous.next = current.next
                         if current == self.tail:
