@@ -51,7 +51,7 @@ class Sprite(Movable):
 
 
     def add(self, list):
-        list.append(self)
+        list.add(self)
 
     def remove(self, list):
         list.remove(self)

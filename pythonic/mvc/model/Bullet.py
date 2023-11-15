@@ -52,7 +52,7 @@ class Bullet(Sprite):
         self.renderVector(imgOff)
 
     def add(self, list):
-        list.append(self)
+        list.add(self)
         Sound.playSound(CommandCenter.getInstance().snd +"thump.wav")
 
 

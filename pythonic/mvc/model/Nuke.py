@@ -61,7 +61,7 @@ class Nuke(Sprite):
 
     def add(self, list):
         if (CommandCenter.getInstance().falcon.nukeMeter > 0):
-            list.append(self)
+            list.add(self)
             CommandCenter.getInstance().falcon.nukeMeter = 0
             Sound.playSound(CommandCenter.getInstance().snd + "nuke.wav")
 

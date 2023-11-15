@@ -15,7 +15,7 @@ class LinkedList:
         self.head = None
         self.tail = None
 
-    def append(self, data):
+    def add(self, data):
         try:
             self.lock.acquire()
             new_node = Node(data)
