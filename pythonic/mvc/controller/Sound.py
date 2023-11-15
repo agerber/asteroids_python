@@ -1,8 +1,10 @@
 import simpleaudio as sa
 import os
 from pythonic.mvc.controller.CommandCenter import CommandCenter
-
+from concurrent.futures import ThreadPoolExecutor
 class Sound:
+    #static member
+    soundExecutor = ThreadPoolExecutor(max_workers=5)
     @staticmethod
     def playSound(strPath):
 
@@ -14,7 +16,7 @@ class Sound:
                 pass
 
         #pass the above lambda to thread-pool, along with the path to file
-        CommandCenter.getInstance().soundExecutor.submit(run, strPath)
+        Sound.soundExecutor.submit(run, strPath)
 
     # todo: thrust and background music not looping properly.
     @staticmethod

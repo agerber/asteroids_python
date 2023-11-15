@@ -40,7 +40,7 @@ class CommandCenter:
         self.movFloaters = LinkedList()
 
         self.opsQueue = GameOpsQueue()
-        self.soundExecutor = ThreadPoolExecutor(max_workers=5)
+
 
     @staticmethod
     def getInstance():
