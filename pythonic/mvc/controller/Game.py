@@ -70,6 +70,8 @@ class Game (threading.Thread):
             self.checkCollisions()
             self.checkNewLevel()
             self.checkFloaters()
+            # this method will execute add() and remove() callbacks on Movable objects
+            self.processGameOpsQueue()
 
             try:
                 startTime += Game.ANIMATION_DELAY
@@ -100,7 +102,7 @@ class Game (threading.Thread):
                 CommandCenter.getInstance().opsQueue.enqueue(movFloater, GameOp.Action.REMOVE)
 
 
-        self.processGameOpsQueue()
+
 
 
 
