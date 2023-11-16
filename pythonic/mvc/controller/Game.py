@@ -141,7 +141,9 @@ class Game (threading.Thread):
             level += 1
             CommandCenter.getInstance().level = level
             self.spawnBigAsteroids(level)
-            CommandCenter.getInstance().falcon.shield = INITIAL_SPAWN_TIME
+            if (CommandCenter.getInstance().falcon.shield < INITIAL_SPAWN_TIME):
+                CommandCenter.getInstance().falcon.shield = INITIAL_SPAWN_TIME
+
             CommandCenter.getInstance().falcon.showLevel = INITIAL_SPAWN_TIME
 
 
