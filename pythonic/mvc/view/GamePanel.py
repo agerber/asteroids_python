@@ -96,11 +96,7 @@ class GamePanel:
 
         # draw the statusArray strings to middle of screen
         if len(statusArray) > 0:
-            y = 0
-            for line in statusArray:
-                g.text((500 - len(line)*2, 200 + y), line, font=self.fontNormal,
-                       fill=Color.WHITE, align="center")
-                y += 40
+            self.displayTextOnScreen(imgOff, *statusArray)
 
         # draw PYTHON VERSION and the frame number to bottom left screen
         g.text((self.fontWidth + 10, DIM.height - (self.fontHeight + 22)), f"PYTHON :{CommandCenter.getInstance().frame}",
@@ -238,11 +234,11 @@ class GamePanel:
                     mov.draw(imgOff)
 
     def displayTextOnScreen(self, imgOff, *lines):
-        y = 0
+        yVal = 0
         for line in lines:
-            ImageDraw.Draw(imgOff).text((DIM.width // 2 - len(line) * 2.5 - 10, 200 + y), line, font=self.fontNormal,
+            ImageDraw.Draw(imgOff).text((DIM.width // 2 - len(line) * 2.5 - 10, 200 + yVal), line, font=self.fontNormal,
                                         fill=Color.WHITE, align="center")
-            y += 40
+            yVal += 40
 
 
 
