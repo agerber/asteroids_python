@@ -16,6 +16,7 @@ from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.prime.Color import Color
 from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, SPAWN_NEW_WALL_FLOATER, MAX_SHIELD,MAX_NUKE, INITIAL_SPAWN_TIME
 from PIL import Image
+from Sound import  Sound
 import sys
 
 
@@ -204,6 +205,7 @@ class Game (threading.Thread):
             sys.exit(0)
         elif keyCode == Game.UP:
             falcon.thrusting = True
+            Sound.playLoopSound("whitenoise.wav")
         elif keyCode == Game.LEFT:
             falcon.turnState = Falcon.TurnState.LEFT
         elif keyCode == Game.RIGHT:
@@ -220,6 +222,7 @@ class Game (threading.Thread):
             falcon.turnState = Falcon.TurnState.IDLE
         elif keyCode == Game.UP:
             falcon.thrusting = False
+            Sound.stopLoopSound("whitenoise.wav")
         elif keyCode == Game.MUTE:
             CommandCenter.getInstance().getInstance().muted = not CommandCenter.getInstance().muted
 
