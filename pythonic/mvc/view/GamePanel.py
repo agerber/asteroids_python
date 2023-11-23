@@ -94,7 +94,7 @@ class GamePanel:
         if CommandCenter.getInstance().falcon.maxSpeedAttained:
             statusArray.append("WARNING - SLOW DOWN")
 
-        # draw the statusArray strings to middle of screen
+        # draw the statusArray strings to middle of screen. unpack the list to satisfy the var-args definition.
         if len(statusArray) > 0:
             self.displayTextOnScreen(imgOff, *statusArray)
 
@@ -227,12 +227,13 @@ class GamePanel:
         self.drawOneMeter(imgOff, color=Color.YELLOW, offSet=2, percent=nukeValue)
 
 
-    def moveDrawMovables(self, imgOff, *teams: list):
+    def moveDrawMovables(self, imgOff, *teams):
         for team in teams:
             for mov in team:
                     mov.move()
                     mov.draw(imgOff)
 
+    #var-args as lines
     def displayTextOnScreen(self, imgOff, *lines):
         yVal = 0
         for line in lines:
