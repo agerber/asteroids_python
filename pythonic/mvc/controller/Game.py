@@ -225,7 +225,10 @@ class Game (threading.Thread):
             Sound.stopLoopSound("whitenoise.wav")
         elif keyCode == Game.MUTE:
             CommandCenter.getInstance().getInstance().muted = not CommandCenter.getInstance().muted
-
+            if CommandCenter.getInstance().getInstance().muted:
+                Sound.stopLoopSound("music-background.wav")
+            else:
+                Sound.playLoopSound("music-background.wav")
 
 if __name__ == "__main__":
     game = Game()

@@ -28,7 +28,7 @@ class CommandCenter:
         self.level = 0
         self.score = 0
         self.paused = False
-        self.muted = False
+        self.muted = True
         self.frame = 0
         self.snd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.img = "/".join(os.getcwd().split("/")[:-2]) + "/resources/imgs/"
