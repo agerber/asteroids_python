@@ -24,8 +24,8 @@ class Sound:
     def stopLoopSound(cls, name):
         cls.soundDictionary.get(name).stop()
 
-    @staticmethod
-    def playSound(strPath):
+    @classmethod
+    def playSound(cls, strPath):
 
         def run(strPath):
             try:
@@ -35,7 +35,7 @@ class Sound:
                 pass
 
         #pass the above lambda to thread-pool, along with the path to file
-        Sound.soundExecutor.submit(run, strPath)
+        cls.soundExecutor.submit(run, strPath)
 
 
 
