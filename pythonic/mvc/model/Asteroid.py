@@ -66,7 +66,7 @@ class Asteroid(Sprite):
         list.remove(self)
         self.spawnSmallerAsteroidOrDebris(self)
         CommandCenter.getInstance().score += + 10
-        Sound.playSound(CommandCenter.getInstance().snd + "kapow.wav")
+        Sound.playSound( "kapow.wav")
 
 
     def spawnSmallerAsteroidOrDebris(self, originalAsteroid):

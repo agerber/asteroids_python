@@ -137,7 +137,7 @@ class Falcon(Sprite):
         from pythonic.mvc.controller.Sound import Sound
         CommandCenter.getInstance().numFalcons -= 1
         if CommandCenter.getInstance().isGameOver(): return
-        Sound.playSound(CommandCenter.getInstance().snd + "shipspawn.wav")
+        Sound.playSound( "shipspawn.wav")
         self.shield = INITIAL_SPAWN_TIME
         self.invisible = INITIAL_SPAWN_TIME / 4
         self.center = Point(DIM.width / 2, DIM.height / 2)

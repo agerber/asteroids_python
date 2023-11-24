@@ -53,6 +53,6 @@ class Bullet(Sprite):
 
     def add(self, list):
         list.add(self)
-        Sound.playSound(CommandCenter.getInstance().snd +"thump.wav")
+        Sound.playSound("thump.wav")
 
 

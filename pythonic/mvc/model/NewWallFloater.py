@@ -24,7 +24,7 @@ class NewWallFloater(Floater):
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):
             self.buildWall()
-            Sound.playSound(CommandCenter.getInstance().snd + "insect.wav")
+            Sound.playSound( "insect.wav")
 
 
     def buildWall(self):

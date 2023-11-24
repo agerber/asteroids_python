@@ -25,17 +25,17 @@ class Sound:
         cls.soundDictionary.get(name).stop()
 
     @classmethod
-    def playSound(cls, strPath):
+    def playSound(cls, fileName):
 
-        def run(strPath):
+        def run(fileName):
             try:
-                wavSound = sa.WaveObject.from_wave_file(strPath)
+                wavSound = sa.WaveObject.from_wave_file(CommandCenter.getInstance().snd +fileName)
                 wavSound.play()
             except Exception as e:
                 pass
 
         #pass the above lambda to thread-pool, along with the path to file
-        cls.soundExecutor.submit(run, strPath)
+        cls.soundExecutor.submit(run, fileName)
 
 
 
