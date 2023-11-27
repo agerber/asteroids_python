@@ -39,5 +39,3 @@ class WhiteCloudDebris(Sprite):
 
 
 
-    def remove(self, list):
-        list.remove(self)

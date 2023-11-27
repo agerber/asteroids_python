@@ -14,8 +14,9 @@ class ShieldFloater(Floater):
 
     def remove(self, list):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
+
+        super().remove(list)
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
-        list.remove(self)
         if (self.expiry > 0):
             Sound.playSound( "shieldup.wav")
             CommandCenter.getInstance().falcon.shield = MAX_SHIELD
