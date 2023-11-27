@@ -50,6 +50,7 @@ class LinkedList:
             elif self.count == 1:
                 temp = self.head
                 self.head = None
+                self.tail = None
                 self.count -= 1
                 return temp.data
             else:
