@@ -9,12 +9,15 @@ class LinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
+        self.count = 0
         self.lock = Lock()
 
     def clear(self):
         self.head = None
         self.tail = None
+        self.count = 0
 
+    #effectively enqueing to tail
     def add(self, data):
         try:
             self.lock.acquire()
@@ -24,6 +27,7 @@ class LinkedList:
             else:
                 self.tail.next = new_node
                 self.tail = new_node
+            self.count += 1
         finally:
             self.lock.release()
 
@@ -32,6 +36,30 @@ class LinkedList:
         while current:
             yield current.data
             current = current.next
+
+
+    def enqueue(self, data):
+        self.add(data)
+
+    def dequeue(self):
+        try:
+            self.lock.acquire()
+            if self.count == 0:
+                return None
+            elif self.count == 1:
+                temp = self.head
+                self.head = None
+                self.count -= 1
+                return temp.data
+            else:
+                temp = self.head
+                self.head = self.head.next
+                self.count -= 1
+                return temp.data
+
+        finally:
+            self.lock.release()
+
 
     def remove(self, data):
         try:
@@ -49,9 +77,11 @@ class LinkedList:
                         self.head = current.next
                         if current == self.tail:
                             self.tail = None
+                    self.count -= 1
                     return
                 previous = current
                 current = current.next
+
         finally:
             self.lock.release()
 
