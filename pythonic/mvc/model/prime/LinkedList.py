@@ -5,6 +5,8 @@ class Node:
 
 
 from threading import Lock
+
+
 class LinkedList:
     def __init__(self):
         self.head = None
@@ -17,7 +19,7 @@ class LinkedList:
         self.tail = None
         self.count = 0
 
-    #effectively enqueing to tail
+    # effectively enqueing to tail
     def add(self, data):
         try:
             self.lock.acquire()
@@ -36,7 +38,6 @@ class LinkedList:
         while current:
             yield current.data
             current = current.next
-
 
     def enqueue(self, data):
         self.add(data)
@@ -60,14 +61,13 @@ class LinkedList:
         finally:
             self.lock.release()
 
-
     def remove(self, data):
         try:
             self.lock.acquire()
             current = self.head
             previous = None
             while current:
-                #same as -> if id(current.data) == id(data):
+                # same as -> if id(current.data) == id(data):
                 if current.data is data:
                     if previous:
                         previous.next = current.next
