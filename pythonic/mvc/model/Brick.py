@@ -19,12 +19,12 @@ import os
 
 
 class Brick(Sprite):
-
     BRICK_IMAGE = 0
+
     def __init__(self, upperLeftCorner: Point, size: int):
         super().__init__()
         self.team = Movable.Team.FOE
-        self.center = Point(int(upperLeftCorner.x + size/2), int(upperLeftCorner.y + size/2))
+        self.center = Point(int(upperLeftCorner.x + size / 2), int(upperLeftCorner.y + size / 2))
         self.radius = int(size / 2)
         # We use a dictionary that has a seek-time of O(1)
         # Using enums as keys is safer b/c we know the value exists when we reference the consts later in code.
@@ -38,9 +38,7 @@ class Brick(Sprite):
     def move(self):
         pass
 
-
-
     def remove(self, list):
         super().remove(list)
         CommandCenter.getInstance().score += 1000
-        Sound.playSound( "rock.wav")
+        Sound.playSound("rock.wav")

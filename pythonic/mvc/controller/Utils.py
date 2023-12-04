@@ -5,8 +5,9 @@ from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.PolarPoint import PolarPoint
 from functional import seq
 from PIL import Image
-class Utils:
 
+
+class Utils:
 
     @staticmethod
     def cartesianToPolar(pntCartesians: List[Point]) -> List[PolarPoint]:
@@ -15,14 +16,12 @@ class Utils:
 
         cart2polarTransform = lambda pnt, dbl: PolarPoint(
             hypotenuseOfPoint(pnt) / dbl,
-            math.degrees(math.atan2(pnt.y, pnt.x)) * math.pi /  180
+            math.degrees(math.atan2(pnt.y, pnt.x)) * math.pi / 180
         )
 
-        return seq(pntCartesians)\
-                   .map(lambda pnt: cart2polarTransform(pnt, largestHyp))\
-                   .list()
-
-
+        return seq(pntCartesians) \
+            .map(lambda pnt: cart2polarTransform(pnt, largestHyp)) \
+            .list()
 
     @staticmethod
     def transparent(img) -> Image:

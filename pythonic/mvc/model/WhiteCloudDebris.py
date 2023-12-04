@@ -3,9 +3,9 @@ from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 import os
 
-class WhiteCloudDebris(Sprite):
 
-    #static variable
+class WhiteCloudDebris(Sprite):
+    # static variable
     SLOW_MO = 3
 
     def __init__(self, explodingSprite: Sprite):
@@ -22,20 +22,17 @@ class WhiteCloudDebris(Sprite):
         self.rasterMap[7] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-3-column-2.png")
         self.rasterMap[8] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-3-column-3.png")
 
-        #expire it out after it has done its animation. Multiply by SLOW_MO to slow down the animation
+        # expire it out after it has done its animation. Multiply by SLOW_MO to slow down the animation
         self.expiry = len(self.rasterMap) * WhiteCloudDebris.SLOW_MO
         self.spin = explodingSprite.spin
         self.center = explodingSprite.center
         self.deltaX = explodingSprite.deltaX
         self.deltaY = explodingSprite.deltaY
-        self.radius = int(explodingSprite.radius *1.3)
+        self.radius = int(explodingSprite.radius * 1.3)
 
     def draw(self, imgOff):
         self.renderRaster(imgOff, self.rasterMap[self.index])
-        #hold the image for SLOW_MO frames to slow down the dust cloud animation
-        #we already have a simple decrement-to-zero counter with expiry; see move() method of Sprite.
+        # hold the image for SLOW_MO frames to slow down the dust cloud animation
+        # we already have a simple decrement-to-zero counter with expiry; see move() method of Sprite.
         if self.expiry % WhiteCloudDebris.SLOW_MO == 0:
             self.index = self.index + 1
-
-
-

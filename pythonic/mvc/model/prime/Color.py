@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Tuple
 
+
 class Color:
     ## static colors
     RED: Tuple[int, int, int] = (255, 0, 0)
@@ -14,5 +15,5 @@ class Color:
     YELLOW: Tuple[int, int, int] = (255, 255, 0)
 
     @staticmethod
-    def from_RGB (r,g,b):
-        return (r,g,b)
+    def from_RGB(r, g, b):
+        return (r, g, b)

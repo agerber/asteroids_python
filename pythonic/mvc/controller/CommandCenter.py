@@ -1,7 +1,6 @@
 import os
 import random
 
-
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
@@ -12,7 +11,6 @@ import sys
 
 
 class CommandCenter:
-
     __instance = None
 
     # the following code ensures that you can only call the constructor ONCE
@@ -41,7 +39,6 @@ class CommandCenter:
 
         self.opsQueue = GameOpsQueue()
 
-
     @staticmethod
     def getInstance():
         # this is now a singleton
@@ -60,14 +57,11 @@ class CommandCenter:
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.createStarField()
 
-
     def clearAll(self):
         self.movDebris.clear()
         self.movFriends.clear()
         self.movFoes.clear()
         self.movFloaters.clear()
-
-
 
     def createStarField(self):
         count = 100
@@ -75,16 +69,12 @@ class CommandCenter:
             self.opsQueue.enqueue(Star(), GameOp.Action.ADD)
             count -= 1
 
-
     def incrementFrame(self):
         # use of ternary expression to simplify the logic to one line
         self.frame = self.frame + 1 if self.frame < sys.maxsize else 0
 
     def isGameOver(self) -> bool:  # //if the number of falcons is zero, then game over
         return self.numFalcons < 1
-
-
-
 
 # if __name__ == "__main__":
 #     comand1 = CommandCenter()

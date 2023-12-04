@@ -14,15 +14,15 @@ from pythonic.mvc.model.Brick import Brick
 from pythonic.mvc.model.Asteroid import Asteroid
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, SPAWN_NEW_WALL_FLOATER, MAX_SHIELD,MAX_NUKE, INITIAL_SPAWN_TIME
+from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, SPAWN_NEW_WALL_FLOATER, \
+    MAX_SHIELD, MAX_NUKE, INITIAL_SPAWN_TIME
 from PIL import Image
-from Sound import  Sound
+from Sound import Sound
 import sys
 
 
-
-#todo: refactor the code so that its in python style, and clean-up
-class Game (threading.Thread):
+# todo: refactor the code so that its in python style, and clean-up
+class Game(threading.Thread):
     # ===============================================
     # FIELDS
     # ===============================================
@@ -56,12 +56,12 @@ class Game (threading.Thread):
         self.gamePanel.gameFrame.bind("<KeyPress>", self.keyPressed)
         self.gamePanel.gameFrame.bind("<KeyRelease>", self.keyReleased)
         self.animationThread = self
-        self.animationThread.daemon = True ## kills thread with main thread
+        self.animationThread.daemon = True  ## kills thread with main thread
         self.animationThread.start()
         self.main()
 
     def run(self):
-        startTime = time.time()*1000.0
+        startTime = time.time() * 1000.0
         while threading.current_thread() == self.animationThread:
             # we use a double-buffered off-screen image called imgOff
             imgOff = Image.new(
@@ -77,7 +77,7 @@ class Game (threading.Thread):
             try:
                 startTime += Game.ANIMATION_DELAY
                 time.sleep(
-                    max(0.0, round(startTime - time.time() * 1000)/1000))
+                    max(0.0, round(startTime - time.time() * 1000) / 1000))
             except:
                 pass
 
@@ -93,7 +93,6 @@ class Game (threading.Thread):
                     CommandCenter.getInstance().opsQueue.enqueue(movFriend, GameOp.Action.REMOVE)
                     CommandCenter.getInstance().opsQueue.enqueue(movFoe, GameOp.Action.REMOVE)
 
-
         pntFalcon = CommandCenter.getInstance().falcon.center
         radFalcon = CommandCenter.getInstance().falcon.getRadius()
         for movFloater in CommandCenter.getInstance().movFloaters:
@@ -101,11 +100,6 @@ class Game (threading.Thread):
             radFloater = movFloater.getRadius()
             if (pntFalcon.distance(pntFloaterCenter) < (radFalcon + radFloater)):
                 CommandCenter.getInstance().opsQueue.enqueue(movFloater, GameOp.Action.REMOVE)
-
-
-
-
-
 
     def processGameOpsQueue(self):
         # deferred mutation: these operations are done AFTER we have completed our collision detection to avoid
@@ -129,8 +123,6 @@ class Game (threading.Thread):
                 mov.add(list)
             else:
                 mov.remove(list)
-                
-
 
     def main(self):
         self.gamePanel.gameFrame.mainloop()
@@ -147,8 +139,6 @@ class Game (threading.Thread):
 
             CommandCenter.getInstance().falcon.showLevel = INITIAL_SPAWN_TIME
 
-
-
     def isLevelClear(self):
         asteroidFree = True
         for movFoe in CommandCenter.getInstance().movFoes:
@@ -156,7 +146,6 @@ class Game (threading.Thread):
                 asteroidFree = False
                 break
         return asteroidFree
-
 
     def isBrickFree(self):
         brickFree = True
@@ -171,7 +160,6 @@ class Game (threading.Thread):
             CommandCenter.getInstance().opsQueue.enqueue(Asteroid(0), GameOp.Action.ADD)
             num -= 1
 
-
     def checkFloaters(self):
         self.spawnShieldFloater()
         self.spawnNewWallFloater()
@@ -180,6 +168,7 @@ class Game (threading.Thread):
     def spawnNewWallFloater(self):
         if CommandCenter.getInstance().frame % SPAWN_NEW_WALL_FLOATER == 0 and self.isBrickFree():
             CommandCenter.getInstance().opsQueue.enqueue(NewWallFloater(), GameOp.Action.ADD)
+
     def spawnNukeFloater(self):
         if CommandCenter.getInstance().frame % SPAWN_NUKE_FLOATER == 0:
             CommandCenter.getInstance().opsQueue.enqueue(NukeFloater(), GameOp.Action.ADD)
@@ -188,14 +177,13 @@ class Game (threading.Thread):
         if CommandCenter.getInstance().frame % SPAWN_SHIELD_FLOATER == 0:
             CommandCenter.getInstance().opsQueue.enqueue(ShieldFloater(), GameOp.Action.ADD)
 
-
-    def stopLoopingSounds(self,*sounds):
-        [sound.stop() for sound in sounds if hasattr(sound, "stop") ]
+    def stopLoopingSounds(self, *sounds):
+        [sound.stop() for sound in sounds if hasattr(sound, "stop")]
 
     def keyPressed(self, event):
         falcon = CommandCenter.getInstance().falcon
         keyCode = event.keysym
-        #print(keyCode)
+        # print(keyCode)
         if keyCode == Game.START and CommandCenter.getInstance().isGameOver():
             CommandCenter.getInstance().initGame()
             return
@@ -230,6 +218,6 @@ class Game (threading.Thread):
             else:
                 Sound.playLoopSound("music-background.wav")
 
+
 if __name__ == "__main__":
     game = Game()
-

@@ -1,12 +1,12 @@
-
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.Color import Color
+
+
 class Floater(Sprite):
     def __init__(self):
         super().__init__()
-
 
         self.team = Movable.Team.FLOATER
         self.color = Color.WHITE
@@ -15,8 +15,6 @@ class Floater(Sprite):
         self.deltaX = self.somePosNegValue(10)
         self.deltaY = self.somePosNegValue(10)
         self.radius = 50
-
-
 
         # define the points on a cartesian grid
         points = [
@@ -34,5 +32,3 @@ class Floater(Sprite):
 
     def draw(self, imgOff):
         self.renderVector(imgOff)
-
-

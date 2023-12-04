@@ -6,17 +6,16 @@ from pythonic.mvc.model.prime.Constants import DIM
 from pythonic.mvc.model.Movable import Movable
 from PIL import ImageDraw
 
+
 class Star(Movable):
 
     def __init__(self):
         self.center = Point(random.randint(0, DIM.width), random.randint(0, DIM.height))
         bright = random.randint(0, 225)
-        self.color = Color.from_RGB(bright, bright, bright) # some gray value. stars are muted from 0-225 / 255
-
+        self.color = Color.from_RGB(bright, bright, bright)  # some gray value. stars are muted from 0-225 / 255
 
     def move(self):
         pass
-
 
     def draw(self, imgOff):
         # get the graphics context of the off-screen-image and draw to it
@@ -24,19 +23,14 @@ class Star(Movable):
         g.ellipse((self.center.x, self.center.y,
                    self.center.x + self.getRadius(), self.center.y + self.getRadius()), outline=self.color)
 
-
     def getRadius(self) -> int:
         return 1
-
 
     def getTeam(self) -> Movable.Team:
         return Movable.Team.DEBRIS
 
-
     def getCenter(self) -> Point:
         return self.center
-
-
 
     def add(self, list):
         list.add(self)

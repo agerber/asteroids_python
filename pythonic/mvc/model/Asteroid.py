@@ -14,8 +14,6 @@ from pythonic.mvc.model.prime.PolarPoint import PolarPoint
 from functional import seq
 
 
-
-
 class Asteroid(Sprite):
 
     def __init__(self, value):
@@ -32,7 +30,6 @@ class Asteroid(Sprite):
 
             self.team = Movable.Team.FOE
             self.color = Color.WHITE
-
 
             self.spin = self.somePosNegValue(10)
             self.deltaX = self.somePosNegValue(10)
@@ -51,21 +48,20 @@ class Asteroid(Sprite):
         value = 0
         if self.radius == self.LARGE_RADIUS:
             value = 0
-        elif self.radius == self.LARGE_RADIUS/2:
+        elif self.radius == self.LARGE_RADIUS / 2:
             value = 1
-        elif self.radius == self.LARGE_RADIUS/4:
+        elif self.radius == self.LARGE_RADIUS / 4:
             value = 2
         return value
+
     def draw(self, imgOff):
         self.renderVector(imgOff)
-
 
     def remove(self, list):
         super().remove(list)
         self.spawnSmallerAsteroidOrDebris(self)
         CommandCenter.getInstance().score += + 10
-        Sound.playSound( "kapow.wav")
-
+        Sound.playSound("kapow.wav")
 
     def spawnSmallerAsteroidOrDebris(self, originalAsteroid):
         size = originalAsteroid.getSize()
@@ -80,10 +76,9 @@ class Asteroid(Sprite):
                     .enqueue(Asteroid(originalAsteroid), GameOp.Action.ADD)
                 size -= 1
 
-
     def __str__(self):
-            return "Asteroid(" + str(self.value) + ")"
-    
+        return "Asteroid(" + str(self.value) + ")"
+
     def generateVertices(self):
         # 6.283 is the max radians
         MAX_RADIANS_X1000 = 6283
@@ -94,9 +89,8 @@ class Asteroid(Sprite):
 
         def polarPointSupplier():
             r = (800 + random.randint(0, 199)) / 1000.0  # number between 0.8 and 0.999
-            theta = random.randint(0, MAX_RADIANS_X1000-1) / 1000.0  # number between 0 and 6.282
+            theta = random.randint(0, MAX_RADIANS_X1000 - 1) / 1000.0  # number between 0 and 6.282
             return PolarPoint(r, theta)
-        
 
         def polarToCartesian(pp: PolarPoint):
             return Point(
@@ -107,7 +101,7 @@ class Asteroid(Sprite):
         # random number of vertices
         VERTICES = random.randint(25, 31)
 
-        return seq(polarPointSupplier() for _ in range(VERTICES))\
-                .sorted(key=lambda pp: pp.theta)\
-                .map(polarToCartesian)\
-                .list()
+        return seq(polarPointSupplier() for _ in range(VERTICES)) \
+            .sorted(key=lambda pp: pp.theta) \
+            .map(polarToCartesian) \
+            .list()
