@@ -65,11 +65,9 @@ class GamePanel:
         self.pntShipsRemaining.append(Point(0, 9))
 
         self.gameFrame.geometry(
-            str(dim.width)+'x'+str(dim.height))  # instead of setsize
+            str(dim.width) + 'x' + str(dim.height))  # instead of setsize
         self.gameFrame.title("Game Base")
         self.gameFrame.resizable = False
-
-
 
     def drawFalconStatus(self, imgOff):
         g = ImageDraw.Draw(imgOff)
@@ -99,11 +97,10 @@ class GamePanel:
             self.displayTextOnScreen(imgOff, *statusArray)
 
         # draw PYTHON VERSION and the frame number to bottom left screen
-        g.text((self.fontWidth + 10, DIM.height - (self.fontHeight + 22)), f"PYTHON :{CommandCenter.getInstance().frame}",
+        g.text((self.fontWidth + 10, DIM.height - (self.fontHeight + 22)),
+               f"PYTHON :{CommandCenter.getInstance().frame}",
                font=self.fontNormal,
                fill=Color.WHITE)  # white color
-
-
 
     def update(self, imgOff):
 
@@ -111,13 +108,13 @@ class GamePanel:
 
         if CommandCenter.getInstance().isGameOver():
             self.displayTextOnScreen(imgOff,
-                                       "GAME OVER",
-                                       "use the arrow keys to turn and thrust",
-                                       "use the space bar to fire",
-                                       "'S' to Start",
-                                       "'P' to Pause",
-                                       "'Q' to Quit",
-                                       "'M' to toggle music")
+                                     "GAME OVER",
+                                     "use the arrow keys to turn and thrust",
+                                     "use the space bar to fire",
+                                     "'S' to Start",
+                                     "'P' to Pause",
+                                     "'Q' to Quit",
+                                     "'M' to toggle music")
 
         elif CommandCenter.getInstance().paused:
             self.displayTextOnScreen(imgOff, "Game Paused")
@@ -132,15 +129,12 @@ class GamePanel:
             self.drawFalconStatus(imgOff)
             self.drawNumberShipsRemaining(imgOff)
 
-
-
         # in one fell-swoop, we copy the off-screen-image to a new on-screen-image and show it for ~40ms. This is the
-        #double-buffering. If you attempt to draw directly on the gameFrame, you will see flickering.
+        # double-buffering. If you attempt to draw directly on the gameFrame, you will see flickering.
         imgOnScreen = ImageTk.PhotoImage(imgOff)
         self.gameFrame.contentFrame.configure(image=imgOnScreen)
         self.gameFrame.contentFrame.image = imgOnScreen
         self.gameFrame.contentFrame.pack()
-
 
     def drawNumberShipsRemaining(self, imgOff):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
@@ -151,7 +145,7 @@ class GamePanel:
 
     def drawOneShip(self, imgOff, offSet):
 
-        g = ImageDraw.Draw(imgOff) # get graphics context from the off-screen-image
+        g = ImageDraw.Draw(imgOff)  # get graphics context from the off-screen-image
 
         # rotate the ship 90 degrees
         DEGREES_90 = -90
@@ -163,23 +157,24 @@ class GamePanel:
         polars = Utils.cartesianToPolar(self.pntShipsRemaining)
 
         # 2: rotate raw polars given the orientation of the sprite.
-        def rotatePolarByOrientation(pp: PolarPoint):
-            return PolarPoint(
-                pp.r,
-                pp.theta + math.radians(DEGREES_90)  # rotated Theta
-            )
+        rotatePolarByOrientation = lambda pp: PolarPoint(
+            pp.r,
+            pp.theta + math.radians(DEGREES_90)
+        )
 
         # 3: convert the rotated polars back to cartesians
-        def polarToCartesian(pp: PolarPoint):
-            return Point(int(pp.r * RADIUS * math.sin(pp.theta)),
-                         int(pp.r * RADIUS * math.cos(pp.theta)))
+        polarToCartesian = lambda pp: Point(
+            int(pp.r * RADIUS * math.sin(pp.theta)),
+            int(pp.r * RADIUS * math.cos(pp.theta))
+        )
 
         # 4: adjust the cartesians for the location (center-point) of the sprite.
         # the reason we subtract the y-value has to do with how python plots the vertical axis for
         # graphics (from top to bottom)
-        def adjustForLocation(pnt: Point):
-            return Point(X_POS + pnt.x,
-                         Y_POS - pnt.y)
+        adjustForLocation = lambda pnt: Point(
+            X_POS + pnt.x,
+            Y_POS - pnt.y
+        )
 
         # 5: draw the polygon using the List of raw polars from above, applying mapping transforms as required
 
@@ -201,8 +196,7 @@ class GamePanel:
             )),
             outline=Color.ORANGE)
 
-
-    def drawOneMeter(self, imgOff, color:Tuple,  offSet:int, percent:int):
+    def drawOneMeter(self, imgOff, color: Tuple, offSet: int, percent: int):
         # get the graphics (g) context of the off-screen-image
         g = ImageDraw.Draw(imgOff)
 
@@ -216,9 +210,6 @@ class GamePanel:
         g.rectangle((upperLeftPoint, bottomRightFillPoint), fill=color)
         g.rectangle((upperLeftPoint, bottomRightStrokePoint), outline=Color.GREY)
 
-
-
-
     def drawMeters(self, imgOff):
 
         sheildValue = CommandCenter.getInstance().falcon.shield // 2
@@ -226,21 +217,16 @@ class GamePanel:
         self.drawOneMeter(imgOff, color=Color.CYAN, offSet=1, percent=sheildValue)
         self.drawOneMeter(imgOff, color=Color.YELLOW, offSet=2, percent=nukeValue)
 
-
     def moveDrawMovables(self, imgOff, *teams):
         for team in teams:
             for mov in team:
-                    mov.move()
-                    mov.draw(imgOff)
+                mov.move()
+                mov.draw(imgOff)
 
-    #var-args as lines
+    # var-args as lines
     def displayTextOnScreen(self, imgOff, *lines):
         yVal = 0
         for line in lines:
             ImageDraw.Draw(imgOff).text((DIM.width // 2 - len(line) * 2.5 - 10, 200 + yVal), line, font=self.fontNormal,
                                         fill=Color.WHITE, align="center")
             yVal += 40
-
-
-
-

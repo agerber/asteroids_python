@@ -143,23 +143,27 @@ class Sprite(Movable):
         polars = Utils.cartesianToPolar(self.cartesians)
 
         # 2: rotate raw polars given the orientation of the sprite.
-        def rotatePolarByOrientation(pp: PolarPoint):
-            return PolarPoint(pp.r, pp.theta + math.radians(self.orientation))  # rotated Theta
+
+        rotatePolarByOrientation = lambda pp: PolarPoint(
+            pp.r,
+            pp.theta + math.radians(self.orientation)  # rotated Theta
+        )
 
         # 3: convert the rotated polars back to cartesians
-        def polarToCartesian(pp: PolarPoint):
-            return Point(int(pp.r * self.radius * math.sin(pp.theta)),
-                         int(pp.r * self.radius * math.cos(pp.theta)))
+        polarToCartesian = lambda pp: Point(
+            int(pp.r * self.radius * math.sin(pp.theta)),
+            int(pp.r * self.radius * math.cos(pp.theta))
+        )
 
         # 4: adjust the cartesians for the location (center-point) of the sprite.
         # the reason we subtract the y-value has to do with how Python plots the vertical axis for
         # graphics (from top to bottom)
-        def adjustForLocation(pnt: Point):
-            return Point(self.center.x + pnt.x,
-                         self.center.y - pnt.y)
+        adjustForLocation = lambda pnt: Point(
+            self.center.x + pnt.x,
+            self.center.y - pnt.y
+        )
 
         # 5: draw the polygon using the List of raw polars from above, applying mapping transforms as required
-
         g.polygon(
             list(zip(
                 seq(polars)
