@@ -87,19 +87,37 @@ class Asteroid(Sprite):
         # radius in the absence of a predefined radius.
         PRECISION = 100.0
 
-        # this inner-function can also be expressed as a lambda
+
+        # this is the lambda version of below
+        # polarPointSupplier = lambda : PolarPoint(
+        #     (800 + random.randint(0, 199)) / 1000.0,
+        #     random.randint(0, MAX_RADIANS_X1000 - 1) / 1000.0
+        # )
+
         def polarPointSupplier():
             r = (800 + random.randint(0, 199)) / 1000.0  # number between 0.8 and 0.999
             theta = random.randint(0, MAX_RADIANS_X1000 - 1) / 1000.0  # number between 0 and 6.282
             return PolarPoint(r, theta)
 
-        # given PolarPoint pp, return theta
-        sortByTheta = lambda pp: pp.theta
 
-        polarToCartesian = lambda pp: Point(
-            int(pp.r * PRECISION * math.sin(pp.theta)),
-            int(pp.r * PRECISION * math.cos(pp.theta))
-        )
+
+        # this is the lambda version of below
+        #sortByTheta = lambda pp: pp.theta
+
+        # given PolarPoint pp, return theta
+        def sortByTheta(pp: PolarPoint):
+            return pp.theta
+
+        # this is the lambda version of below
+        # polarToCartesian = lambda pp: Point(
+        #     int(pp.r * PRECISION * math.sin(pp.theta)),
+        #     int(pp.r * PRECISION * math.cos(pp.theta))
+        # )
+        def polarToCartesian(pp: PolarPoint):
+            return Point(
+                int(pp.r * PRECISION * math.sin(pp.theta)),
+                int(pp.r * PRECISION * math.cos(pp.theta))
+            )
 
         # random number of vertices
         VERTICES = random.randint(25, 31)
