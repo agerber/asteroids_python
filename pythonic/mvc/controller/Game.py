@@ -83,6 +83,7 @@ class Game(threading.Thread):
 
     def checkCollisions(self):
 
+        # this has an order of growth of O(FRIENDS * FOES)
         for movFriend in CommandCenter.getInstance().movFriends:
             for movFoe in CommandCenter.getInstance().movFoes:
                 pntFriendCenter = movFriend.getCenter()
@@ -95,6 +96,7 @@ class Game(threading.Thread):
 
         pntFalcon = CommandCenter.getInstance().falcon.center
         radFalcon = CommandCenter.getInstance().falcon.getRadius()
+        # this has an order of growth of O(FLOATERS)
         for movFloater in CommandCenter.getInstance().movFloaters:
             pntFloaterCenter = movFloater.getCenter()
             radFloater = movFloater.getRadius()
@@ -119,6 +121,7 @@ class Game(threading.Thread):
             elif mov.getTeam() == Movable.Team.DEBRIS:
                 list = CommandCenter.getInstance().movDebris
 
+            # the following block executes the callbacks
             if action == GameOp.Action.ADD:
                 mov.add(list)
             else:

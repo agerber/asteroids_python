@@ -12,6 +12,7 @@ class Movable(ABC):
         FLOATER = 2
         DEBRIS = 3
 
+    # for movables to move and draw themselves. See GamePanel class.
     @abstractmethod
     def move(self):
         pass
@@ -20,6 +21,8 @@ class Movable(ABC):
     def draw(self, imgOff):
         pass
 
+
+    # for collision detection
     @abstractmethod
     def getRadius(self) -> int:
         pass
@@ -32,6 +35,8 @@ class Movable(ABC):
     def getCenter(self) -> Point:
         pass
 
+    # lifecycle callbacks when a movable object is added or removed from the game-space. This is your opportunity
+    # to add sounds or other sound effects.
     @abstractmethod
     def add(self, list):
         pass
