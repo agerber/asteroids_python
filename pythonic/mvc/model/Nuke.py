@@ -54,12 +54,12 @@ class Nuke(Sprite):
         else:
             self.radius = self.radius - 11
 
-    def add(self, list):
+    def start(self, list):
         if (CommandCenter.getInstance().falcon.nukeMeter > 0):
             list.add(self)
             CommandCenter.getInstance().falcon.nukeMeter = 0
             Sound.playSound("nuke.wav")
 
-    def remove(self, list):
+    def finish(self, list):
         if (self.expiry == 0):
             list.remove(self)

@@ -123,7 +123,7 @@ class Falcon(Sprite):
                   , outline=Color.CYAN)
 
 
-    def remove(self, list):
+    def finish(self, list):
         # The falcon is never actually removed from the game-space; instead we decrement numFalcons
         # only execute the decrementFalconNumAndSpawn() method if shield is down.
         if (self.shield == 0):

@@ -32,8 +32,8 @@ class Star(Movable):
     def getCenter(self) -> Point:
         return self.center
 
-    def add(self, list):
+    def start(self, list):
         list.add(self)
 
-    def remove(self, list):
+    def finish(self, list):
         list.remove(self)
