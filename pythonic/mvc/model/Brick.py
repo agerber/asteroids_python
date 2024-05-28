@@ -38,7 +38,7 @@ class Brick(Sprite):
     def move(self):
         pass
 
-    def finish(self, list):
-        super().finish(list)
+    def removeFromGame(self, list):
+        super().removeFromGame(list)
         CommandCenter.getInstance().score += 1000
         Sound.playSound("rock.wav")

@@ -12,10 +12,10 @@ class ShieldFloater(Floater):
         self.color = Color.CYAN
         self.expiry = 260
 
-    def finish(self, list):
+    def removeFromGame(self, list):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
 
-        super().finish(list)
+        super().removeFromGame(list)
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):
             Sound.playSound("shieldup.wav")

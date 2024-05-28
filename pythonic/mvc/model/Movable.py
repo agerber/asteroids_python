@@ -38,12 +38,12 @@ class Movable(ABC):
     # lifecycle callbacks when a movable object is added or removed from the game-space. This is your opportunity
     # to add sounds or other side effects.
     @abstractmethod
-    def start(self, list):
+    def addToGame(self, list):
         pass
 
 
     @abstractmethod
-    def finish(self, list):
+    def removeFromGame(self, list):
         pass
 
 

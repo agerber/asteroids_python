@@ -53,6 +53,6 @@ class Bullet(Sprite):
     def draw(self, imgOff):
         self.renderVector(imgOff)
 
-    def start(self, list):
-        super().start(list)
+    def addToGame(self, list):
+        super().addToGame(list)
         Sound.playSound("thump.wav")

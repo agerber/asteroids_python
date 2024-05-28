@@ -123,9 +123,9 @@ class Game(threading.Thread):
 
             # the following block executes the callbacks
             if action == GameOp.Action.ADD:
-                mov.start(list)
+                mov.addToGame(list)
             else:
-                mov.finish(list)
+                mov.removeFromGame(list)
 
     def main(self):
         self.gamePanel.gameFrame.mainloop()

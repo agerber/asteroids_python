@@ -57,8 +57,8 @@ class Asteroid(Sprite):
     def draw(self, imgOff):
         self.renderVector(imgOff)
 
-    def finish(self, list):
-        super().finish(list)
+    def removeFromGame(self, list):
+        super().removeFromGame(list)
         self.spawnSmallerAsteroidOrDebris(self)
         CommandCenter.getInstance().score += 10
         Sound.playSound("kapow.wav")
