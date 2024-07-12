@@ -15,7 +15,7 @@ class Star(Movable):
         self.color = Color.from_RGB(bright, bright, bright)  # some gray value. stars are muted from 0-225 / 255
 
     def move(self):
-        #import CommandCenter here to avoid circular import
+       """
         from pythonic.mvc.controller.CommandCenter import CommandCenter
             # right-bounds reached
         if self.center.x > DIM.width:
@@ -32,9 +32,10 @@ class Star(Movable):
             # in-bounds
         else:
             # move star in opposite direction of falcon
-            new_x_pos = self.center.x - CommandCenter.getInstance().falcon.deltaX / 6
-            new_y_pos = self.center.y - CommandCenter.getInstance().falcon.deltaY / 6
+            new_x_pos = self.center.x - CommandCenter.getInstance().falcon.deltaX
+            new_y_pos = self.center.y - CommandCenter.getInstance().falcon.deltaY
             self.center = Point(int(round(new_x_pos)), int(round(new_y_pos)))
+        """
 
     def draw(self, imgOff):
         # get the graphics context of the off-screen-image and draw to it
