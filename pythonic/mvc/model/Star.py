@@ -32,9 +32,9 @@ class Star(Movable):
             # in-bounds
         else:
             # move star in opposite direction of falcon
-            new_x_pos = self.center.x - CommandCenter.getInstance().falcon.deltaX / 3
-            new_y_pos = self.center.y - CommandCenter.getInstance().falcon.deltaY / 3
-            self.center = Point(int(new_x_pos), int(new_y_pos))
+            new_x_pos = self.center.x - CommandCenter.getInstance().falcon.deltaX / 6
+            new_y_pos = self.center.y - CommandCenter.getInstance().falcon.deltaY / 6
+            self.center = Point(int(round(new_x_pos)), int(round(new_y_pos)))
 
     def draw(self, imgOff):
         # get the graphics context of the off-screen-image and draw to it
