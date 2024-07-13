@@ -2,15 +2,11 @@ import os
 import time
 import threading
 from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.model.NewWallFloater import NewWallFloater
-from pythonic.mvc.model.Nuke import Nuke
-from pythonic.mvc.model.NukeFloater import NukeFloater
-from pythonic.mvc.model.ShieldFloater import ShieldFloater
-from pythonic.mvc.view.GamePanel import GamePanel
+
+
 from pythonic.mvc.controller.CommandCenter import CommandCenter
-from pythonic.mvc.model import Falcon, Brick
-from pythonic.mvc.model.Bullet import Bullet
-from pythonic.mvc.model.Brick import Brick
+
+
 from pythonic.mvc.model.Asteroid import Asteroid
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.prime.Color import Color
@@ -19,6 +15,8 @@ from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_
 from PIL import Image
 from Sound import Sound
 import sys
+
+from pythonic.mvc.view.GamePanel import GamePanel
 
 
 # todo: refactor the code so that its in python style, and clean-up
@@ -29,6 +27,7 @@ class Game(threading.Thread):
 
     ANIMATION_DELAY = 40  # milliseconds between frames
     FRAMES_PER_SECOND = 1000 // ANIMATION_DELAY
+    BIG_UNIVERSE_SCALAR = 5
 
     # key-codes
     PAUSE = 'p'  # p key
@@ -39,7 +38,8 @@ class Game(threading.Thread):
     START = 's'  # s key
     FIRE = 'space'  # space key
     MUTE = 'm'  # m-key mute
-    NUKE = 'n'  # m-key mute
+    NUKE = 'v'  # m-key mute
+    UNIVERSE = 'c'  # m-key mute
 
     # for possible future use
     # HYPER = 68 # D key
@@ -150,13 +150,7 @@ class Game(threading.Thread):
                 break
         return asteroidFree
 
-    def isBrickFree(self):
-        brickFree = True
-        for movFoe in CommandCenter.getInstance().movFoes:
-            if isinstance(movFoe, Brick):
-                brickFree = False
-                break
-        return brickFree
+
 
     def spawnBigAsteroids(self, num):
         while num > 0:
@@ -165,12 +159,8 @@ class Game(threading.Thread):
 
     def checkFloaters(self):
         self.spawnShieldFloater()
-        self.spawnNewWallFloater()
         self.spawnNukeFloater()
 
-    def spawnNewWallFloater(self):
-        if CommandCenter.getInstance().frame % SPAWN_NEW_WALL_FLOATER == 0 and self.isBrickFree():
-            CommandCenter.getInstance().opsQueue.enqueue(NewWallFloater(), GameOp.Action.ADD)
 
     def spawnNukeFloater(self):
         if CommandCenter.getInstance().frame % SPAWN_NUKE_FLOATER == 0:
@@ -214,6 +204,8 @@ class Game(threading.Thread):
         elif keyCode == Game.UP:
             falcon.thrusting = False
             Sound.stopLoopSound("whitenoise.wav")
+        elif keyCode == Game.UNIVERSE:
+            CommandCenter.getInstance().cycle_universe()
         elif keyCode == Game.MUTE:
             CommandCenter.getInstance().getInstance().muted = not CommandCenter.getInstance().muted
             if CommandCenter.getInstance().getInstance().muted:

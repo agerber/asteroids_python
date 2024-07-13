@@ -1,5 +1,6 @@
 import random
 
+from pythonic.mvc.controller.CommandCenter import Universe
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.Color import Color
 from pythonic.mvc.model.prime.Constants import DIM
@@ -15,8 +16,9 @@ class Star(Movable):
         self.color = Color.from_RGB(bright, bright, bright)  # some gray value. stars are muted from 0-225 / 255
 
     def move(self):
-       """
         from pythonic.mvc.controller.CommandCenter import CommandCenter
+        if CommandCenter.getInstance().get_universe() == Universe.SMALL: return
+
             # right-bounds reached
         if self.center.x > DIM.width:
             self.center = Point(1, self.center.y)
@@ -35,7 +37,7 @@ class Star(Movable):
             new_x_pos = self.center.x - CommandCenter.getInstance().falcon.deltaX
             new_y_pos = self.center.y - CommandCenter.getInstance().falcon.deltaY
             self.center = Point(int(round(new_x_pos)), int(round(new_y_pos)))
-        """
+
 
     def draw(self, imgOff):
         # get the graphics context of the off-screen-image and draw to it

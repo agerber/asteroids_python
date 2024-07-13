@@ -1,17 +1,21 @@
 import os
 import random
 
+
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
-from pythonic.mvc.model.Star import Star
+from pythonic.mvc.model.MiniMap import MiniMap
+from pythonic.mvc.model.prime import Universe
+
 from pythonic.mvc.model.prime.LinkedList import LinkedList
-from concurrent.futures import ThreadPoolExecutor
 import sys
 
 
 class CommandCenter:
     __instance = None
+
+
 
     # the following code ensures that you can only call the constructor ONCE
     def __new__(cls):
@@ -22,6 +26,7 @@ class CommandCenter:
 
     def __init__(self):
 
+        self.universe = Universe.Universe.SMALL
         self.numFalcons = 0
         self.level = 0
         self.score = 0
@@ -31,6 +36,7 @@ class CommandCenter:
         self.snd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
         self.img = "/".join(os.getcwd().split("/")[:-2]) + "/resources/imgs/"
         self.falcon = Falcon()
+        self.miniMap = MiniMap()
 
         self.movDebris = LinkedList()
         self.movFriends = LinkedList()
@@ -55,7 +61,9 @@ class CommandCenter:
         self.numFalcons = 4
         self.falcon.decrementFalconNumAndSpawn()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
+        self.opsQueue.enqueue(self.miniMap, GameOp.Action.ADD)
         self.createStarField()
+
 
     def clearAll(self):
         self.movDebris.clear()
@@ -64,10 +72,26 @@ class CommandCenter:
         self.movFloaters.clear()
 
     def createStarField(self):
+        from pythonic.mvc.model.Star import Star
         count = 100
         while (count > 0):
             self.opsQueue.enqueue(Star(), GameOp.Action.ADD)
             count -= 1
+
+    def cycle_universe(self):
+        if self.universe == Universe.SMALL:
+            self.universe = Universe.SMALL_CENTERED
+        elif self.universe == Universe.SMALL_CENTERED:
+            self.universe = Universe.BIG
+        elif self.universe == Universe.BIG:
+            self.universe = Universe.SMALL
+
+    def get_uni_scalar(self):
+        from pythonic.mvc.controller import Game
+        if self.universe == Universe.BIG:
+            return Game.BIG_UNIVERSE_SCALAR
+        else:
+            return 1
 
     def incrementFrame(self):
         # use of ternary expression to simplify the logic to one line
