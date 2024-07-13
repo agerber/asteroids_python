@@ -9,6 +9,7 @@ from pythonic.mvc.controller.CommandCenter import CommandCenter
 
 from pythonic.mvc.model.Asteroid import Asteroid
 from pythonic.mvc.controller.GameOp import GameOp
+
 from pythonic.mvc.model.prime.Color import Color
 from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, SPAWN_NEW_WALL_FLOATER, \
     MAX_SHIELD, MAX_NUKE, INITIAL_SPAWN_TIME
@@ -163,10 +164,14 @@ class Game(threading.Thread):
 
 
     def spawnNukeFloater(self):
+        from pythonic.mvc.model.NukeFloater import NukeFloater
+        from pythonic.mvc.model.ShieldFloater import ShieldFloater
         if CommandCenter.getInstance().frame % SPAWN_NUKE_FLOATER == 0:
             CommandCenter.getInstance().opsQueue.enqueue(NukeFloater(), GameOp.Action.ADD)
 
     def spawnShieldFloater(self):
+        from pythonic.mvc.model.NukeFloater import NukeFloater
+        from pythonic.mvc.model.ShieldFloater import ShieldFloater
         if CommandCenter.getInstance().frame % SPAWN_SHIELD_FLOATER == 0:
             CommandCenter.getInstance().opsQueue.enqueue(ShieldFloater(), GameOp.Action.ADD)
 

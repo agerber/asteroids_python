@@ -5,7 +5,7 @@ import random
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
-from pythonic.mvc.model.MiniMap import MiniMap
+
 from pythonic.mvc.model.prime import Universe
 
 from pythonic.mvc.model.prime.LinkedList import LinkedList
@@ -25,7 +25,7 @@ class CommandCenter:
         raise Exception(" one instance of CommandCenter is already created ")
 
     def __init__(self):
-
+        from pythonic.mvc.model.MiniMap import MiniMap
         self.universe = Universe.Universe.SMALL
         self.numFalcons = 0
         self.level = 0

@@ -1,9 +1,9 @@
-
-
+from pythonic.mvc.controller import Game
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.prime.Color import Color
 from pythonic.mvc.model.prime.Point import Point
+from pythonic.mvc.controller.CommandCenter import CommandCenter
 
 
 class MiniMap(Sprite):
@@ -17,16 +17,18 @@ class MiniMap(Sprite):
         pass
 
     def draw(self, g):
-        from pythonic.mvc.controller.Game import Game
-        from pythonic.mvc.controller import CommandCenter
-        if CommandCenter.getInstance().getUniverse() == CommandCenter.Universe.SMALL:
+
+
+        from pythonic.mvc.model.prime.Universe import Universe
+
+        if CommandCenter.getInstance().universe == Universe.SMALL:
             return
 
         width = round(self.MINI_MAP_PERCENT * Game.DIM.width)
         height = round(self.MINI_MAP_PERCENT * Game.DIM.height)
 
         # if BIG - show entire universe.
-        if CommandCenter.getInstance().getUniverse() == CommandCenter.Universe.BIG:
+        if CommandCenter.getUniverse() == Universe.BIG:
             g.setColor(Color.BLACK)
             g.fillRect(0, 1, width, height)
 
@@ -41,11 +43,12 @@ class MiniMap(Sprite):
         g.drawRect(0, 1, miniViewPortWidth, miniViewPortHeight)
 
         # draw the non-debris movables
-        self.drawRadarBlips(g, Color.WHITE, CommandCenter.getInstance().getMovFoes())
-        self.drawRadarBlips(g, Color.CYAN, CommandCenter.getInstance().getMovFloaters())
-        self.drawRadarBlips(g, Color.ORANGE, CommandCenter.getInstance().getMovFriends())
+        self.drawRadarBlips(g, Color.WHITE, CommandCenter.getMovFoes())
+        self.drawRadarBlips(g, Color.CYAN, CommandCenter.getMovFloaters())
+        self.drawRadarBlips(g, Color.ORANGE, CommandCenter.getMovFriends())
 
     def drawRadarBlips(self, g, color, movables):
+        from pythonic.mvc.controller.Game import Game
         g.setColor(color)
         for mov in movables:
             scaledPoint = Point(
