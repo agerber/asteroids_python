@@ -51,10 +51,10 @@ class Falcon(Sprite):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
         self.rasterMap: Dict[ImageState, Image.Image] = {
             ImageState.FALCON_INVISIBLE: None,
-            ImageState.FALCON: ImageLoader.ImageLoader.getInstance().masterImageMap['falcon125'],
-            ImageState.FALCON_THR: ImageLoader.ImageLoader.getInstance().masterImageMap['falcon125_thr'],
-            ImageState.FALCON_PRO: ImageLoader.ImageLoader.getInstance().masterImageMap['falcon125_PRO'],
-            ImageState.FALCON_PRO_THR: ImageLoader.ImageLoader.getInstance().masterImageMap['falcon125_PRO_thr']
+            ImageState.FALCON: ImageLoader.ImageLoader.getInstance().IMAGES['falcon125'],
+            ImageState.FALCON_THR: ImageLoader.ImageLoader.getInstance().IMAGES['falcon125_thr'],
+            ImageState.FALCON_PRO: ImageLoader.ImageLoader.getInstance().IMAGES['falcon125_PRO'],
+            ImageState.FALCON_PRO_THR: ImageLoader.ImageLoader.getInstance().IMAGES['falcon125_PRO_thr']
         }
 
     # METHODS

@@ -7,7 +7,7 @@ from pythonic.mvc.model.Sprite import Sprite
 
 class ImageLoader:
     __instance = None
-    masterImageMap = {}
+    IMAGES = {}
 
     def __new__(cls):
         if cls.__instance is None:
@@ -24,7 +24,7 @@ class ImageLoader:
         except Exception:
             print(traceback.format_exc())
 
-        self.masterImageMap = localMap
+        self.IMAGES = localMap
 
     @staticmethod
     def getInstance():

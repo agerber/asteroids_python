@@ -30,7 +30,7 @@ class Brick(Sprite):
         # We use a dictionary that has a seek-time of O(1)
         # Using enums as keys is safer b/c we know the value exists when we reference the consts later in code.
         self.rasterMap: Dict[int, Image.Image] = {
-            Brick.BRICK_IMAGE: ImageLoader.ImageLoader.getInstance().masterImageMap['Brick_Block100']
+            Brick.BRICK_IMAGE: ImageLoader.ImageLoader.getInstance().IMAGES['Brick_Block100']
         }
 
     def draw(self, imgOff):
