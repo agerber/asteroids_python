@@ -93,7 +93,7 @@ class GamePanel:
             statusArray.append("WARNING - SLOW DOWN")
 
         # draw the statusArray strings to middle of screen. unpack the list to satisfy the var-args definition.
-        if len(statusArray) > 0:
+        if statusArray:
             self.displayTextOnScreen(imgOff, *statusArray)
 
         # draw PYTHON VERSION and the frame number to bottom left screen
