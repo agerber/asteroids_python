@@ -16,7 +16,7 @@ from pythonic.mvc.model.Asteroid import Asteroid
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.prime.Color import Color
 from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, SPAWN_NEW_WALL_FLOATER, \
-    MAX_SHIELD, MAX_NUKE, INITIAL_SPAWN_TIME
+    MAX_SHIELD, MAX_NUKE, INITIAL_SPAWN_TIME, FALCON_CENTERED
 from PIL import Image
 from Sound import Sound
 import sys
@@ -170,7 +170,7 @@ class Game(threading.Thread):
         self.spawnNukeFloater()
 
     def spawnNewWallFloater(self):
-        if CommandCenter.getInstance().frame % SPAWN_NEW_WALL_FLOATER == 0 and self.isBrickFree():
+        if not FALCON_CENTERED and CommandCenter.getInstance().frame % SPAWN_NEW_WALL_FLOATER == 0 and self.isBrickFree():
             CommandCenter.getInstance().opsQueue.enqueue(NewWallFloater(), GameOp.Action.ADD)
 
     def spawnNukeFloater(self):

@@ -31,8 +31,8 @@ class NewWallFloater(Floater):
         BRICK_SIZE = int(DIM.width / 30)
         ROWS = 2
         COLS = 20
-        X_OFFSET = int(BRICK_SIZE * 5)
-        Y_OFFSET = 50
+        X_OFFSET = int(BRICK_SIZE * 6)
+        Y_OFFSET = 48
 
         for nCol in range(0, COLS):
             for nRow in range(0, ROWS):
