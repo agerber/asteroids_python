@@ -45,7 +45,7 @@ class ImageLoader:
             for file in files:
                 split_text = os.path.splitext(file)
                 if split_text[1] == '.png' and 'do_not_load' not in split_text[0]:
-                    print(os.path.join(currentPath,file))
+                    # print(os.path.join(currentPath,file))
                     pngImages[split_text[0]] = Sprite.loadGraphic(os.path.join(currentPath,file))
 
         return pngImages
