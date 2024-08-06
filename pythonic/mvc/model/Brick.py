@@ -12,6 +12,7 @@ from PIL import Image, ImageDraw
 
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Sprite import Sprite
+from pythonic.mvc.controller import ImageLoader
 from pythonic.mvc.model.prime.Color import Color
 from enum import Enum
 import math
@@ -29,7 +30,7 @@ class Brick(Sprite):
         # We use a dictionary that has a seek-time of O(1)
         # Using enums as keys is safer b/c we know the value exists when we reference the consts later in code.
         self.rasterMap: Dict[int, Image.Image] = {
-            Brick.BRICK_IMAGE: self.loadGraphic(CommandCenter.getInstance().img + "brick/Brick_Block100.png")
+            Brick.BRICK_IMAGE: ImageLoader.ImageLoader.getInstance().masterImageMap['Brick_Block100']
         }
 
     def draw(self, imgOff):

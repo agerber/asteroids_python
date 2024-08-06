@@ -6,6 +6,7 @@ from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.LinkedList import LinkedList
+
 from concurrent.futures import ThreadPoolExecutor
 import sys
 

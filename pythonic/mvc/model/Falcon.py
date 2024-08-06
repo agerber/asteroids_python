@@ -12,7 +12,7 @@ import os
 
 from pythonic.mvc.model.prime.Constants import INITIAL_SPAWN_TIME, DIM
 from pythonic.mvc.model.prime.Point import Point
-
+from pythonic.mvc.controller import ImageLoader
 
 class TurnState(Enum):
     IDLE = 0
@@ -51,10 +51,10 @@ class Falcon(Sprite):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
         self.rasterMap: Dict[ImageState, Image.Image] = {
             ImageState.FALCON_INVISIBLE: None,
-            ImageState.FALCON: self.loadGraphic(CommandCenter.getInstance().img + "fal/falcon125.png"),
-            ImageState.FALCON_THR: self.loadGraphic(CommandCenter.getInstance().img + "fal/falcon125_thr.png"),
-            ImageState.FALCON_PRO: self.loadGraphic(CommandCenter.getInstance().img+ "fal/falcon125_PRO.png"),
-            ImageState.FALCON_PRO_THR: self.loadGraphic(CommandCenter.getInstance().img + "fal/falcon125_PRO_thr.png")
+            ImageState.FALCON: ImageLoader.ImageLoader.getInstance().masterImageMap['falcon125'],
+            ImageState.FALCON_THR: ImageLoader.ImageLoader.getInstance().masterImageMap['falcon125_thr'],
+            ImageState.FALCON_PRO: ImageLoader.ImageLoader.getInstance().masterImageMap['falcon125_PRO'],
+            ImageState.FALCON_PRO_THR: ImageLoader.ImageLoader.getInstance().masterImageMap['falcon125_PRO_thr']
         }
 
     # METHODS

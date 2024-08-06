@@ -62,7 +62,8 @@ class Sprite(Movable):
     def draw(self, g):
         pass
 
-    def loadGraphic(self, image_path: str) -> Image.Image:
+    @staticmethod
+    def loadGraphic(image_path: str) -> Image.Image:
         try:
             buffered_image = Image.open(image_path)
         except IOError as e:

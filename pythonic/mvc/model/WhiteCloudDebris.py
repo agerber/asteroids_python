@@ -1,6 +1,7 @@
 from pythonic.mvc.controller.CommandCenter import CommandCenter
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
+from pythonic.mvc.controller.ImageLoader import ImageLoader
 import os
 
 
@@ -12,15 +13,15 @@ class WhiteCloudDebris(Sprite):
         super().__init__()
         self.team = Movable.Team.DEBRIS
         self.index = 0
-        self.rasterMap[0] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-1-column-1.png")
-        self.rasterMap[1] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-1-column-2.png")
-        self.rasterMap[2] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-1-column-3.png")
-        self.rasterMap[3] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-2-column-1.png")
-        self.rasterMap[4] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-2-column-2.png")
-        self.rasterMap[5] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-2-column-3.png")
-        self.rasterMap[6] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-3-column-1.png")
-        self.rasterMap[7] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-3-column-2.png")
-        self.rasterMap[8] = self.loadGraphic(CommandCenter.getInstance().img + "exp/row-3-column-3.png")
+        self.rasterMap[0] = ImageLoader.getInstance().masterImageMap['row-1-column-1']
+        self.rasterMap[1] = ImageLoader.getInstance().masterImageMap['row-1-column-2']
+        self.rasterMap[2] = ImageLoader.getInstance().masterImageMap['row-1-column-3']
+        self.rasterMap[3] = ImageLoader.getInstance().masterImageMap['row-2-column-1']
+        self.rasterMap[4] = ImageLoader.getInstance().masterImageMap['row-2-column-2']
+        self.rasterMap[5] = ImageLoader.getInstance().masterImageMap['row-2-column-3']
+        self.rasterMap[6] = ImageLoader.getInstance().masterImageMap['row-3-column-1']
+        self.rasterMap[7] = ImageLoader.getInstance().masterImageMap['row-3-column-2']
+        self.rasterMap[8] = ImageLoader.getInstance().masterImageMap['row-3-column-3']
 
         # expire it out after it has done its animation. Multiply by SLOW_MO to slow down the animation
         self.expiry = len(self.rasterMap) * WhiteCloudDebris.SLOW_MO
