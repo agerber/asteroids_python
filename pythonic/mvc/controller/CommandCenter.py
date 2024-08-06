@@ -39,7 +39,7 @@ class CommandCenter:
         self.movFriends = LinkedList()
         self.movFoes = LinkedList()
         self.movFloaters = LinkedList()
-        self.falconCentered = False
+        self.falconCentered = True
         self.opsQueue = GameOpsQueue()
         self.diffX = 0
         self.diffY = 0
