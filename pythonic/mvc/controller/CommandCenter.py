@@ -28,8 +28,8 @@ class CommandCenter:
         self.paused = False
         self.muted = True
         self.frame = 0
-        self.snd = "/".join(os.getcwd().split("/")[:-2]) + "/resources/sounds/"
-        self.img = "/".join(os.getcwd().split("/")[:-2]) + "/resources/imgs/"
+        self.snd = "\\".join(os.getcwd().split("\\")[:-2]) + "\\resources\\sounds\\"
+        self.img = "\\".join(os.getcwd().split("\\")[:-2]) + "\\resources\\imgs\\"
         self.falcon = Falcon()
 
         self.movDebris = LinkedList()

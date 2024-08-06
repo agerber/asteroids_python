@@ -62,10 +62,10 @@ class Asteroid(Sprite):
         self.spawnSmallerAsteroidOrDebris(self)
         CommandCenter.getInstance().score += 10
 
-        if self.getSize() < 2:
-            Sound.playSound("kapow.wav")
-        else:
+        if self.getSize() > 1:
             Sound.playSound("pillow.wav")
+        else:
+            Sound.playSound("kapow.wav")
 
     def spawnSmallerAsteroidOrDebris(self, originalAsteroid):
         size = originalAsteroid.getSize()
