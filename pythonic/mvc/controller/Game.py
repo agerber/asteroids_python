@@ -16,7 +16,8 @@ from pythonic.mvc.model.Asteroid import Asteroid
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.prime.Color import Color
 from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, SPAWN_NEW_WALL_FLOATER, \
-    MAX_SHIELD, MAX_NUKE, INITIAL_SPAWN_TIME, FALCON_CENTERED
+    MAX_SHIELD, MAX_NUKE, INITIAL_SPAWN_TIME
+from pythonic.mvc.model.prime.Point import Point
 from PIL import Image
 from Sound import Sound
 import sys
@@ -41,6 +42,7 @@ class Game(threading.Thread):
     FIRE = 'space'  # space key
     MUTE = 'm'  # m-key mute
     NUKE = 'n'  # m-key mute
+    CENTERED = 'c'
 
     # for possible future use
     # HYPER = 68 # D key
@@ -151,14 +153,6 @@ class Game(threading.Thread):
                 break
         return asteroidFree
 
-    def isBrickFree(self):
-        brickFree = True
-        for movFoe in CommandCenter.getInstance().movFoes:
-            if isinstance(movFoe, Brick):
-                brickFree = False
-                break
-        return brickFree
-
     def spawnBigAsteroids(self, num):
         while num > 0:
             CommandCenter.getInstance().opsQueue.enqueue(Asteroid(0), GameOp.Action.ADD)
@@ -166,12 +160,8 @@ class Game(threading.Thread):
 
     def checkFloaters(self):
         self.spawnShieldFloater()
-        self.spawnNewWallFloater()
+        # self.spawnNewWallFloater()
         self.spawnNukeFloater()
-
-    def spawnNewWallFloater(self):
-        if not FALCON_CENTERED and CommandCenter.getInstance().frame % SPAWN_NEW_WALL_FLOATER == 0 and self.isBrickFree():
-            CommandCenter.getInstance().opsQueue.enqueue(NewWallFloater(), GameOp.Action.ADD)
 
     def spawnNukeFloater(self):
         if CommandCenter.getInstance().frame % SPAWN_NUKE_FLOATER == 0:
@@ -221,7 +211,12 @@ class Game(threading.Thread):
                 Sound.stopLoopSound("music-background.wav")
             else:
                 Sound.playLoopSound("music-background.wav")
-
+        elif keyCode == Game.CENTERED:
+            if CommandCenter.getInstance().falconCentered:
+                CommandCenter.getInstance().falconCentered = False
+            else:
+                CommandCenter.getInstance().falcon.center = Point(DIM[0]/2.0, DIM[1]/2.0)
+                CommandCenter.getInstance().falconCentered = True
 
 if __name__ == "__main__":
     game = Game()

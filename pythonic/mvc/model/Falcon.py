@@ -10,7 +10,7 @@ from enum import Enum
 import math
 import os
 
-from pythonic.mvc.model.prime.Constants import INITIAL_SPAWN_TIME, DIM, FALCON_CENTERED
+from pythonic.mvc.model.prime.Constants import INITIAL_SPAWN_TIME, DIM
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.controller import ImageLoader
 
@@ -60,7 +60,9 @@ class Falcon(Sprite):
     # METHODS
 
     def move(self):
-        if not FALCON_CENTERED:
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
+
+        if not CommandCenter.getInstance().falconCentered:
             super().move()
 
         if self.invisible > 0: self.invisible -= 1

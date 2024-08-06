@@ -71,6 +71,7 @@ class Sprite(Movable):
         return buffered_image
 
     def move(self) -> None:
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
         # right - bounds reached
         if self.center.x  > DIM.width:
             self.center = Point(1, self.center.y)
@@ -86,6 +87,9 @@ class Sprite(Movable):
         else:
             new_x_pos = self.center.x + self.deltaX
             new_y_pos = self.center.y + self.deltaY
+            if CommandCenter.getInstance().falconCentered:
+                new_x_pos -= CommandCenter.getInstance().diffX
+                new_y_pos -= CommandCenter.getInstance().diffY
             self.center = Point(int(new_x_pos), int(new_y_pos))
 
 

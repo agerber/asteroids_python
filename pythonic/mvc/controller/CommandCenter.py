@@ -6,6 +6,8 @@ from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.LinkedList import LinkedList
+from pythonic.mvc.model.prime.Point import Point
+from pythonic.mvc.model.prime.Constants import DIM
 
 from concurrent.futures import ThreadPoolExecutor
 import sys
@@ -37,8 +39,10 @@ class CommandCenter:
         self.movFriends = LinkedList()
         self.movFoes = LinkedList()
         self.movFloaters = LinkedList()
-
+        self.falconCentered = False
         self.opsQueue = GameOpsQueue()
+        self.diffX = 0
+        self.diffY = 0
 
     @staticmethod
     def getInstance():
@@ -76,6 +80,14 @@ class CommandCenter:
 
     def isGameOver(self) -> bool:  # //if the number of falcons is zero, then game over
         return self.numFalcons < 1
+
+    def recenterAllMovables(self):
+        gameCenter = Point(int(round(DIM[0]/2.0)), int(round(DIM[1]/2.0)))
+        falconCenter = CommandCenter.getInstance().falcon.getCenter()
+
+        self.diffX = gameCenter.x = falconCenter.x
+        self.diffY = gameCenter.y = falconCenter.y
+
 
 # if __name__ == "__main__":
 #     comand1 = CommandCenter()
