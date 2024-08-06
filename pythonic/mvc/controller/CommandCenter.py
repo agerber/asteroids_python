@@ -4,6 +4,7 @@ import random
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
+from pythonic.mvc.model.MiniMap import MiniMap
 from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.LinkedList import LinkedList
 from pythonic.mvc.model.prime.Point import Point
@@ -34,7 +35,7 @@ class CommandCenter:
         self.snd = "\\".join(os.getcwd().split("\\")[:-2]) + "\\resources\\sounds\\"
         self.img = "\\".join(os.getcwd().split("\\")[:-2]) + "\\resources\\imgs\\"
         self.falcon = Falcon()
-
+        self.minimap = MiniMap()
         self.movDebris = LinkedList()
         self.movFriends = LinkedList()
         self.movFoes = LinkedList()
@@ -60,6 +61,7 @@ class CommandCenter:
         self.numFalcons = 4
         self.falcon.decrementFalconNumAndSpawn()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
+        self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
         self.createStarField()
 
     def clearAll(self):
@@ -82,7 +84,7 @@ class CommandCenter:
         return self.numFalcons < 1
 
     def recenterAllMovables(self):
-        gameCenter = Point(int(round(DIM[0]/2.0)), int(round(DIM[1]/2.0)))
+        gameCenter = Point(int(round(DIM.width/2.0)), int(round(DIM.height/2.0)))
         falconCenter = CommandCenter.getInstance().falcon.getCenter()
 
         self.diffX = gameCenter.x = falconCenter.x

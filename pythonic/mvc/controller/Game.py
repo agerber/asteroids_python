@@ -215,7 +215,7 @@ class Game(threading.Thread):
             if CommandCenter.getInstance().falconCentered:
                 CommandCenter.getInstance().falconCentered = False
             else:
-                CommandCenter.getInstance().falcon.center = Point(DIM[0]/2.0, DIM[1]/2.0)
+                CommandCenter.getInstance().falcon.center = Point(DIM.width/2.0, DIM.height/2.0)
                 CommandCenter.getInstance().falconCentered = True
 
 if __name__ == "__main__":
