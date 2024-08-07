@@ -22,18 +22,21 @@ class MiniMap(Sprite):
         miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
         miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
-        g.rectangle((0,0,miniWidth,miniHeight), fill=Color.BLACK)
-        g.rectangle((0,0,miniWidth,miniHeight),outline=Color.BLUE)
+        g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
+        g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.BLUE)
         centerOfMiniMap = Point(int(miniWidth / 2), int(miniHeight / 2))
-        g.rectangle((centerOfMiniMap.x - (miniWidth / UNIVERSAL_SCALER/2), centerOfMiniMap.y - (miniHeight / UNIVERSAL_SCALER/2), miniWidth / UNIVERSAL_SCALER, miniHeight / UNIVERSAL_SCALER),outline=Color.BLUE)
+        g.rectangle((centerOfMiniMap.x - (miniWidth / UNIVERSAL_SCALER / 2),
+                     centerOfMiniMap.y - (miniHeight / UNIVERSAL_SCALER / 2), miniWidth / UNIVERSAL_SCALER,
+                     miniHeight / UNIVERSAL_SCALER), outline=Color.BLUE)
 
         from pythonic.mvc.controller.CommandCenter import CommandCenter
 
         self.drawRadarBlips(imgOff, Color.RED, CommandCenter.getInstance().movFoes)
 
-    def drawRadarBlips(self, imgOff, color : Color, movables):
+    def drawRadarBlips(self, imgOff, color: Color, movables):
         g = ImageDraw.Draw(imgOff)
         for mov in movables:
+            print(mov.getCenter().x, " ", mov.getCenter().x)
             scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / UNIVERSAL_SCALER)),
                                 int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / UNIVERSAL_SCALER)))
-            g.ellipse((scaledPoint.x -2, scaledPoint.y -2,4,4),fill=color)
+            g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 10, 10), fill=color)
