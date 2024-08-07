@@ -18,6 +18,11 @@ class MiniMap(Sprite):
         pass
 
     def draw(self, imgOff):
+
+        from pythonic.mvc.controller.CommandCenter import CommandCenter,Universe
+
+        if CommandCenter.getInstance().universe != Universe.BIG:    return
+
         g = ImageDraw.Draw(imgOff)
         miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
         miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))

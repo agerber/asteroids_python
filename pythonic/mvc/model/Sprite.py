@@ -3,6 +3,7 @@ from typing import List, Dict, Any
 from PIL import Image, ImageOps,ImageDraw
 import math
 from scipy import ndimage as ndi
+
 from pythonic.mvc.controller.Utils import Utils
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.prime.Point import Point
@@ -71,23 +72,23 @@ class Sprite(Movable):
         return buffered_image
 
     def move(self) -> None:
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
         # right - bounds reached
-        if self.center.x  > DIM.width:
+        if self.center.x  > CommandCenter.getInstance().getUniScaler() * DIM.width:
             self.center = Point(1, self.center.y)
         # left - bounds reached
         elif self.center.x < 0:
-            self.center = Point(DIM.width - 1, self.center.y)
+            self.center = Point(CommandCenter.getInstance().getUniScaler() *DIM.width - 1, self.center.y)
         # bottom - bounds reached
-        elif self.center.y > DIM.height:
+        elif self.center.y > CommandCenter.getInstance().getUniScaler() *DIM.height:
             self.center = Point(self.center.x, 1)
         # top - bounds reached
         elif self.center.y < 0:
-            self.center = Point(self.center.x, DIM.height - 1)
+            self.center = Point(self.center.x, CommandCenter.getInstance().getUniScaler() *DIM.height - 1)
         else:
             new_x_pos = self.center.x + self.deltaX
             new_y_pos = self.center.y + self.deltaY
-            if CommandCenter.getInstance().falconCentered:
+            if CommandCenter.getInstance().universe != Universe.SMALL:
                 new_x_pos -= CommandCenter.getInstance().diffX
                 new_y_pos -= CommandCenter.getInstance().diffY
             self.center = Point(int(new_x_pos), int(new_y_pos))

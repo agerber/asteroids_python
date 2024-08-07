@@ -1,5 +1,6 @@
 import os
 import random
+from enum import Enum
 
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
@@ -8,10 +9,16 @@ from pythonic.mvc.model.MiniMap import MiniMap
 from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.LinkedList import LinkedList
 from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.Constants import DIM
+from pythonic.mvc.model.prime.Constants import DIM, UNIVERSAL_SCALER
 
 from concurrent.futures import ThreadPoolExecutor
 import sys
+
+
+class Universe(Enum):
+    SMALL = 0,
+    SMALL_CENTERED = 1,
+    BIG = 2
 
 
 class CommandCenter:
@@ -44,6 +51,7 @@ class CommandCenter:
         self.opsQueue = GameOpsQueue()
         self.diffX = 0
         self.diffY = 0
+        self.universe = Universe.SMALL
 
     @staticmethod
     def getInstance():
@@ -84,12 +92,27 @@ class CommandCenter:
         return self.numFalcons < 1
 
     def recenterAllMovables(self):
-        gameCenter = Point(int(round(DIM.width/2.0)), int(round(DIM.height/2.0)))
+        gameCenter = Point(int(round(DIM.width / 2.0)), int(round(DIM.height / 2.0)))
         falconCenter = CommandCenter.getInstance().falcon.getCenter()
 
         self.diffX = gameCenter.x = falconCenter.x
         self.diffY = gameCenter.y = falconCenter.y
 
+    def getUniScaler(self):
+        localScaler=1
+        if self.universe == Universe.BIG:
+            localScaler = UNIVERSAL_SCALER
+        else:
+            localScaler = 1
+        return localScaler
+
+    def cycleUniverse(self):
+        if self.universe == Universe.SMALL:
+            self.universe = Universe.SMALL_CENTERED
+        elif self.universe == Universe.SMALL_CENTERED:
+            self.universe = Universe.BIG
+        elif self.universe == Universe.BIG:
+            self.universe = Universe.SMALL
 
 # if __name__ == "__main__":
 #     comand1 = CommandCenter()

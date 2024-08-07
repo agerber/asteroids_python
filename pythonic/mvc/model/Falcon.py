@@ -60,9 +60,9 @@ class Falcon(Sprite):
     # METHODS
 
     def move(self):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
-        if not CommandCenter.getInstance().falconCentered:
+        if CommandCenter.getInstance().universe == Universe.SMALL:
             super().move()
 
         if self.invisible > 0: self.invisible -= 1

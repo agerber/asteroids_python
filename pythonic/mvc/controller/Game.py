@@ -213,11 +213,7 @@ class Game(threading.Thread):
             else:
                 Sound.playLoopSound("music-background.wav")
         elif keyCode == Game.CENTERED:
-            if CommandCenter.getInstance().falconCentered:
-                CommandCenter.getInstance().falconCentered = False
-            else:
-                CommandCenter.getInstance().falcon.center = Point(DIM.width/2.0, DIM.height/2.0)
-                CommandCenter.getInstance().falconCentered = True
+            CommandCenter.getInstance().cycleUniverse()
 
 if __name__ == "__main__":
     game = Game()

@@ -15,7 +15,9 @@ class Star(Movable):
         self.color = Color.from_RGB(bright, bright, bright)  # some gray value. stars are muted from 0-225 / 255
 
     def move(self):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
+
+        if CommandCenter.getInstance().universe != Universe.SMALL:  return
             # right-bounds reached
         if self.center.x > DIM.width:
             self.center = Point(0, self.center.y)
