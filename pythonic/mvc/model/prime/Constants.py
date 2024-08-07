@@ -1,7 +1,7 @@
 from pythonic.mvc.model.prime.Dimension import Dimension
 ASPECT_RATIO = Dimension(3, 2)
 PIXELS = 400
-DIM = Dimension(1400, 900)
+DIM = Dimension(1400, 800)
 SPAWN_SHIELD_FLOATER = 1000   ## in java G_FRAMES_PER_SECOND/ANIMATION_DELAY * 40
 SPAWN_NEW_WALL_FLOATER = 1120
 SPAWN_NUKE_FLOATER = 400
