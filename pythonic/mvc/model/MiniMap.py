@@ -33,9 +33,9 @@ class MiniMap(Sprite):
         miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * self.aspectRatio.width))
         miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * self.aspectRatio.height))
 
-        if CommandCenter.getInstance().universe == Universe.BIG:
-            g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
-            g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY)
+
+        #g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
+        g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY)
 
         miniViewPortWidth = miniWidth / CommandCenter.getInstance().getUniDim().width
         miniViewPortHeight = miniHeight / CommandCenter.getInstance().getUniDim().height
@@ -45,19 +45,19 @@ class MiniMap(Sprite):
 
         for mov in CommandCenter.getInstance().movDebris:
             translatedPoint = self.translatePoint(mov.getCenter())
-            g.ellipse((translatedPoint.x - 1, translatedPoint.y - 1, 2, 2), fill=Color.GREY)
+            g.ellipse((translatedPoint.x - 1, translatedPoint.y - 1, translatedPoint.x + 1, translatedPoint.y + 1), fill=Color.GREY)
 
         for mov in CommandCenter.getInstance().movFoes:
             translatedPoint = self.translatePoint(mov.getCenter())
-            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, 4, 4), fill=Color.WHITE)
+            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=Color.WHITE)
 
         for mov in CommandCenter.getInstance().movFloaters:
             translatedPoint = self.translatePoint(mov.getCenter())
-            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, 4, 4), fill=Color.YELLOW)
+            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=Color.YELLOW)
 
         for mov in CommandCenter.getInstance().movFriends:
             translatedPoint = self.translatePoint(mov.getCenter())
-            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, 4, 4), fill=Color.CYAN)
+            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=Color.CYAN)
 
     def translatePoint(self, mov):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
