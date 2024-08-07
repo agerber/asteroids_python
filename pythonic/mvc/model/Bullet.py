@@ -21,7 +21,7 @@ class Bullet(Sprite):
         self.radius = 6
 
         # everything is relative to the falcon ship that fired the bullet
-        self.center = falcon.center
+        self.center = falcon.center.copy()
 
         # set the bullet orientation to the falcon (ship) orientation
         self.orientation = falcon.orientation

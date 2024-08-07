@@ -221,8 +221,8 @@ class Game(threading.Thread):
                 Sound.stopLoopSound("music-background.wav")
             else:
                 Sound.playLoopSound("music-background.wav")
-        elif keyCode == Game.UNIVERSE:
-            CommandCenter.getInstance().cycleUniverse()
+        # elif keyCode == Game.UNIVERSE:
+        #     CommandCenter.getInstance().cycleUniverse()
 
 if __name__ == "__main__":
     game = Game()

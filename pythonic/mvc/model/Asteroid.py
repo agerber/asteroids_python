@@ -39,7 +39,7 @@ class Asteroid(Sprite):
         else:
             ast_exploded = value
             self.__init__(ast_exploded.getSize() + 1)
-            self.center = ast_exploded.getCenter()
+            self.center = ast_exploded.getCenter().copy()
             new_smaller_size = ast_exploded.getSize() + 1
             self.deltaX = ast_exploded.deltaX / 1.5 + self.somePosNegValue(5 + new_smaller_size * 2)
             self.deltaY = ast_exploded.deltaY / 1.5 + self.somePosNegValue(5 + new_smaller_size * 2)

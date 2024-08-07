@@ -23,7 +23,7 @@ class Nuke(Sprite):
         self.radius = 0
 
         # everything is relative to the falcon ship that fired the bullet
-        self.center = falcon.center
+        self.center = falcon.center.copy()
 
         self.orientation = falcon.orientation
 
