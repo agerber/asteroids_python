@@ -1,13 +1,14 @@
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM
+from pythonic.mvc.model.prime.Constants import DIM, UNIVERSAL_SCALER
 from pythonic.mvc.model.prime.Point import Point
+from pythonic.mvc.model.prime.LinkedList import LinkedList
 from PIL import ImageDraw
+
+
 class MiniMap(Sprite):
-    MAP_MARGIN = 20
-    WIDTH_FACTOR = 5
-    HEIGHT_FACTOR = 4
+    MINI_MAP_PERCENT = 0.31
 
     def __init__(self):
         super().__init__()
@@ -18,9 +19,21 @@ class MiniMap(Sprite):
 
     def draw(self, imgOff):
         g = ImageDraw.Draw(imgOff)
+        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
+        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
-        g.rectangle((DIM.width - (DIM.width/self.WIDTH_FACTOR) - self.MAP_MARGIN, self.MAP_MARGIN, DIM.width/self.WIDTH_FACTOR + 4, DIM.height/self.HEIGHT_FACTOR + 4), outline=Color.BLACK)
-        g.rectangle((DIM.width - (DIM.width / self.WIDTH_FACTOR) - self.MAP_MARGIN, self.MAP_MARGIN, DIM.width / self.WIDTH_FACTOR + 4,
-                     DIM.height / self.HEIGHT_FACTOR + 4), outline=Color.BLUE)
-        g.rectangle((DIM.width - (2 * DIM.width / (3*self.WIDTH_FACTOR)) - self.MAP_MARGIN, self.MAP_MARGIN + (DIM.height / (3 * self.HEIGHT_FACTOR)), DIM.width / (3 * self.WIDTH_FACTOR),
-                     DIM.height / (3 * self.HEIGHT_FACTOR)), outline=Color.BLUE)
+        g.rectangle((0,0,miniWidth,miniHeight), fill=Color.BLACK)
+        g.rectangle((0,0,miniWidth,miniHeight),outline=Color.BLUE)
+        centerOfMiniMap = Point(int(miniWidth / 2), int(miniHeight / 2))
+        g.rectangle((centerOfMiniMap.x - (miniWidth / UNIVERSAL_SCALER/2), centerOfMiniMap.y - (miniHeight / UNIVERSAL_SCALER/2), miniWidth / UNIVERSAL_SCALER, miniHeight / UNIVERSAL_SCALER),outline=Color.BLUE)
+
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
+
+        self.drawRadarBlips(imgOff, Color.RED, CommandCenter.getInstance().movFoes)
+
+    def drawRadarBlips(self, imgOff, color : Color, movables):
+        g = ImageDraw.Draw(imgOff)
+        for mov in movables:
+            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / UNIVERSAL_SCALER)),
+                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / UNIVERSAL_SCALER)))
+            g.ellipse((scaledPoint.x -2, scaledPoint.y -2,4,4),fill=color)

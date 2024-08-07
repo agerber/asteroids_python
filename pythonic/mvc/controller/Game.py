@@ -154,6 +154,7 @@ class Game(threading.Thread):
         return asteroidFree
 
     def spawnBigAsteroids(self, num):
+         # num += 10
         while num > 0:
             CommandCenter.getInstance().opsQueue.enqueue(Asteroid(0), GameOp.Action.ADD)
             num -= 1

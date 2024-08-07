@@ -10,7 +10,7 @@ from pythonic.mvc.model.prime.PolarPoint import PolarPoint
 from functional import seq
 from abc import abstractmethod
 from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM
+from pythonic.mvc.model.prime.Constants import DIM, UNIVERSAL_SCALER
 from pythonic.mvc.controller.GameOp import GameOp
 
 import random
