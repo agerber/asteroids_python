@@ -77,7 +77,7 @@ class CommandCenter:
         self.miniDimHash[Universe.SMALL] = Dimension(1, 1)
         self.miniDimHash[Universe.SMALL_FREE_FLY] = Dimension(1,1)
         self.miniDimHash[Universe.BIG] = Dimension(3,3)
-        self.miniDimHash[Universe.HORIZONTAL] = Dimension(6,1)
+        self.miniDimHash[Universe.HORIZONTAL] = Dimension(3,1)
         self.createStarField()
 
     def clearAll(self):
