@@ -8,7 +8,7 @@ from pythonic.mvc.model.Nuke import Nuke
 from pythonic.mvc.model.NukeFloater import NukeFloater
 from pythonic.mvc.model.ShieldFloater import ShieldFloater
 from pythonic.mvc.view.GamePanel import GamePanel
-from pythonic.mvc.controller.CommandCenter import CommandCenter
+from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 from pythonic.mvc.model import Falcon, Brick
 from pythonic.mvc.model.Bullet import Bullet
 from pythonic.mvc.model.Brick import Brick
@@ -140,6 +140,12 @@ class Game(threading.Thread):
         if self.isLevelClear():
             level = CommandCenter.getInstance().level
             CommandCenter.getInstance().score += 10_000 * level
+
+            # CommandCenter.getInstance().setUniverse(universe)
+            ordinal = level % len(Universe)
+            key = list(Universe)[ordinal]
+            CommandCenter.getInstance().universe = key
+
             level += 1
             CommandCenter.getInstance().level = level
             self.spawnBigAsteroids(level)
