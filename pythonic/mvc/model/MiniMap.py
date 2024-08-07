@@ -23,7 +23,7 @@ class MiniMap(Sprite):
 
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
-        if CommandCenter.getInstance().universe == Universe.SMALL:    return
+        if CommandCenter.getInstance().universe == Universe.FREE_FLY:    return
 
         g = ImageDraw.Draw(imgOff)
         miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))

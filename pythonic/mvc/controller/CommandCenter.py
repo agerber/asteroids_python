@@ -18,8 +18,8 @@ import sys
 
 
 class Universe(Enum):
-    SMALL = 0,
-    SMALL_FREE_FLY = 1,
+    FREE_FLY = 0,
+    CENTER = 1,
     BIG = 2,
     HORIZONTAL = 3,
     VERTICAL = 4,
@@ -56,7 +56,7 @@ class CommandCenter:
         self.opsQueue = GameOpsQueue()
         self.diffX = 0
         self.diffY = 0
-        self.universe = Universe.SMALL
+        self.universe = Universe.FREE_FLY
         self.miniDimHash = {}
 
     @staticmethod
@@ -76,8 +76,8 @@ class CommandCenter:
         self.falcon.decrementFalconNumAndSpawn()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
-        self.miniDimHash[Universe.SMALL] = Dimension(1, 1)
-        self.miniDimHash[Universe.SMALL_FREE_FLY] = Dimension(1,1)
+        self.miniDimHash[Universe.FREE_FLY] = Dimension(1, 1)
+        self.miniDimHash[Universe.CENTER] = Dimension(1,1)
         self.miniDimHash[Universe.BIG] = Dimension(3,3)
         self.miniDimHash[Universe.HORIZONTAL] = Dimension(3,1)
         self.miniDimHash[Universe.VERTICAL] = Dimension(1, 3)
@@ -119,9 +119,9 @@ class CommandCenter:
         return localScaler
 
     def cycleUniverse(self):
-        if self.universe == Universe.SMALL:
-            self.universe = Universe.SMALL_FREE_FLY
-        elif self.universe == Universe.SMALL_FREE_FLY:
+        if self.universe == Universe.FREE_FLY:
+            self.universe = Universe.CENTER
+        elif self.universe == Universe.CENTER:
             self.universe = Universe.BIG
         elif self.universe == Universe.BIG:
             self.universe = Universe.HORIZONTAL
@@ -130,10 +130,10 @@ class CommandCenter:
         elif self.universe == Universe.VERTICAL:
             self.universe = Universe.DARK
         elif self.universe == Universe.DARK:
-            self.universe = Universe.SMALL
+            self.universe = Universe.FREE_FLY
 
     def isFalconPositionFixed(self):
-        return CommandCenter.getInstance().universe == Universe.SMALL
+        return CommandCenter.getInstance().universe == Universe.FREE_FLY
 
     def getUniDim(self):
         return self.miniDimHash[self.universe]
