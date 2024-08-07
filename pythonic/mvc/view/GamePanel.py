@@ -76,7 +76,7 @@ class GamePanel:
         #        font=self.fontNormal,
         #        fill=Color.WHITE)  # white color
 
-        g.text((DIM.width - OFFSET_LEFT, 30), f"Score : {CommandCenter.getInstance().universe.name}",
+        g.text((DIM.width - OFFSET_LEFT, 30), f"Universe : {CommandCenter.getInstance().universe.name}",
                font=self.fontNormal,
                fill=Color.WHITE)
 
@@ -147,7 +147,7 @@ class GamePanel:
     def drawNumberShipsRemaining(self, imgOff):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
         numFalcons = CommandCenter.getInstance().numFalcons
-        while numFalcons > 0:
+        while numFalcons > 1:
             self.drawOneShip(imgOff, numFalcons)
             numFalcons -= 1
 
