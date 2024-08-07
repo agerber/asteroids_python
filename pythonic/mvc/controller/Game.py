@@ -222,11 +222,11 @@ class Game(threading.Thread):
         elif keyCode == Game.MUTE:
             CommandCenter.getInstance().getInstance().muted = not CommandCenter.getInstance().muted
             if CommandCenter.getInstance().getInstance().muted:
-                Sound.stopLoopSound("music-background.wav")
+                Sound.stopLoopSound("dr_loop.wav")
             else:
-                Sound.playLoopSound("music-background.wav")
-        # elif keyCode == Game.UNIVERSE:
-        #     CommandCenter.getInstance().cycleUniverse()
+                Sound.playLoopSound("dr_loop.wav")
+        elif keyCode == Game.RADAR:
+            CommandCenter.getInstance().radar = not CommandCenter.getInstance().radar
 
 if __name__ == "__main__":
     game = Game()

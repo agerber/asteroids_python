@@ -48,7 +48,7 @@ class Nuke(Sprite):
             self.nukeState = self.nukeState + 1
 
         if self.nukeState == 0:
-            self.radius = 2
+            self.radius = 17
         elif self.nukeState < 4:
             self.radius = self.radius + 8
         else:

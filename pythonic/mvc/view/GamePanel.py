@@ -72,22 +72,18 @@ class GamePanel:
     def drawFalconStatus(self, imgOff):
         g = ImageDraw.Draw(imgOff)
         OFFSET_LEFT = 220
-        # g.text((self.fontWidth + 10, self.fontHeight + 15), f"Score : {CommandCenter.getInstance().score}",
-        #        font=self.fontNormal,
-        #        fill=Color.WHITE)  # white color
 
-        g.text((DIM.width - OFFSET_LEFT, 30), f"Universe : {CommandCenter.getInstance().universe.name}",
-               font=self.fontNormal,
-               fill=Color.WHITE)
+        universe_str = CommandCenter.getInstance().universe.name
+        formatted_uni = universe_str.replace('_', ' ')
+        levelText = f"Level: [{CommandCenter.getInstance().level}] {formatted_uni}"
+
+        g.text((DIM.width - OFFSET_LEFT, 30 ), levelText, font=self.fontNormal,
+               fill=Color.WHITE)  # white color
 
         g.text((DIM.width - OFFSET_LEFT, 30 * 2), f"Score : {CommandCenter.getInstance().score}",
                font=self.fontNormal,
                fill=Color.WHITE)  # white color
 
-        levelText = f"Level: {CommandCenter.getInstance().level}"
-
-        g.text((DIM.width - OFFSET_LEFT, 30 * 3), levelText, font=self.fontNormal,
-               fill=Color.WHITE)  # white color
 
         statusArray = []
 
@@ -106,7 +102,7 @@ class GamePanel:
 
         # draw PYTHON VERSION and the frame number to bottom left screen
         g.text((self.fontWidth + 10, DIM.height - (self.fontHeight + 22)),
-               f"PYTHON :{CommandCenter.getInstance().frame}",
+               f"FRAME[PYTHON]:{CommandCenter.getInstance().frame}",
                font=self.fontNormal,
                fill=Color.WHITE)  # white color
 

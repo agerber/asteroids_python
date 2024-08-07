@@ -23,7 +23,9 @@ class MiniMap(Sprite):
 
     def draw(self, imgOff):
 
+
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
+        if not (CommandCenter.getInstance().radar): return
 
         #if CommandCenter.getInstance().universe == Universe.FREE_FLY:    return
 

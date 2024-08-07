@@ -44,9 +44,12 @@ class CommandCenter:
         self.paused = False
         self.muted = True
         self.frame = 0
+        self.radar = True
+
         base_path = os.path.sep.join(os.getcwd().split(os.path.sep)[:-2])
         self.snd = os.path.join(base_path, "resources", "sounds") + os.path.sep
         self.img = os.path.join(base_path, "resources", "imgs") + os.path.sep
+
         self.falcon = Falcon()
         self.minimap = MiniMap()
         self.movDebris = LinkedList()
@@ -103,13 +106,6 @@ class CommandCenter:
 
     def isGameOver(self) -> bool:  # //if the number of falcons is zero, then game over
         return self.numFalcons < 1
-
-    # def recenterAllMovables(self):
-    #     gameCenter = Point(int(round(DIM.width / 2.0)), int(round(DIM.height / 2.0)))
-    #     falconCenter = CommandCenter.getInstance().falcon.getCenter()
-    #
-    #     self.diffX = gameCenter.x = falconCenter.x
-    #     self.diffY = gameCenter.y = falconCenter.y
 
     def getUniScaler(self):
         localScaler=1
