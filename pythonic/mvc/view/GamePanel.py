@@ -2,7 +2,7 @@ from typing import Tuple
 
 from PIL import ImageFont, ImageTk, ImageDraw
 
-from pythonic.mvc.controller.CommandCenter import CommandCenter
+from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 from pythonic.mvc.controller.Utils import Utils
 from pythonic.mvc.model.prime.Constants import DIM
 from pythonic.mvc.model.prime.LinkedList import LinkedList
@@ -68,6 +68,9 @@ class GamePanel:
             str(dim.width) + 'x' + str(dim.height))  # instead of setsize
         self.gameFrame.title("Game Base")
         self.gameFrame.resizable = False
+        self.colorMap = {Universe.SMALL: Color(0, 10, 30),
+                         Universe.SMALL_CENTERED: Color(15,15,15),
+                         Universe.BIG_CENTERED: Color.BLACK}
 
     def drawFalconStatus(self, imgOff):
         g = ImageDraw.Draw(imgOff)
