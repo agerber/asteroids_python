@@ -22,11 +22,9 @@ class MiniMap(Sprite):
         miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
         miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
-        g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
-        g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.BLUE)
-        centerOfMiniMap = Point(int(miniWidth / 2), int(miniHeight / 2))
-        g.rectangle((centerOfMiniMap.x - (miniWidth / UNIVERSAL_SCALER / 2),
-                     centerOfMiniMap.y - (miniHeight / UNIVERSAL_SCALER / 2), miniWidth / UNIVERSAL_SCALER,
+        g.rectangle((0, 1, miniWidth, miniHeight), fill=Color.BLACK)
+        g.rectangle((0, 1, miniWidth, miniHeight), outline=Color.BLUE)
+        g.rectangle((0, 1, miniWidth / UNIVERSAL_SCALER,
                      miniHeight / UNIVERSAL_SCALER), outline=Color.BLUE)
 
         from pythonic.mvc.controller.CommandCenter import CommandCenter
