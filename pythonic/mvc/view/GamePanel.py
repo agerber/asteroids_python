@@ -68,9 +68,6 @@ class GamePanel:
             str(dim.width) + 'x' + str(dim.height))  # instead of setsize
         self.gameFrame.title("Game Base")
         self.gameFrame.resizable = False
-        self.colorMap = {Universe.SMALL: Color(0, 10, 30),
-                         Universe.SMALL_CENTERED: Color(15,15,15),
-                         Universe.BIG_CENTERED: Color.BLACK}
 
     def drawFalconStatus(self, imgOff):
         g = ImageDraw.Draw(imgOff)
