@@ -95,7 +95,7 @@ class GamePanel:
             statusArray.append(levelText)
 
         if CommandCenter.getInstance().falcon.nukeMeter > 0:
-            statusArray.append("Press 'N' for Nuke")
+            statusArray.append("Press 'F' for Nuke")
 
         if CommandCenter.getInstance().falcon.maxSpeedAttained:
             statusArray.append("WARNING - SLOW DOWN")

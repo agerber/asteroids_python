@@ -148,6 +148,10 @@ class Game(threading.Thread):
 
             level += 1
             CommandCenter.getInstance().level = level
+
+            #recenter the falcon at level clears
+            CommandCenter.getInstance().falcon.center = Point(int(round(DIM.width / 2.0)), int(round(DIM.height / 2.0)))
+
             self.spawnBigAsteroids(level)
             if (CommandCenter.getInstance().falcon.shield < INITIAL_SPAWN_TIME):
                 CommandCenter.getInstance().falcon.shield = INITIAL_SPAWN_TIME

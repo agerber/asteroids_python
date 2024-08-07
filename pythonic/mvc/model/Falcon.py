@@ -109,6 +109,8 @@ class Falcon(Sprite):
                 self.maxSpeedAttained = True
 
     def draw(self, imgOff):
+
+
         imageState = None
         if self.invisible > 0:
             imageState = ImageState.FALCON_INVISIBLE
@@ -122,11 +124,17 @@ class Falcon(Sprite):
         if self.shield > 0 and imageState != ImageState.FALCON_INVISIBLE:
             self.drawShield(ImageDraw.Draw(imgOff))
 
+        if (self.nukeMeter > 0):  self.drawNukeHalo(ImageDraw.Draw(imgOff))
+
     def drawShield(self, g):
         g.ellipse((self.getCenter().x - self.getRadius(), self.getCenter().y - self.getRadius(),
                    self.getCenter().x + self.getRadius(), self.getCenter().y + self.getRadius())
                   , outline=Color.CYAN)
-
+    def drawNukeHalo(self, g):
+        if (self.invisible > 0): return
+        g.ellipse((self.getCenter().x - self.getRadius()+10, self.getCenter().y - self.getRadius()+10,
+                   self.getCenter().x + self.getRadius()-10, self.getCenter().y + self.getRadius()-10)
+                  , outline=Color.YELLOW)
 
     def removeFromGame(self, list):
         # The falcon is never actually removed from the game-space; instead we decrement numFalcons

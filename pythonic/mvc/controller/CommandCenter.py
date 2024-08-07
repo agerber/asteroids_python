@@ -104,12 +104,12 @@ class CommandCenter:
     def isGameOver(self) -> bool:  # //if the number of falcons is zero, then game over
         return self.numFalcons < 1
 
-    def recenterAllMovables(self):
-        gameCenter = Point(int(round(DIM.width / 2.0)), int(round(DIM.height / 2.0)))
-        falconCenter = CommandCenter.getInstance().falcon.getCenter()
-
-        self.diffX = gameCenter.x = falconCenter.x
-        self.diffY = gameCenter.y = falconCenter.y
+    # def recenterAllMovables(self):
+    #     gameCenter = Point(int(round(DIM.width / 2.0)), int(round(DIM.height / 2.0)))
+    #     falconCenter = CommandCenter.getInstance().falcon.getCenter()
+    #
+    #     self.diffX = gameCenter.x = falconCenter.x
+    #     self.diffY = gameCenter.y = falconCenter.y
 
     def getUniScaler(self):
         localScaler=1
