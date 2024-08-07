@@ -1,4 +1,4 @@
-class AspectDim:
+class AspectRatio:
     width = 0.0
     height = 0.0
 

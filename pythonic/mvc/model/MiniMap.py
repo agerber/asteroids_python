@@ -1,4 +1,4 @@
-from pythonic.mvc.model.AspectDim import AspectDim
+from pythonic.mvc.model.AspectRatio import AspectRatio
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.prime.Color import Color
@@ -16,7 +16,7 @@ class MiniMap(Sprite):
         self.team = Movable.Team.DEBRIS
         self.center = Point(0, 0)
         self.pumpkin = Color.from_RGB(200, 100, 50)
-        self.aspectDim = AspectDim(1, 1)
+        self.aspectRatio = AspectRatio(1, 1)
 
     def move(self):
         pass
@@ -27,11 +27,11 @@ class MiniMap(Sprite):
 
         if CommandCenter.getInstance().universe == Universe.FREE_FLY:    return
 
-        self.aspectDim = self.aspectAdjustedDimension(CommandCenter.getInstance().getUniDim())
+        self.aspectRatio = self.aspectAdjustedRatio(CommandCenter.getInstance().getUniDim())
 
         g = ImageDraw.Draw(imgOff)
-        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * self.aspectDim.width))
-        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * self.aspectDim.height))
+        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * self.aspectRatio.width))
+        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * self.aspectRatio.height))
 
         if CommandCenter.getInstance().universe == Universe.BIG:
             g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
@@ -62,15 +62,15 @@ class MiniMap(Sprite):
     def translatePoint(self, mov):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
-        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * self.aspectDim.width)),
-                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * self.aspectDim.height)))
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * self.aspectRatio.width)),
+                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * self.aspectRatio.height)))
 
-    def aspectAdjustedDimension(self, universeDim):
+    def aspectAdjustedRatio(self, universeDim):
         if universeDim.width == universeDim.height:
-            return AspectDim(1.0,1.0)
+            return AspectRatio(1.0,1.0)
         elif universeDim.width > universeDim.height:
             wMultiple = float(universeDim.width/universeDim.height)
-            return AspectDim(wMultiple, 1.0).scale(0.5)
+            return AspectRatio(wMultiple, 1.0).scale(0.5)
         else:
             hMultiple = float(universeDim.height / universeDim.width)
-            return AspectDim(1.0, hMultiple).scale(0.5)
+            return AspectRatio(1.0, hMultiple).scale(0.5)
