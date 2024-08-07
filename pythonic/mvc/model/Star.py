@@ -17,7 +17,7 @@ class Star(Movable):
     def move(self):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
-        if CommandCenter.getInstance().universe != Universe.SMALL:  return
+        if not CommandCenter.getInstance().isFalconPositionFixed():  return
             # right-bounds reached
         if self.center.x > DIM.width:
             self.center = Point(1, self.center.y)
