@@ -42,7 +42,7 @@ class Game(threading.Thread):
     FIRE = 'space'  # space key
     MUTE = 'm'  # m-key mute
     NUKE = 'n'  # m-key mute
-    CENTERED = 'c'
+    UNIVERSE = 'c'
 
     # for possible future use
     # HYPER = 68 # D key
@@ -212,7 +212,7 @@ class Game(threading.Thread):
                 Sound.stopLoopSound("music-background.wav")
             else:
                 Sound.playLoopSound("music-background.wav")
-        elif keyCode == Game.CENTERED:
+        elif keyCode == Game.UNIVERSE:
             CommandCenter.getInstance().cycleUniverse()
 
 if __name__ == "__main__":

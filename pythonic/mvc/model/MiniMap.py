@@ -21,19 +21,21 @@ class MiniMap(Sprite):
 
         from pythonic.mvc.controller.CommandCenter import CommandCenter,Universe
 
-        if CommandCenter.getInstance().universe != Universe.BIG:    return
+        if CommandCenter.getInstance().universe == Universe.SMALL:    return
 
         g = ImageDraw.Draw(imgOff)
-        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
-        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
+        width = int(round(self.MINI_MAP_PERCENT * DIM.width))
+        height = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
-        miniViewPortWidth = miniWidth / UNIVERSAL_SCALER
-        miniViewPortHeight = miniHeight / UNIVERSAL_SCALER
+        if CommandCenter.getInstance().universe == Universe.BIG:
+            g.rectangle((0, 1, width, height), fill=Color.BLACK)
+            g.rectangle((0, 1, width, height), outline=Color.GREY)
 
-        g.rectangle((0, 1, miniWidth, miniHeight), fill=Color.BLACK)
-        g.rectangle((0, 1, miniWidth, miniHeight), outline=Color.BLUE)
+        miniViewPortWidth = width / UNIVERSAL_SCALER
+        miniViewPortHeight = height / UNIVERSAL_SCALER
+
         g.rectangle((0, 1, miniViewPortWidth,
-                     miniViewPortHeight), outline=Color.BLUE)
+                     miniViewPortHeight), outline=Color.GREY)
 
 
         from pythonic.mvc.controller.CommandCenter import CommandCenter

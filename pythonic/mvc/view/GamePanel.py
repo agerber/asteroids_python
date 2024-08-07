@@ -71,18 +71,22 @@ class GamePanel:
 
     def drawFalconStatus(self, imgOff):
         g = ImageDraw.Draw(imgOff)
-
+        OFFSET_LEFT = 200
         # g.text((self.fontWidth + 10, self.fontHeight + 15), f"Score : {CommandCenter.getInstance().score}",
         #        font=self.fontNormal,
         #        fill=Color.WHITE)  # white color
 
-        g.text((DIM.width - 160, 30), f"Score : {CommandCenter.getInstance().score}",
+        g.text((DIM.width - OFFSET_LEFT, 30), f"Score : {CommandCenter.getInstance().universe.name}",
+               font=self.fontNormal,
+               fill=Color.WHITE)
+
+        g.text((DIM.width - OFFSET_LEFT, 30 * 2), f"Score : {CommandCenter.getInstance().score}",
                font=self.fontNormal,
                fill=Color.WHITE)  # white color
 
         levelText = f"Level: {CommandCenter.getInstance().level}"
 
-        g.text((DIM.width - 160, self.fontHeight), levelText, font=self.fontNormal,
+        g.text((DIM.width - OFFSET_LEFT, 30 * 3), levelText, font=self.fontNormal,
                fill=Color.WHITE)  # white color
 
         statusArray = []
