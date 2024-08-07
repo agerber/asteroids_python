@@ -44,22 +44,22 @@ class MiniMap(Sprite):
                      miniViewPortHeight), outline=Color.GREY)
 
         for mov in CommandCenter.getInstance().movDebris:
-            scaledPoint = self.scalePoint(mov.getCenter())
-            g.ellipse((scaledPoint.x - 1, scaledPoint.y - 1, 2, 2), fill=Color.GREY)
+            translatedPoint = self.translatePoint(mov.getCenter())
+            g.ellipse((translatedPoint.x - 1, translatedPoint.y - 1, 2, 2), fill=Color.GREY)
 
         for mov in CommandCenter.getInstance().movFoes:
-            scaledPoint = self.scalePoint(mov.getCenter())
-            g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.WHITE)
+            translatedPoint = self.translatePoint(mov.getCenter())
+            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, 4, 4), fill=Color.WHITE)
 
         for mov in CommandCenter.getInstance().movFloaters:
-            scaledPoint = self.scalePoint(mov.getCenter())
-            g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.YELLOW)
+            translatedPoint = self.translatePoint(mov.getCenter())
+            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, 4, 4), fill=Color.YELLOW)
 
         for mov in CommandCenter.getInstance().movFriends:
-            scaledPoint = self.scalePoint(mov.getCenter())
-            g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.CYAN)
+            translatedPoint = self.translatePoint(mov.getCenter())
+            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, 4, 4), fill=Color.CYAN)
 
-    def scalePoint(self, mov):
+    def translatePoint(self, mov):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
         return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * self.aspectDim.width)),
