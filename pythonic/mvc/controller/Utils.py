@@ -10,7 +10,7 @@ from PIL import Image
 class Utils:
 
     @staticmethod
-    def cartesianToPolar(pntCartesians: List[Point]) -> List[PolarPoint]:
+    def cartesiansToPolar(pntCartesians: List[Point]) -> List[PolarPoint]:
         hypotenuseOfPoint = lambda pnt: math.sqrt(pnt.x ** 2 + pnt.y ** 2)
         largestHyp = max(map(hypotenuseOfPoint, pntCartesians), default=0.0)
 

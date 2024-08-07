@@ -150,7 +150,7 @@ class Sprite(Movable):
 
         # 1: convert raw cartesians to raw polars (used later in seq below).
         # The reason we convert cartesian-points to polar-points is that it's much easier to rotate polar-points
-        polars = Utils.cartesianToPolar(self.cartesians)
+        polars = Utils.cartesiansToPolar(self.cartesians)
 
         # 2: rotate raw polars given the orientation of the sprite.
 

@@ -162,7 +162,7 @@ class GamePanel:
         Y_POS = DIM.height - 20
 
         # the reason we convert to polar-points is that it's much easier to rotate polar-points.
-        polars = Utils.cartesianToPolar(self.pntShipsRemaining)
+        polars = Utils.cartesiansToPolar(self.pntShipsRemaining)
 
         # 2: rotate raw polars given the orientation of the sprite.
         rotatePolarByOrientation = lambda pp: PolarPoint(
