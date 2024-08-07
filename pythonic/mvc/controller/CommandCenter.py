@@ -9,7 +9,7 @@ from pythonic.mvc.model.MiniMap import MiniMap
 from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.LinkedList import LinkedList
 from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.Constants import DIM, UNIVERSAL_SCALER
+from pythonic.mvc.model.prime.Constants import DIM, BIG_UNIVERSAL_SCALER
 
 from concurrent.futures import ThreadPoolExecutor
 import sys
@@ -101,7 +101,7 @@ class CommandCenter:
     def getUniScaler(self):
         localScaler=1
         if self.universe == Universe.BIG:
-            localScaler = UNIVERSAL_SCALER
+            localScaler = BIG_UNIVERSAL_SCALER
         else:
             localScaler = 1
         return localScaler

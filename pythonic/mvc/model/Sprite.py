@@ -11,7 +11,7 @@ from pythonic.mvc.model.prime.PolarPoint import PolarPoint
 from functional import seq
 from abc import abstractmethod
 from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM, UNIVERSAL_SCALER
+from pythonic.mvc.model.prime.Constants import DIM, BIG_UNIVERSAL_SCALER
 from pythonic.mvc.controller.GameOp import GameOp
 
 import random
@@ -78,13 +78,13 @@ class Sprite(Movable):
             self.center = Point(1, self.center.y)
         # left - bounds reached
         elif self.center.x < 0:
-            self.center = Point(CommandCenter.getInstance().getUniScaler() *DIM.width - 1, self.center.y)
+            self.center = Point(CommandCenter.getInstance().getUniScaler() * DIM.width - 1, self.center.y)
         # bottom - bounds reached
-        elif self.center.y > CommandCenter.getInstance().getUniScaler() *DIM.height:
+        elif self.center.y > CommandCenter.getInstance().getUniScaler() * DIM.height:
             self.center = Point(self.center.x, 1)
         # top - bounds reached
         elif self.center.y < 0:
-            self.center = Point(self.center.x, CommandCenter.getInstance().getUniScaler() *DIM.height - 1)
+            self.center = Point(self.center.x, CommandCenter.getInstance().getUniScaler() * DIM.height - 1)
         else:
             new_x_pos = self.center.x + self.deltaX
             new_y_pos = self.center.y + self.deltaY

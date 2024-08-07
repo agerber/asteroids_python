@@ -1,7 +1,7 @@
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM, UNIVERSAL_SCALER
+from pythonic.mvc.model.prime.Constants import DIM, BIG_UNIVERSAL_SCALER
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.LinkedList import LinkedList
 from PIL import ImageDraw
@@ -13,6 +13,7 @@ class MiniMap(Sprite):
     def __init__(self):
         super().__init__()
         self.team = Movable.Team.DEBRIS
+        self.center = Point(0,0)
 
     def move(self):
         pass
@@ -31,23 +32,21 @@ class MiniMap(Sprite):
             g.rectangle((0, 1, width, height), fill=Color.BLACK)
             g.rectangle((0, 1, width, height), outline=Color.GREY)
 
-        miniViewPortWidth = width / UNIVERSAL_SCALER
-        miniViewPortHeight = height / UNIVERSAL_SCALER
+        miniViewPortWidth = width / BIG_UNIVERSAL_SCALER
+        miniViewPortHeight = height / BIG_UNIVERSAL_SCALER
 
         g.rectangle((0, 1, miniViewPortWidth,
                      miniViewPortHeight), outline=Color.GREY)
 
-
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
-
         self.drawRadarBlips(imgOff, Color.WHITE, CommandCenter.getInstance().movFoes)
         self.drawRadarBlips(imgOff, Color.CYAN, CommandCenter.getInstance().movFloaters)
         self.drawRadarBlips(imgOff, Color.ORANGE, CommandCenter.getInstance().movFriends)
+        self.drawRadarBlips(imgOff, Color.GREY, CommandCenter.getInstance().movDebris)
 
     def drawRadarBlips(self, imgOff, color: Color, movables):
         g = ImageDraw.Draw(imgOff)
         for mov in movables:
             print(mov.getCenter().x, " ", mov.getCenter().x)
-            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / UNIVERSAL_SCALER)),
-                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / UNIVERSAL_SCALER)))
+            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
+                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
             g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 10, 10), fill=color)
