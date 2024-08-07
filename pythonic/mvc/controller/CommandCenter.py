@@ -18,8 +18,8 @@ import sys
 
 class Universe(Enum):
     SMALL = 0,
-    SMALL_FIXED_POSITION = 1,
-    BIG_FIXED_POSITION = 2,
+    SMALL_FREE_FLY = 1,
+    BIG = 2,
     HORIZONTAL = 3
 
 
@@ -74,8 +74,8 @@ class CommandCenter:
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
         self.miniHash[Universe.SMALL] = MiniMeta(1, 1)
-        self.miniHash[Universe.SMALL_FIXED_POSITION] = MiniMeta(1,1)
-        self.miniHash[Universe.BIG_FIXED_POSITION] = MiniMeta(3,3)
+        self.miniHash[Universe.SMALL_FREE_FLY] = MiniMeta(1,1)
+        self.miniHash[Universe.BIG] = MiniMeta(3,3)
         self.miniHash[Universe.HORIZONTAL] = MiniMeta(6,1)
         self.createStarField()
 
@@ -107,7 +107,7 @@ class CommandCenter:
 
     def getUniScaler(self):
         localScaler=1
-        if self.universe == Universe.BIG_FIXED_POSITION:
+        if self.universe == Universe.BIG:
             localScaler = BIG_UNIVERSAL_SCALER
         else:
             localScaler = 1
@@ -115,10 +115,10 @@ class CommandCenter:
 
     def cycleUniverse(self):
         if self.universe == Universe.SMALL:
-            self.universe = Universe.SMALL_FIXED_POSITION
-        elif self.universe == Universe.SMALL_FIXED_POSITION:
-            self.universe = Universe.BIG_FIXED_POSITION
-        elif self.universe == Universe.BIG_FIXED_POSITION:
+            self.universe = Universe.SMALL_FREE_FLY
+        elif self.universe == Universe.SMALL_FREE_FLY:
+            self.universe = Universe.BIG
+        elif self.universe == Universe.BIG:
             self.universe = Universe.HORIZONTAL
         elif self.universe == Universe.HORIZONTAL:
             self.universe = Universe.SMALL
