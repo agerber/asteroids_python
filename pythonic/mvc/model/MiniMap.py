@@ -29,7 +29,7 @@ class MiniMap(Sprite):
         miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
         miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
-        if CommandCenter.getInstance().universe == Universe.BIG_CENTERED:
+        if CommandCenter.getInstance().universe == Universe.BIG_FIXED_POSITION:
             g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
             g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY)
 
@@ -56,5 +56,5 @@ class MiniMap(Sprite):
             g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.CYAN)
 
     def scalePoint(self, mov):
-        return Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
-                     int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / BIG_UNIVERSAL_SCALER)),
+                     int(round(self.MINI_MAP_PERCENT * mov.y / BIG_UNIVERSAL_SCALER)))

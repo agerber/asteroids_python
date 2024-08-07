@@ -71,7 +71,7 @@ class GamePanel:
 
     def drawFalconStatus(self, imgOff):
         g = ImageDraw.Draw(imgOff)
-        OFFSET_LEFT = 200
+        OFFSET_LEFT = 220
         # g.text((self.fontWidth + 10, self.fontHeight + 15), f"Score : {CommandCenter.getInstance().score}",
         #        font=self.fontNormal,
         #        fill=Color.WHITE)  # white color

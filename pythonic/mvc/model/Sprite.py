@@ -91,7 +91,7 @@ class Sprite(Movable):
         else:
             new_x_pos = self.center.x + self.deltaX
             new_y_pos = self.center.y + self.deltaY
-            if CommandCenter.getInstance().universe != Universe.SMALL:
+            if CommandCenter.getInstance().isFalconPositionFixed():
                 new_x_pos -= CommandCenter.getInstance().diffX
                 new_y_pos -= CommandCenter.getInstance().diffY
             self.center = Point(int(new_x_pos), int(new_y_pos))
