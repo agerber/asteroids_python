@@ -9,9 +9,8 @@ from pythonic.mvc.model.NukeFloater import NukeFloater
 from pythonic.mvc.model.ShieldFloater import ShieldFloater
 from pythonic.mvc.view.GamePanel import GamePanel
 from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
-from pythonic.mvc.model import Falcon, Brick
+from pythonic.mvc.model import Falcon
 from pythonic.mvc.model.Bullet import Bullet
-from pythonic.mvc.model.Brick import Brick
 from pythonic.mvc.model.Asteroid import Asteroid
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.prime.Color import Color
