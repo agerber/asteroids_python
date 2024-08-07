@@ -1,3 +1,4 @@
+from pythonic.mvc.model.AspectDim import AspectDim
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.prime.Color import Color
@@ -25,9 +26,11 @@ class MiniMap(Sprite):
 
         if CommandCenter.getInstance().universe == Universe.FREE_FLY:    return
 
+        aspectDim = self.aspectAdjustedDimension(CommandCenter.getInstance().getUniDim())
+
         g = ImageDraw.Draw(imgOff)
-        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
-        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
+        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * aspectDim.w))
+        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * aspectDim.h))
 
         if CommandCenter.getInstance().universe == Universe.BIG:
             g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
@@ -57,5 +60,19 @@ class MiniMap(Sprite):
 
     def scalePoint(self, mov):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
-        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width)),
-                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height)))
+        aspectDim = self.aspectAdjustedDimension(CommandCenter.getInstance().getUniDim())
+
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * aspectDim.w)),
+                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * aspectDim.h)))
+
+    def aspectAdjustedDimension(self, universeDim):
+        if universeDim.width == universeDim.height:
+            return AspectDim(1.0,1.0)
+        elif universeDim.width > universeDim.height:
+            wMultiple = float(universeDim.width/universeDim.height)
+            aspectDim = AspectDim(wMultiple, 1.0)
+            return aspectDim.scale(0.5)
+        else:
+            hMultiple = float(universeDim.height / universeDim.width)
+            aspectDim = AspectDim(1.0, hMultiple)
+            return aspectDim.scale(0.5)
