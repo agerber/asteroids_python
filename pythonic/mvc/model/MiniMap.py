@@ -70,9 +70,7 @@ class MiniMap(Sprite):
             return AspectDim(1.0,1.0)
         elif universeDim.width > universeDim.height:
             wMultiple = float(universeDim.width/universeDim.height)
-            aspectDim = AspectDim(wMultiple, 1.0)
-            return aspectDim.scale(0.5)
+            return AspectDim(wMultiple, 1.0).scale(0.5)
         else:
             hMultiple = float(universeDim.height / universeDim.width)
-            aspectDim = AspectDim(1.0, hMultiple)
-            return aspectDim.scale(0.5)
+            return AspectDim(1.0, hMultiple).scale(0.5)
