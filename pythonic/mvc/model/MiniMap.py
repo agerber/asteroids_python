@@ -8,7 +8,7 @@ from PIL import ImageDraw
 
 
 class MiniMap(Sprite):
-    MINI_MAP_PERCENT = 0.42
+    MINI_MAP_PERCENT = 0.23
 
     def __init__(self):
         super().__init__()
