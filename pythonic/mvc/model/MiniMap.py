@@ -39,23 +39,22 @@ class MiniMap(Sprite):
                      miniViewPortHeight), outline=Color.GREY)
 
         for mov in CommandCenter.getInstance().movDebris:
-            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
-                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+            scaledPoint = self.scalePoint(mov.getCenter())
             g.ellipse((scaledPoint.x - 1, scaledPoint.y - 1, 2, 2), fill=Color.GREY)
 
         for mov in CommandCenter.getInstance().movFoes:
-            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
-                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+            scaledPoint = self.scalePoint(mov.getCenter())
             g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.WHITE)
 
         for mov in CommandCenter.getInstance().movFloaters:
-            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
-                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+            scaledPoint = self.scalePoint(mov.getCenter())
             g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.YELLOW)
 
         for mov in CommandCenter.getInstance().movFriends:
-            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
-                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+            scaledPoint = self.scalePoint(mov.getCenter())
             g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.CYAN)
 
 
+    def scalePoint(self, mov):
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
+                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
