@@ -40,9 +40,13 @@ class ImageLoader:
         dirs = os.listdir(rootDirectory)
 
         for dir in dirs:
+            if dir.startswith('.'):
+                continue
             currentPath = os.path.join(rootDirectory, dir)
             files = os.listdir(currentPath)
             for file in files:
+                # Ignore hidden files
+
                 split_text = os.path.splitext(file)
                 if split_text[1] == '.png' and 'do_not_load' not in split_text[0]:
                     # print(os.path.join(currentPath,file))

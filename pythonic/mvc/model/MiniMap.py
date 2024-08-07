@@ -25,7 +25,7 @@ class MiniMap(Sprite):
 
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
-        if CommandCenter.getInstance().universe == Universe.FREE_FLY:    return
+        #if CommandCenter.getInstance().universe == Universe.FREE_FLY:    return
 
         self.aspectRatio = self.aspectAdjustedRatio(CommandCenter.getInstance().getUniDim())
 
