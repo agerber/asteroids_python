@@ -94,8 +94,8 @@ class Sprite(Movable):
             new_y_pos = self.center.y + self.deltaY
 
             if CommandCenter.getInstance().isFalconPositionFixed():
-                new_x_pos -= CommandCenter.getInstance().diffX
-                new_y_pos -= CommandCenter.getInstance().diffY
+                new_x_pos -= CommandCenter.getInstance().falcon.deltaX
+                new_y_pos -= CommandCenter.getInstance().falcon.deltaY
 
             self.center.x = new_x_pos
             self.center.y = new_y_pos

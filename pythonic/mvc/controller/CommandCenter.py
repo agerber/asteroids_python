@@ -134,7 +134,7 @@ class CommandCenter:
             self.universe = Universe.FREE_FLY
 
     def isFalconPositionFixed(self):
-        return CommandCenter.getInstance().universe == Universe.FREE_FLY
+        return CommandCenter.getInstance().universe != Universe.FREE_FLY
 
     def getUniDim(self):
         return self.miniDimHash[self.universe]
