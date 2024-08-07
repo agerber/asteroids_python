@@ -74,20 +74,21 @@ class Sprite(Movable):
     def move(self) -> None:
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
-        scaler = CommandCenter.getInstance().getUniScaler()
+        scalerX = CommandCenter.getInstance().getMeta().scaleX
+        scalerY = CommandCenter.getInstance().getMeta().scaleY
 
         # right - bounds reached
-        if self.center.x  > scaler * DIM.width:
+        if self.center.x  > scalerX * DIM.width:
             self.center = Point(1, self.center.y)
         # left - bounds reached
         elif self.center.x < 0:
-            self.center = Point(scaler * DIM.width - 1, self.center.y)
+            self.center = Point(scalerX * DIM.width - 1, self.center.y)
         # bottom - bounds reached
-        elif self.center.y > scaler * DIM.height:
+        elif self.center.y > scalerY * DIM.height:
             self.center = Point(self.center.x, 1)
         # top - bounds reached
         elif self.center.y < 0:
-            self.center = Point(self.center.x, scaler * DIM.height - 1)
+            self.center = Point(self.center.x, scalerY * DIM.height - 1)
         else:
             new_x_pos = self.center.x + self.deltaX
             new_y_pos = self.center.y + self.deltaY

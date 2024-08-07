@@ -2,6 +2,7 @@ import os
 import random
 from enum import Enum
 
+from pythonic.mvc.controller.MiniMeta import MiniMeta
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
@@ -18,7 +19,8 @@ import sys
 class Universe(Enum):
     SMALL = 0,
     SMALL_FIXED_POSITION = 1,
-    BIG_FIXED_POSITION = 2
+    BIG_FIXED_POSITION = 2,
+    HORIZONTAL = 3
 
 
 class CommandCenter:
@@ -52,6 +54,7 @@ class CommandCenter:
         self.diffX = 0
         self.diffY = 0
         self.universe = Universe.SMALL
+        self.miniHash = {}
 
     @staticmethod
     def getInstance():
@@ -70,6 +73,10 @@ class CommandCenter:
         self.falcon.decrementFalconNumAndSpawn()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
+        self.miniHash[Universe.SMALL] = MiniMeta(1, 1)
+        self.miniHash[Universe.SMALL_FIXED_POSITION] = MiniMeta(1,1)
+        self.miniHash[Universe.BIG_FIXED_POSITION] = MiniMeta(3,3)
+        self.miniHash[Universe.HORIZONTAL] = MiniMeta(6,1)
         self.createStarField()
 
     def clearAll(self):
@@ -112,10 +119,15 @@ class CommandCenter:
         elif self.universe == Universe.SMALL_FIXED_POSITION:
             self.universe = Universe.BIG_FIXED_POSITION
         elif self.universe == Universe.BIG_FIXED_POSITION:
+            self.universe = Universe.HORIZONTAL
+        elif self.universe == Universe.HORIZONTAL:
             self.universe = Universe.SMALL
 
     def isFalconPositionFixed(self):
         return CommandCenter.getInstance().universe == Universe.SMALL
+
+    def getMeta(self):
+        return self.miniHash[self.universe]
 # if __name__ == "__main__":
 #     comand1 = CommandCenter()
 #     #print(comand1.getInstance().__dict__)

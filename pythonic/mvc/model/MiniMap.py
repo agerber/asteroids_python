@@ -8,7 +8,7 @@ from PIL import ImageDraw
 
 
 class MiniMap(Sprite):
-    MINI_MAP_PERCENT = 0.23
+    MINI_MAP_PERCENT = 0.31
 
     def __init__(self):
         super().__init__()
@@ -33,8 +33,8 @@ class MiniMap(Sprite):
             g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
             g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY)
 
-        miniViewPortWidth = miniWidth / BIG_UNIVERSAL_SCALER
-        miniViewPortHeight = miniHeight / BIG_UNIVERSAL_SCALER
+        miniViewPortWidth = miniWidth / CommandCenter.getInstance().getMeta().scaleX
+        miniViewPortHeight = miniHeight / CommandCenter.getInstance().getMeta().scaleY
 
         g.rectangle((0, 1, miniViewPortWidth,
                      miniViewPortHeight), outline=Color.GREY)
@@ -56,5 +56,6 @@ class MiniMap(Sprite):
             g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.CYAN)
 
     def scalePoint(self, mov):
-        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / BIG_UNIVERSAL_SCALER)),
-                     int(round(self.MINI_MAP_PERCENT * mov.y / BIG_UNIVERSAL_SCALER)))
+        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getMeta().scaleX)),
+                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getMeta().scaleX)))
