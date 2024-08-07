@@ -8,6 +8,7 @@ from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
 from pythonic.mvc.model.MiniMap import MiniMap
 from pythonic.mvc.model.Star import Star
+from pythonic.mvc.model.prime.Dimension import Dimension
 from pythonic.mvc.model.prime.LinkedList import LinkedList
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.Constants import DIM, BIG_UNIVERSAL_SCALER
@@ -73,10 +74,10 @@ class CommandCenter:
         self.falcon.decrementFalconNumAndSpawn()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
-        self.miniHash[Universe.SMALL] = MiniMeta(1, 1)
-        self.miniHash[Universe.SMALL_FREE_FLY] = MiniMeta(1,1)
-        self.miniHash[Universe.BIG] = MiniMeta(3,3)
-        self.miniHash[Universe.HORIZONTAL] = MiniMeta(6,1)
+        self.miniHash[Universe.SMALL] = Dimension(1, 1)
+        self.miniHash[Universe.SMALL_FREE_FLY] = Dimension(1,1)
+        self.miniHash[Universe.BIG] = Dimension(3,3)
+        self.miniHash[Universe.HORIZONTAL] = Dimension(6,1)
         self.createStarField()
 
     def clearAll(self):

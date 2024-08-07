@@ -74,8 +74,8 @@ class Sprite(Movable):
     def move(self) -> None:
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
-        scalerX = CommandCenter.getInstance().getMeta().scaleX
-        scalerY = CommandCenter.getInstance().getMeta().scaleY
+        scalerX = CommandCenter.getInstance().getMeta().width
+        scalerY = CommandCenter.getInstance().getMeta().height
 
         # right - bounds reached
         if self.center.x  > scalerX * DIM.width:
