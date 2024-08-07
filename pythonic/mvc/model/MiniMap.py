@@ -29,8 +29,8 @@ class MiniMap(Sprite):
         aspectDim = self.aspectAdjustedDimension(CommandCenter.getInstance().getUniDim())
 
         g = ImageDraw.Draw(imgOff)
-        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * aspectDim.w))
-        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * aspectDim.h))
+        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * aspectDim.width))
+        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * aspectDim.height))
 
         if CommandCenter.getInstance().universe == Universe.BIG:
             g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
@@ -62,8 +62,8 @@ class MiniMap(Sprite):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
         aspectDim = self.aspectAdjustedDimension(CommandCenter.getInstance().getUniDim())
 
-        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * aspectDim.w)),
-                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * aspectDim.h)))
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * aspectDim.width)),
+                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * aspectDim.height)))
 
     def aspectAdjustedDimension(self, universeDim):
         if universeDim.width == universeDim.height:

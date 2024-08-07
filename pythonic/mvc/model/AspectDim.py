@@ -1,10 +1,12 @@
 class AspectDim:
-    w = 0.0
-    h = 0.0
+    width = 0.0
+    height = 0.0
 
     def __init__(self, width, height):
-        self.w = width
-        self.h = height
+        self.width = width
+        self.height = height
 
     def scale(self, scale):
-        return AspectDim(self.w * scale, self.h * scale)
+        self.width = self.width * scale
+        self.height = self.height * scale
+        return self
