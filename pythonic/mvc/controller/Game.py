@@ -41,8 +41,8 @@ class Game(threading.Thread):
     START = 's'  # s key
     FIRE = 'space'  # space key
     MUTE = 'm'  # m-key mute
-    NUKE = 'n'  # m-key mute
-    UNIVERSE = 'c'
+    NUKE = 'f'  # f-key
+    RADAR = 'a'
 
     # for possible future use
     # HYPER = 68 # D key
