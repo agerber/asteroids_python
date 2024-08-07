@@ -44,8 +44,9 @@ class CommandCenter:
         self.paused = False
         self.muted = True
         self.frame = 0
-        self.snd = "\\".join(os.getcwd().split("\\")[:-2]) + "\\resources\\sounds\\"
-        self.img = "\\".join(os.getcwd().split("\\")[:-2]) + "\\resources\\imgs\\"
+        base_path = os.path.sep.join(os.getcwd().split(os.path.sep)[:-2])
+        self.snd = os.path.join(base_path, "resources", "sounds") + os.path.sep
+        self.img = os.path.join(base_path, "resources", "imgs") + os.path.sep
         self.falcon = Falcon()
         self.minimap = MiniMap()
         self.movDebris = LinkedList()

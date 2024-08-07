@@ -40,7 +40,7 @@ class ImageLoader:
         dirs = os.listdir(rootDirectory)
 
         for dir in dirs:
-            currentPath = rootDirectory + dir
+            currentPath = os.path.join(rootDirectory, dir)
             files = os.listdir(currentPath)
             for file in files:
                 split_text = os.path.splitext(file)

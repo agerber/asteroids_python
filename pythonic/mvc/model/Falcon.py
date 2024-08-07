@@ -14,6 +14,8 @@ from pythonic.mvc.model.prime.Constants import INITIAL_SPAWN_TIME, DIM
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.controller import ImageLoader
 
+
+
 class TurnState(Enum):
     IDLE = 0
     LEFT = 1
@@ -48,7 +50,7 @@ class Falcon(Sprite):
         # We use a dictionary that has a seek-time of O(1)
         # Using enums as keys is safer b/c we know the value exists when we reference the consts later in code.
         #avoid circular import
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        #from pythonic.mvc.controller.CommandCenter import CommandCenter
         self.rasterMap: Dict[ImageState, Image.Image] = {
             ImageState.FALCON_INVISIBLE: None,
             ImageState.FALCON: ImageLoader.ImageLoader.getInstance().IMAGES['falcon125'],
@@ -60,7 +62,7 @@ class Falcon(Sprite):
     # METHODS
 
     def move(self):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
 
         if CommandCenter.getInstance().isFalconPositionFixed():
             super().move()
