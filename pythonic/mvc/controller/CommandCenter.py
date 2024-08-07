@@ -18,7 +18,7 @@ import sys
 class Universe(Enum):
     SMALL = 0,
     SMALL_CENTERED = 1,
-    BIG = 2
+    BIG_CENTERED = 2
 
 
 class CommandCenter:
@@ -100,7 +100,7 @@ class CommandCenter:
 
     def getUniScaler(self):
         localScaler=1
-        if self.universe == Universe.BIG:
+        if self.universe == Universe.BIG_CENTERED:
             localScaler = BIG_UNIVERSAL_SCALER
         else:
             localScaler = 1
@@ -110,10 +110,12 @@ class CommandCenter:
         if self.universe == Universe.SMALL:
             self.universe = Universe.SMALL_CENTERED
         elif self.universe == Universe.SMALL_CENTERED:
-            self.universe = Universe.BIG
-        elif self.universe == Universe.BIG:
+            self.universe = Universe.BIG_CENTERED
+        elif self.universe == Universe.BIG_CENTERED:
             self.universe = Universe.SMALL
 
+    def isFalconCentered(self):
+        return CommandCenter.getInstance().universe == Universe.SMALL
 # if __name__ == "__main__":
 #     comand1 = CommandCenter()
 #     #print(comand1.getInstance().__dict__)

@@ -25,28 +25,37 @@ class MiniMap(Sprite):
         if CommandCenter.getInstance().universe == Universe.SMALL:    return
 
         g = ImageDraw.Draw(imgOff)
-        width = int(round(self.MINI_MAP_PERCENT * DIM.width))
-        height = int(round(self.MINI_MAP_PERCENT * DIM.height))
+        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
+        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
-        if CommandCenter.getInstance().universe == Universe.BIG:
-            g.rectangle((0, 1, width, height), fill=Color.BLACK)
-            g.rectangle((0, 1, width, height), outline=Color.GREY)
+        if CommandCenter.getInstance().universe == Universe.BIG_CENTERED:
+            g.rectangle((0, 1, miniWidth, miniHeight), fill=Color.BLACK)
+            g.rectangle((0, 1, miniWidth, miniHeight), outline=Color.GREY)
 
-        miniViewPortWidth = width / BIG_UNIVERSAL_SCALER
-        miniViewPortHeight = height / BIG_UNIVERSAL_SCALER
+        miniViewPortWidth = miniWidth / BIG_UNIVERSAL_SCALER
+        miniViewPortHeight = miniHeight / BIG_UNIVERSAL_SCALER
 
         g.rectangle((0, 1, miniViewPortWidth,
                      miniViewPortHeight), outline=Color.GREY)
 
-        self.drawRadarBlips(imgOff, Color.WHITE, CommandCenter.getInstance().movFoes)
-        self.drawRadarBlips(imgOff, Color.CYAN, CommandCenter.getInstance().movFloaters)
-        self.drawRadarBlips(imgOff, Color.ORANGE, CommandCenter.getInstance().movFriends)
-        self.drawRadarBlips(imgOff, Color.GREY, CommandCenter.getInstance().movDebris)
-
-    def drawRadarBlips(self, imgOff, color: Color, movables):
-        g = ImageDraw.Draw(imgOff)
-        for mov in movables:
-            print(mov.getCenter().x, " ", mov.getCenter().x)
+        for mov in CommandCenter.getInstance().movDebris:
             scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
                                 int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
-            g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 10, 10), fill=color)
+            g.ellipse((scaledPoint.x - 1, scaledPoint.y - 1, 2, 2), fill=Color.GREY)
+
+        for mov in CommandCenter.getInstance().movFoes:
+            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
+                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+            g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.WHITE)
+
+        for mov in CommandCenter.getInstance().movFloaters:
+            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
+                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+            g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.YELLOW)
+
+        for mov in CommandCenter.getInstance().movFriends:
+            scaledPoint = Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
+                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+            g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.CYAN)
+
+

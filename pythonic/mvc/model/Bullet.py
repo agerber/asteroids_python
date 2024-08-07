@@ -17,7 +17,7 @@ class Bullet(Sprite):
         self.color = Color.ORANGE  # orange
 
         # a bullet expires after 20 frames.
-        self.expiry = 20 * CommandCenter.getInstance().getUniScaler()
+        self.expiry = 20
         self.radius = 6
 
         # everything is relative to the falcon ship that fired the bullet
