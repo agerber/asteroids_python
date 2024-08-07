@@ -13,14 +13,15 @@ class MiniMap(Sprite):
     def __init__(self):
         super().__init__()
         self.team = Movable.Team.DEBRIS
-        self.center = Point(0,0)
+        self.center = Point(0, 0)
+        self.pumpkin = Color.from_RGB(200, 100, 50)
 
     def move(self):
         pass
 
     def draw(self, imgOff):
 
-        from pythonic.mvc.controller.CommandCenter import CommandCenter,Universe
+        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 
         if CommandCenter.getInstance().universe == Universe.SMALL:    return
 
@@ -54,7 +55,6 @@ class MiniMap(Sprite):
             scaledPoint = self.scalePoint(mov.getCenter())
             g.ellipse((scaledPoint.x - 2, scaledPoint.y - 2, 4, 4), fill=Color.CYAN)
 
-
     def scalePoint(self, mov):
         return Point(int(round(self.MINI_MAP_PERCENT * mov.getCenter().x / BIG_UNIVERSAL_SCALER)),
-                                int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
+                     int(round(self.MINI_MAP_PERCENT * mov.getCenter().y / BIG_UNIVERSAL_SCALER)))
