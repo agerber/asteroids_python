@@ -33,8 +33,8 @@ class MiniMap(Sprite):
             g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
             g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY)
 
-        miniViewPortWidth = miniWidth / CommandCenter.getInstance().getMeta().width
-        miniViewPortHeight = miniHeight / CommandCenter.getInstance().getMeta().height
+        miniViewPortWidth = miniWidth / CommandCenter.getInstance().getUniDim().width
+        miniViewPortHeight = miniHeight / CommandCenter.getInstance().getUniDim().height
 
         g.rectangle((0, 1, miniViewPortWidth,
                      miniViewPortHeight), outline=Color.GREY)
@@ -57,5 +57,5 @@ class MiniMap(Sprite):
 
     def scalePoint(self, mov):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
-        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getMeta().width)),
-                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getMeta().height)))
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width)),
+                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height)))

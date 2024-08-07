@@ -55,7 +55,7 @@ class CommandCenter:
         self.diffX = 0
         self.diffY = 0
         self.universe = Universe.SMALL
-        self.miniHash = {}
+        self.miniDimHash = {}
 
     @staticmethod
     def getInstance():
@@ -74,10 +74,10 @@ class CommandCenter:
         self.falcon.decrementFalconNumAndSpawn()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
-        self.miniHash[Universe.SMALL] = Dimension(1, 1)
-        self.miniHash[Universe.SMALL_FREE_FLY] = Dimension(1,1)
-        self.miniHash[Universe.BIG] = Dimension(3,3)
-        self.miniHash[Universe.HORIZONTAL] = Dimension(6,1)
+        self.miniDimHash[Universe.SMALL] = Dimension(1, 1)
+        self.miniDimHash[Universe.SMALL_FREE_FLY] = Dimension(1,1)
+        self.miniDimHash[Universe.BIG] = Dimension(3,3)
+        self.miniDimHash[Universe.HORIZONTAL] = Dimension(6,1)
         self.createStarField()
 
     def clearAll(self):
@@ -127,8 +127,8 @@ class CommandCenter:
     def isFalconPositionFixed(self):
         return CommandCenter.getInstance().universe == Universe.SMALL
 
-    def getMeta(self):
-        return self.miniHash[self.universe]
+    def getUniDim(self):
+        return self.miniDimHash[self.universe]
 # if __name__ == "__main__":
 #     comand1 = CommandCenter()
 #     #print(comand1.getInstance().__dict__)
