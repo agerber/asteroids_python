@@ -8,7 +8,7 @@ from PIL import ImageDraw
 
 
 class MiniMap(Sprite):
-    MINI_MAP_PERCENT = 0.31
+    MINI_MAP_PERCENT = 0.42
 
     def __init__(self):
         super().__init__()
@@ -22,14 +22,20 @@ class MiniMap(Sprite):
         miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width))
         miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
+        miniViewPortWidth = miniWidth / UNIVERSAL_SCALER
+        miniViewPortHeight = miniHeight / UNIVERSAL_SCALER
+
         g.rectangle((0, 1, miniWidth, miniHeight), fill=Color.BLACK)
         g.rectangle((0, 1, miniWidth, miniHeight), outline=Color.BLUE)
-        g.rectangle((0, 1, miniWidth / UNIVERSAL_SCALER,
-                     miniHeight / UNIVERSAL_SCALER), outline=Color.BLUE)
+        g.rectangle((0, 1, miniViewPortWidth,
+                     miniViewPortHeight), outline=Color.BLUE)
+
 
         from pythonic.mvc.controller.CommandCenter import CommandCenter
 
-        self.drawRadarBlips(imgOff, Color.RED, CommandCenter.getInstance().movFoes)
+        self.drawRadarBlips(imgOff, Color.WHITE, CommandCenter.getInstance().movFoes)
+        self.drawRadarBlips(imgOff, Color.CYAN, CommandCenter.getInstance().movFloaters)
+        self.drawRadarBlips(imgOff, Color.ORANGE, CommandCenter.getInstance().movFriends)
 
     def drawRadarBlips(self, imgOff, color: Color, movables):
         g = ImageDraw.Draw(imgOff)
