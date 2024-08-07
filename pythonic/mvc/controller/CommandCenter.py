@@ -21,7 +21,9 @@ class Universe(Enum):
     SMALL = 0,
     SMALL_FREE_FLY = 1,
     BIG = 2,
-    HORIZONTAL = 3
+    HORIZONTAL = 3,
+    VERTICAL = 4,
+    DARK = 5
 
 
 class CommandCenter:
@@ -78,6 +80,8 @@ class CommandCenter:
         self.miniDimHash[Universe.SMALL_FREE_FLY] = Dimension(1,1)
         self.miniDimHash[Universe.BIG] = Dimension(3,3)
         self.miniDimHash[Universe.HORIZONTAL] = Dimension(3,1)
+        self.miniDimHash[Universe.VERTICAL] = Dimension(1, 3)
+        self.miniDimHash[Universe.DARK] = Dimension(4, 4)
         self.createStarField()
 
     def clearAll(self):
@@ -122,6 +126,10 @@ class CommandCenter:
         elif self.universe == Universe.BIG:
             self.universe = Universe.HORIZONTAL
         elif self.universe == Universe.HORIZONTAL:
+            self.universe = Universe.VERTICAL
+        elif self.universe == Universe.VERTICAL:
+            self.universe = Universe.DARK
+        elif self.universe == Universe.DARK:
             self.universe = Universe.SMALL
 
     def isFalconPositionFixed(self):

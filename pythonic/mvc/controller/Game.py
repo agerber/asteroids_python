@@ -134,6 +134,9 @@ class Game(threading.Thread):
         self.gamePanel.gameFrame.mainloop()
 
     def checkNewLevel(self):
+
+        if not self.isLevelClear(): return
+
         if self.isLevelClear():
             level = CommandCenter.getInstance().level
             CommandCenter.getInstance().score += 10_000 * level
