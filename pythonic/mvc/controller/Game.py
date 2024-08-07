@@ -200,7 +200,7 @@ class Game(threading.Thread):
             sys.exit(0)
         elif keyCode == Game.UP:
             falcon.thrusting = True
-            Sound.playLoopSound("whitenoise.wav")
+            Sound.playLoopSound("whitenoise_loop.wav")
         elif keyCode == Game.LEFT:
             falcon.turnState = Falcon.TurnState.LEFT
         elif keyCode == Game.RIGHT:
@@ -217,7 +217,7 @@ class Game(threading.Thread):
             falcon.turnState = Falcon.TurnState.IDLE
         elif keyCode == Game.UP:
             falcon.thrusting = False
-            Sound.stopLoopSound("whitenoise.wav")
+            Sound.stopLoopSound("whitenoise_loop.wav")
         elif keyCode == Game.MUTE:
             CommandCenter.getInstance().getInstance().muted = not CommandCenter.getInstance().muted
             if CommandCenter.getInstance().getInstance().muted:

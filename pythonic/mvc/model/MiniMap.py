@@ -1,4 +1,4 @@
-from pythonic.mvc.model.AspectRatio import AspectRatio
+from pythonic.mvc.model.prime.AspectRatio import AspectRatio
 from pythonic.mvc.model.Falcon import Falcon
 
 from pythonic.mvc.model.Sprite import Sprite
@@ -6,7 +6,6 @@ from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.prime.Color import Color
 from pythonic.mvc.model.prime.Constants import DIM
 from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.LinkedList import LinkedList
 from PIL import ImageDraw
 
 
@@ -79,7 +78,7 @@ class MiniMap(Sprite):
             g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=color)
 
     def translatePoint(self, mov):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
 
         return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * self.aspectRatio.width)),
                      int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * self.aspectRatio.height)))

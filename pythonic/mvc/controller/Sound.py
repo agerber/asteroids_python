@@ -13,10 +13,10 @@ class Sound:
     pygame.mixer.init()
 
     # load looping clips
-    thrustClip = pygame.mixer.Sound(CommandCenter.getInstance().snd + "whitenoise.wav")
+    thrustClip = pygame.mixer.Sound(CommandCenter.getInstance().snd + "whitenoise_loop.wav")
     backgroundClip = pygame.mixer.Sound(CommandCenter.getInstance().snd + "dr_loop.wav")
     # put them into dictionary
-    soundDictionary = {"whitenoise.wav": thrustClip, "dr_loop.wav": backgroundClip}
+    soundDictionary = {"whitenoise_loop.wav": thrustClip, "dr_loop.wav": backgroundClip}
 
     @classmethod
     def playLoopSound(cls, name):
