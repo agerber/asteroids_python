@@ -20,16 +20,16 @@ class Star(Movable):
         if not CommandCenter.getInstance().isFalconPositionFixed():  return
             # right-bounds reached
         if self.center.x > DIM.width:
-            self.center = Point(1, self.center.y)
+            self.center.x = 1
             # left-bounds reached
         elif self.center.x < 0:
-            self.center = Point(DIM.width - 1, self.center.y)
+            self.center.x = DIM.width - 1
             # bottom-bounds reached
         elif self.center.y > DIM.height:
-            self.center = Point(self.center.x, 1)
+            self.center.y = 1
             # top-bounds reached
         elif self.center.y < 0:
-            self.center = Point(self.center.x, DIM.height - 1)
+            self.center.y = DIM.height - 1
             # in-bounds
         else:
             # move star in opposite direction of falcon

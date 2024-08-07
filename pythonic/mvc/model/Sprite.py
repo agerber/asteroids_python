@@ -78,17 +78,17 @@ class Sprite(Movable):
         scalerY = CommandCenter.getInstance().getUniDim().height
 
         # right - bounds reached
-        if self.center.x  > scalerX * DIM.width:
-            self.center = Point(1, self.center.y)
+        if self.center.x > scalerX * DIM.width:
+            self.center.x = 1
         # left - bounds reached
         elif self.center.x < 0:
-            self.center = Point(scalerX * DIM.width - 1, self.center.y)
+            self.center.x = scalerX * DIM.width - 1
         # bottom - bounds reached
         elif self.center.y > scalerY * DIM.height:
-            self.center = Point(self.center.x, 1)
+            self.center.y = 1
         # top - bounds reached
         elif self.center.y < 0:
-            self.center = Point(self.center.x, scalerY * DIM.height - 1)
+            self.center.y = scalerY * DIM.height - 1
         else:
             new_x_pos = self.center.x + self.deltaX
             new_y_pos = self.center.y + self.deltaY
