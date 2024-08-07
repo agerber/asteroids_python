@@ -29,8 +29,8 @@ class MiniMap(Sprite):
         miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
         if CommandCenter.getInstance().universe == Universe.BIG_CENTERED:
-            g.rectangle((0, 1, miniWidth, miniHeight), fill=Color.BLACK)
-            g.rectangle((0, 1, miniWidth, miniHeight), outline=Color.GREY)
+            g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
+            g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY)
 
         miniViewPortWidth = miniWidth / BIG_UNIVERSAL_SCALER
         miniViewPortHeight = miniHeight / BIG_UNIVERSAL_SCALER
