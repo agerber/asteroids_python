@@ -79,8 +79,8 @@ class GamePanel:
 
         g.text((DIM.width - OFFSET_LEFT, 30 ), levelText, font=self.fontNormal,
                fill=Color.WHITE)  # white color
-
-        g.text((DIM.width - OFFSET_LEFT, 30 * 2), f"Score : {CommandCenter.getInstance().score}",
+        formatted_score = "{:,}".format(CommandCenter.getInstance().score)
+        g.text((DIM.width - OFFSET_LEFT, 30 * 2), f"Score: {formatted_score}",
                font=self.fontNormal,
                fill=Color.WHITE)  # white color
 

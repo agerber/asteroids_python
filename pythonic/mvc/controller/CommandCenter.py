@@ -2,7 +2,7 @@ import os
 import random
 from enum import Enum
 
-from pythonic.mvc.controller.MiniMeta import MiniMeta
+
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
@@ -11,7 +11,7 @@ from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.Dimension import Dimension
 from pythonic.mvc.model.prime.LinkedList import LinkedList
 from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.Constants import DIM, BIG_UNIVERSAL_SCALER
+from pythonic.mvc.model.prime.Constants import DIM
 
 from concurrent.futures import ThreadPoolExecutor
 import sys
@@ -107,13 +107,13 @@ class CommandCenter:
     def isGameOver(self) -> bool:  # //if the number of falcons is zero, then game over
         return self.numFalcons < 1
 
-    def getUniScaler(self):
-        localScaler=1
-        if self.universe == Universe.BIG:
-            localScaler = BIG_UNIVERSAL_SCALER
-        else:
-            localScaler = 1
-        return localScaler
+    # def getUniScaler(self):
+    #     localScaler=1
+    #     if self.universe == Universe.BIG:
+    #         localScaler = BIG_UNIVERSAL_SCALER
+    #     else:
+    #         localScaler = 1
+    #     return localScaler
 
     def cycleUniverse(self):
         if self.universe == Universe.FREE_FLY:

@@ -4,7 +4,7 @@ from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM, BIG_UNIVERSAL_SCALER
+from pythonic.mvc.model.prime.Constants import DIM
 from pythonic.mvc.model.prime.Point import Point
 from pythonic.mvc.model.prime.LinkedList import LinkedList
 from PIL import ImageDraw
@@ -28,25 +28,27 @@ class MiniMap(Sprite):
 
         from pythonic.mvc.model.Nuke import Nuke
         from pythonic.mvc.model.NukeFloater import NukeFloater
-        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
-        if not (CommandCenter.getInstance().radar): return
+        from pythonic.mvc.controller.CommandCenter import CommandCenter
 
-        #if CommandCenter.getInstance().universe == Universe.FREE_FLY:    return
+        if not (CommandCenter.getInstance().radar): return
 
         self.aspectRatio = self.aspectAdjustedRatio(CommandCenter.getInstance().getUniDim())
 
+        # get the graphic context
         g = ImageDraw.Draw(imgOff)
+
         miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * self.aspectRatio.width))
         miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * self.aspectRatio.height))
 
 
-        #g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
+        # draw the entire universe bounding box
         g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY)
 
         miniViewPortWidth = miniWidth / CommandCenter.getInstance().getUniDim().width
         miniViewPortHeight = miniHeight / CommandCenter.getInstance().getUniDim().height
 
-        g.rectangle((0, 1, miniViewPortWidth,
+        # draw the portal bounding box
+        g.rectangle((0, 0, miniViewPortWidth,
                      miniViewPortHeight), outline=Color.GREY)
 
         # draw debris blips
