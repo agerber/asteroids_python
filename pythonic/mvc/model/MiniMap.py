@@ -16,6 +16,7 @@ class MiniMap(Sprite):
         self.team = Movable.Team.DEBRIS
         self.center = Point(0, 0)
         self.pumpkin = Color.from_RGB(200, 100, 50)
+        self.aspectDim = AspectDim(1, 1)
 
     def move(self):
         pass
@@ -26,11 +27,11 @@ class MiniMap(Sprite):
 
         if CommandCenter.getInstance().universe == Universe.FREE_FLY:    return
 
-        aspectDim = self.aspectAdjustedDimension(CommandCenter.getInstance().getUniDim())
+        self.aspectDim = self.aspectAdjustedDimension(CommandCenter.getInstance().getUniDim())
 
         g = ImageDraw.Draw(imgOff)
-        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * aspectDim.width))
-        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * aspectDim.height))
+        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * self.aspectDim.width))
+        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * self.aspectDim.height))
 
         if CommandCenter.getInstance().universe == Universe.BIG:
             g.rectangle((0, 0, miniWidth, miniHeight), fill=Color.BLACK)
@@ -60,10 +61,9 @@ class MiniMap(Sprite):
 
     def scalePoint(self, mov):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
-        aspectDim = self.aspectAdjustedDimension(CommandCenter.getInstance().getUniDim())
 
-        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * aspectDim.width)),
-                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * aspectDim.height)))
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * self.aspectDim.width)),
+                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * self.aspectDim.height)))
 
     def aspectAdjustedDimension(self, universeDim):
         if universeDim.width == universeDim.height:
