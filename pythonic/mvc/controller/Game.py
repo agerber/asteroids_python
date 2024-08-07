@@ -3,7 +3,7 @@ import time
 import threading
 
 from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.model.NewWallFloater import NewWallFloater
+
 from pythonic.mvc.model.Nuke import Nuke
 from pythonic.mvc.model.NukeFloater import NukeFloater
 from pythonic.mvc.model.ShieldFloater import ShieldFloater

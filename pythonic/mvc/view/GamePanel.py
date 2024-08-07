@@ -118,7 +118,9 @@ class GamePanel:
                                      "'S' to Start",
                                      "'P' to Pause",
                                      "'Q' to Quit",
-                                     "'M' to toggle music")
+                                     "'M' to toggle music",
+                                     "'A' to toggle radar"
+                                     )
 
         elif CommandCenter.getInstance().paused:
             self.displayTextOnScreen(imgOff, "Game Paused")

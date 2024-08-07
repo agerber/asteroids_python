@@ -16,5 +16,5 @@ class Point:
         return dist
 
     def copy(self):
-        # Create and return a new instance of Point with the same x and y values
+        # Create and return a new instance of Point with the same x and y values; effectively a clone
         return Point(self.x, self.y)

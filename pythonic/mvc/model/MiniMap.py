@@ -1,4 +1,6 @@
 from pythonic.mvc.model.AspectRatio import AspectRatio
+from pythonic.mvc.model.Falcon import Falcon
+
 from pythonic.mvc.model.Sprite import Sprite
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.prime.Color import Color
@@ -10,6 +12,7 @@ from PIL import ImageDraw
 
 class MiniMap(Sprite):
     MINI_MAP_PERCENT = 0.31
+    pumpkin = Color.from_RGB(200, 100, 50)
 
     def __init__(self):
         super().__init__()
@@ -23,7 +26,8 @@ class MiniMap(Sprite):
 
     def draw(self, imgOff):
 
-
+        from pythonic.mvc.model.Nuke import Nuke
+        from pythonic.mvc.model.NukeFloater import NukeFloater
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
         if not (CommandCenter.getInstance().radar): return
 
@@ -45,21 +49,32 @@ class MiniMap(Sprite):
         g.rectangle((0, 1, miniViewPortWidth,
                      miniViewPortHeight), outline=Color.GREY)
 
+        # draw debris blips
         for mov in CommandCenter.getInstance().movDebris:
             translatedPoint = self.translatePoint(mov.getCenter())
             g.ellipse((translatedPoint.x - 1, translatedPoint.y - 1, translatedPoint.x + 1, translatedPoint.y + 1), fill=Color.GREY)
 
+        # draw foes blips
         for mov in CommandCenter.getInstance().movFoes:
             translatedPoint = self.translatePoint(mov.getCenter())
             g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=Color.WHITE)
 
+        # draw floaters blips
         for mov in CommandCenter.getInstance().movFloaters:
             translatedPoint = self.translatePoint(mov.getCenter())
-            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=Color.YELLOW)
+            color = Color.YELLOW if isinstance(mov, NukeFloater) else Color.CYAN
+            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=color)
 
+        # draw freinds blips
         for mov in CommandCenter.getInstance().movFriends:
+            if isinstance(mov, Falcon) and CommandCenter.getInstance().falcon.shield > 0:
+                color = Color.CYAN
+            elif isinstance(mov, Nuke):
+                color = Color.YELLOW
+            else:
+                color = self.pumpkin
             translatedPoint = self.translatePoint(mov.getCenter())
-            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=Color.CYAN)
+            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=color)
 
     def translatePoint(self, mov):
         from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
