@@ -19,7 +19,7 @@ from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_
 from pythonic.mvc.model.prime.Point import Point
 from PIL import Image
 from Sound import Sound
-import sys
+import sys, gc
 
 
 # todo: refactor the code so that its in python style, and clean-up
@@ -54,6 +54,9 @@ class Game(threading.Thread):
 
     def __init__(self):
         super().__init__()
+        # Set garbage collection thresholds low, so that gc happens often. The Default thresholds: (700, 10, 10)
+        # Setting gc at this aggressive level will keep the animation smooth
+        gc.set_threshold(50, 5, 5)
         self.gamePanel = GamePanel(DIM)
         self.gamePanel.gameFrame.bind("<KeyPress>", self.keyPressed)
         self.gamePanel.gameFrame.bind("<KeyRelease>", self.keyReleased)
