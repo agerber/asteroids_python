@@ -54,9 +54,6 @@ class Game(threading.Thread):
 
     def __init__(self):
         super().__init__()
-        # Set garbage collection thresholds low, so that gc happens often. The Default thresholds: (700, 10, 10)
-        # Setting gc at this aggressive level will keep the animation smooth
-        gc.set_threshold(50, 5, 5)
         self.gamePanel = GamePanel(DIM)
         self.gamePanel.gameFrame.bind("<KeyPress>", self.keyPressed)
         self.gamePanel.gameFrame.bind("<KeyRelease>", self.keyReleased)
@@ -147,6 +144,8 @@ class Game(threading.Thread):
             ordinal = level % len(Universe)
             key = list(Universe)[ordinal]
             CommandCenter.getInstance().universe = key
+            #players will need radar in the big universes, but they can still toggle it off
+            if (ordinal > 1) : CommandCenter.getInstance().radar = True
 
             level += 1
             CommandCenter.getInstance().level = level
