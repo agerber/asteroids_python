@@ -44,7 +44,7 @@ class CommandCenter:
         self.paused = False
         self.muted = True
         self.frame = 0
-        self.radar = True
+        self.radar = False
 
         base_path = os.path.sep.join(os.getcwd().split(os.path.sep)[:-2])
         self.snd = os.path.join(base_path, "resources", "sounds") + os.path.sep
