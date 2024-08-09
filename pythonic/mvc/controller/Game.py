@@ -136,31 +136,30 @@ class Game(threading.Thread):
 
         if not self.isLevelClear(): return
 
-        if self.isLevelClear():
-            level = CommandCenter.getInstance().level
-            CommandCenter.getInstance().score += 10_000 * level
+        level = CommandCenter.getInstance().level
+        CommandCenter.getInstance().score += 10_000 * level
 
-            # CommandCenter.getInstance().setUniverse(universe)
-            ordinal = level % len(Universe)
-            key = list(Universe)[ordinal]
-            CommandCenter.getInstance().universe = key
-            #players will need radar in the big universes, but they can still toggle it off
-            if (ordinal > 1) :
-                CommandCenter.getInstance().radar = True
-            else :
-                CommandCenter.getInstance().radar = False
+        # CommandCenter.getInstance().setUniverse(universe)
+        ordinal = level % len(Universe)
+        key = list(Universe)[ordinal]
+        CommandCenter.getInstance().universe = key
+        #players will need radar in the big universes, but they can still toggle it off
+        if (ordinal > 1) :
+            CommandCenter.getInstance().radar = True
+        else :
+            CommandCenter.getInstance().radar = False
 
-            level += 1
-            CommandCenter.getInstance().level = level
+        level += 1
+        CommandCenter.getInstance().level = level
 
-            #recenter the falcon at level clears
-            CommandCenter.getInstance().falcon.center = Point(int(round(DIM.width / 2.0)), int(round(DIM.height / 2.0)))
+        #recenter the falcon at level clears
+        CommandCenter.getInstance().falcon.center = Point(int(round(DIM.width / 2.0)), int(round(DIM.height / 2.0)))
 
-            self.spawnBigAsteroids(level)
-            if (CommandCenter.getInstance().falcon.shield < INITIAL_SPAWN_TIME):
-                CommandCenter.getInstance().falcon.shield = INITIAL_SPAWN_TIME
+        self.spawnBigAsteroids(level)
+        if (CommandCenter.getInstance().falcon.shield < INITIAL_SPAWN_TIME):
+            CommandCenter.getInstance().falcon.shield = INITIAL_SPAWN_TIME
 
-            CommandCenter.getInstance().falcon.showLevel = INITIAL_SPAWN_TIME
+        CommandCenter.getInstance().falcon.showLevel = INITIAL_SPAWN_TIME
 
     def isLevelClear(self):
         asteroidFree = True
