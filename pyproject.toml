@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "asteroids1"
+version = "0.1.0"
+description = "A class-by-class translation of Asteroids game for UChicago 51036"
+authors = ["Adam Gerber <adam.gerber@yahoo.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[package.dependencies]
+Pillow="9.4.0"
+pip="23.0.1"
+wheel="0.40.0"
+confine-controller="1.0.2"
+setuptools="65.5.0"
+numpy="1.24.2"
+six="1.16.0"
+pynput="1.7.6"
+scipy="1.10.1"
+simpleaudio="1.0.4"
+pygame="2.5.2"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
