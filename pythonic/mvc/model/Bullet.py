@@ -18,7 +18,7 @@ class Bullet(Sprite):
 
         # a bullet expires after 20 frames.
         self.expiry = 20
-        self.radius = 6
+        self.radius = 11
 
         # everything is relative to the falcon ship that fired the bullet
         self.center = falcon.center.clone()
@@ -33,12 +33,6 @@ class Bullet(Sprite):
         # fire force: falcon inertia + fire-vector
         self.deltaX = falcon.deltaX + vectorX
         self.deltaY = falcon.deltaY + vectorY
-
-        # we have a reference to the falcon passed into the constructor. Let's create some kick-back.
-        # fire kick-back on the falcon: inertia - fire-vector / some arbitrary divisor
-        KICK_BACK_DIVISOR = 36.0
-        falcon.deltaX = falcon.deltaX - vectorX / KICK_BACK_DIVISOR
-        falcon.deltaY = falcon.deltaY - vectorY / KICK_BACK_DIVISOR
 
         # define the points on a cartesian grid
         points = [

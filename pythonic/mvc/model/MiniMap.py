@@ -44,19 +44,14 @@ class MiniMap(Sprite):
 
 
         # draw the entire universe bounding box
-        g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY)
+        g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY, fill=Color.BLACK)
 
         miniViewPortWidth = miniWidth / CommandCenter.getInstance().getUniDim().width
         miniViewPortHeight = miniHeight / CommandCenter.getInstance().getUniDim().height
 
         # draw the portal bounding box
         g.rectangle((0, 0, miniViewPortWidth,
-                     miniViewPortHeight), outline=Color.GREY)
-
-        # draw debris blips
-        for mov in CommandCenter.getInstance().movDebris:
-            translatedPoint = self.translatePoint(mov.getCenter())
-            g.ellipse((translatedPoint.x - 1, translatedPoint.y - 1, translatedPoint.x + 1, translatedPoint.y + 1), fill=Color.GREY)
+                     miniViewPortHeight), outline=Color.GREY,fill=Color.BLACK)
 
         # draw foes blips
         for mov in CommandCenter.getInstance().movFoes:
