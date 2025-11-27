@@ -6,7 +6,7 @@ from enum import Enum
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
-from pythonic.mvc.model.MiniMap import MiniMap
+from pythonic.mvc.model.Radar import MiniMap
 from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.Dimension import Dimension
 from pythonic.mvc.model.prime.LinkedList import LinkedList
