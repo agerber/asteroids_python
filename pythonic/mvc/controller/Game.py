@@ -142,11 +142,12 @@ class Game(threading.Thread):
         ordinal = level % len(Universe)
         key = list(Universe)[ordinal]
         CommandCenter.getInstance().universe = key
+
         #players will need radar in the big universes, but they can still toggle it off
-        if (ordinal > 1) :
-            CommandCenter.getInstance().radar = True
-        else :
-            CommandCenter.getInstance().radar = False
+        # if (ordinal > 1) :
+        #     CommandCenter.getInstance().radar = True
+        # else :
+        #     CommandCenter.getInstance().radar = False
 
         level += 1
         CommandCenter.getInstance().level = level

@@ -1,4 +1,4 @@
-from pythonic.mvc.model.prime.AspectRatio import AspectRatio
+
 from pythonic.mvc.model.Falcon import Falcon
 
 from pythonic.mvc.model.Sprite import Sprite
@@ -19,7 +19,7 @@ class MiniMap(Sprite):
         self.team = Movable.Team.DEBRIS
         self.center = Point(0, 0)
         self.PUMPKIN = Color.from_RGB(200, 100, 50)
-        self.aspectRatio = AspectRatio(1, 1)
+        #self.aspectRatio = AspectRatio(1, 1)
 
     def move(self):
         pass
@@ -34,13 +34,11 @@ class MiniMap(Sprite):
 
         if not (CommandCenter.getInstance().radar): return
 
-        self.aspectRatio = self.aspectAdjustedRatio(CommandCenter.getInstance().getUniDim())
-
         # get the graphic context
         g = ImageDraw.Draw(imgOff)
 
-        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width * self.aspectRatio.width))
-        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height * self.aspectRatio.height))
+        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width ))
+        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
 
         # draw the entire universe bounding box
@@ -89,15 +87,6 @@ class MiniMap(Sprite):
     def translatePoint(self, mov):
         from pythonic.mvc.controller.CommandCenter import CommandCenter
 
-        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width * self.aspectRatio.width)),
-                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height * self.aspectRatio.height)))
+        return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width )),
+                     int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height )))
 
-    def aspectAdjustedRatio(self, universeDim):
-        if universeDim.width == universeDim.height:
-            return AspectRatio(1.0,1.0)
-        elif universeDim.width > universeDim.height:
-            wMultiple = float(universeDim.width/universeDim.height)
-            return AspectRatio(wMultiple, 1.0).scale(0.5)
-        else:
-            hMultiple = float(universeDim.height / universeDim.width)
-            return AspectRatio(1.0, hMultiple).scale(0.5)

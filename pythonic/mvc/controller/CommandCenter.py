@@ -95,6 +95,7 @@ class CommandCenter:
         self.level = 0
         self.score = 0
         self.paused = False
+        self.radar = True
         self.numFalcons = 4
         self.falcon.decrementFalconNumAndSpawn()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
