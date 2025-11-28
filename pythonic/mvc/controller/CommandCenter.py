@@ -1,7 +1,7 @@
 import os
 import random
 from enum import Enum
-
+from typing import Optional
 
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
@@ -18,12 +18,17 @@ import sys
 
 
 class Universe(Enum):
-    FREE_FLY = 0,
-    CENTER = 1,
-    BIG = 2,
-    HORIZONTAL = 3,
-    VERTICAL = 4,
-    DARK = 5
+    FREE_FLY   = ("FREE FLY",   Dimension(1, 1))
+    CENTER     = ("CENTER",     Dimension(1, 1))
+    BIG        = ("BIG",        Dimension(3, 3))
+    HORIZONTAL = ("HORIZONTAL", Dimension(3, 1))
+    VERTICAL   = ("VERTICAL",   Dimension(1, 3))
+    DARK       = ("DARK",       Dimension(4, 4))
+
+    def __init__(self, name, dimension):
+        self.label = name            # string name
+        self.dimension = dimension    # Dimension object
+
 
 
 class CommandCenter:
@@ -45,6 +50,8 @@ class CommandCenter:
         self.muted = True
         self.frame = 0
         self.radar = False
+        self.universes = list(Universe)
+
 
         base_path = os.path.sep.join(os.getcwd().split(os.path.sep)[:-2])
         self.snd = os.path.join(base_path, "resources", "sounds") + os.path.sep
@@ -101,12 +108,6 @@ class CommandCenter:
         self.createStarField()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
-        self.miniDimHash[Universe.FREE_FLY] = Dimension(1, 1)
-        self.miniDimHash[Universe.CENTER] = Dimension(1,1)
-        self.miniDimHash[Universe.BIG] = Dimension(3,3)
-        self.miniDimHash[Universe.HORIZONTAL] = Dimension(3,1)
-        self.miniDimHash[Universe.VERTICAL] = Dimension(1, 3)
-        self.miniDimHash[Universe.DARK] = Dimension(4, 4)
 
 
     def clearAll(self):
@@ -128,33 +129,25 @@ class CommandCenter:
     def isGameOver(self) -> bool:  # //if the number of falcons is zero, then game over
         return self.numFalcons < 1
 
-    # def getUniScaler(self):
-    #     localScaler=1
-    #     if self.universe == Universe.BIG:
-    #         localScaler = BIG_UNIVERSAL_SCALER
-    #     else:
-    #         localScaler = 1
-    #     return localScaler
 
-    def cycleUniverse(self):
-        if self.universe == Universe.FREE_FLY:
-            self.universe = Universe.CENTER
-        elif self.universe == Universe.CENTER:
-            self.universe = Universe.BIG
-        elif self.universe == Universe.BIG:
-            self.universe = Universe.HORIZONTAL
-        elif self.universe == Universe.HORIZONTAL:
-            self.universe = Universe.VERTICAL
-        elif self.universe == Universe.VERTICAL:
-            self.universe = Universe.DARK
-        elif self.universe == Universe.DARK:
-            self.universe = Universe.FREE_FLY
 
     def isFalconPositionFixed(self):
         return CommandCenter.getInstance().universe != Universe.FREE_FLY
 
+    def optUni(self) -> Optional["Universe"]:
+        if self.level == 0:
+            return None
+        index = (self.level - 1) % len(self.universes)
+        return self.universes[index]
+
     def getUniDim(self):
-        return self.miniDimHash[self.universe]
+        uni = self.optUni()
+        return Dimension(1, 1) if uni is None else uni.dimension
+
+    def getUniName(self):
+        uni = self.optUni()
+        return "" if uni is None else uni.label
+
 # if __name__ == "__main__":
 #     comand1 = CommandCenter()
 #     #print(comand1.getInstance().__dict__)
