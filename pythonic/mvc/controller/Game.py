@@ -7,6 +7,7 @@ from pythonic.mvc.model.Asteroid import Asteroid
 from pythonic.mvc.model.Nuke import Nuke
 from pythonic.mvc.model.NukeFloater import NukeFloater
 from pythonic.mvc.model.ShieldFloater import ShieldFloater
+#from pythonic.mvc.model.prime.Dimension import Dimension
 from pythonic.mvc.view.GamePanel import GamePanel
 from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
 from pythonic.mvc.model import Falcon
@@ -53,6 +54,7 @@ class Game(threading.Thread):
 
     def __init__(self):
         super().__init__()
+        #self.DIM = self.setDimFromEnv()
         self.gamePanel = GamePanel(DIM)
         self.gamePanel.gameFrame.bind("<KeyPress>", self.keyPressed)
         self.gamePanel.gameFrame.bind("<KeyRelease>", self.keyReleased)
