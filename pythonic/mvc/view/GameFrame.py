@@ -13,7 +13,7 @@ class GameFrame(tk.Tk):
         self.contentFrame.pack(fill=tk.BOTH, expand=True)
 
         # Force window placement AFTER it's created
-        self.after(50, self.force_placement)
+        self.after(0, self.force_placement)
 
         # Bind close
         self.protocol("WM_DELETE_WINDOW", self.on_close)
