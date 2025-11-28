@@ -10,25 +10,8 @@ from pythonic.mvc.model.Radar import Radar
 from pythonic.mvc.model.Star import Star
 from pythonic.mvc.model.prime.Dimension import Dimension
 from pythonic.mvc.model.prime.LinkedList import LinkedList
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.Constants import DIM
 
-from concurrent.futures import ThreadPoolExecutor
 import sys
-
-
-class Universe(Enum):
-    FREE_FLY   = ("FREE FLY",   Dimension(1, 1))
-    CENTER     = ("CENTER",     Dimension(1, 1))
-    BIG        = ("BIG",        Dimension(3, 3))
-    HORIZONTAL = ("HORIZONTAL", Dimension(3, 1))
-    VERTICAL   = ("VERTICAL",   Dimension(1, 3))
-    DARK       = ("DARK",       Dimension(4, 4))
-
-    def __init__(self, name, dimension):
-        self.label = name            # string name
-        self.dimension = dimension    # Dimension object
-
 
 
 class CommandCenter:
@@ -104,11 +87,12 @@ class CommandCenter:
         self.paused = False
         self.radar = True
         self.numFalcons = 4
-        self.falcon.decrementFalconNumAndSpawn()
+
         self.createStarField()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
 
+        self.falcon.decrementFalconNumAndSpawn()
 
     def clearAll(self):
         self.movDebris.clear()
@@ -129,8 +113,6 @@ class CommandCenter:
     def isGameOver(self) -> bool:  # //if the number of falcons is zero, then game over
         return self.numFalcons < 1
 
-
-
     def isFalconPositionFixed(self):
         return CommandCenter.getInstance().universe != Universe.FREE_FLY
 
@@ -148,9 +130,15 @@ class CommandCenter:
         uni = self.optUni()
         return "" if uni is None else uni.label
 
-# if __name__ == "__main__":
-#     comand1 = CommandCenter()
-#     #print(comand1.getInstance().__dict__)
-#     comand2 = CommandCenter()
-#
-#     print(comand1 is comand2)
+class Universe(Enum):
+    FREE_FLY   = ("FREE FLY",   Dimension(1, 1))
+    CENTER     = ("CENTER",     Dimension(1, 1))
+    BIG        = ("BIG",        Dimension(3, 3))
+    HORIZONTAL = ("HORIZONTAL", Dimension(3, 1))
+    VERTICAL   = ("VERTICAL",   Dimension(1, 3))
+    DARK       = ("DARK",       Dimension(4, 4))
+
+    def __init__(self, name, dimension):
+        self.label = name            # string name
+        self.dimension = dimension    # Dimension object
+
