@@ -122,7 +122,7 @@ class GamePanel:
                                      "'A' to toggle radar"
                                      )
 
-        elif CommandCenter.getInstance().paused:
+        elif CommandCenter.getInstance().isPaused:
             self.displayTextOnScreen(imgOff, "Game Paused")
         else:
             self.moveDrawMovables(imgOff,

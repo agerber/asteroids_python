@@ -32,7 +32,7 @@ class Radar(Sprite):
         from pythonic.mvc.model.Asteroid import Asteroid
 
 
-        if not (CommandCenter.getInstance().radar): return
+        if not (CommandCenter.getInstance().isRadar): return
 
         # get the graphic context
         g = ImageDraw.Draw(imgOff)

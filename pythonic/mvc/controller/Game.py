@@ -193,7 +193,7 @@ class Game(threading.Thread):
             CommandCenter.getInstance().initGame()
             return
         if keyCode == Game.PAUSE:
-            CommandCenter.getInstance().paused = not CommandCenter.getInstance().paused
+            CommandCenter.getInstance().isPaused = not CommandCenter.getInstance().isPaused
         elif keyCode == Game.QUIT:
             sys.exit(0)
         elif keyCode == Game.UP:
@@ -217,13 +217,13 @@ class Game(threading.Thread):
             falcon.thrusting = False
             Sound.stopLoopSound("whitenoise_loop.wav")
         elif keyCode == Game.MUTE:
-            CommandCenter.getInstance().getInstance().muted = not CommandCenter.getInstance().muted
-            if CommandCenter.getInstance().getInstance().muted:
+            CommandCenter.getInstance().getInstance().isMuted = not CommandCenter.getInstance().isMuted
+            if CommandCenter.getInstance().getInstance().isMuted:
                 Sound.stopLoopSound("dr_loop.wav")
             else:
                 Sound.playLoopSound("dr_loop.wav")
         elif keyCode == Game.RADAR:
-            CommandCenter.getInstance().radar = not CommandCenter.getInstance().radar
+            CommandCenter.getInstance().isRadar = not CommandCenter.getInstance().isRadar
 
 if __name__ == "__main__":
     game = Game()

@@ -29,10 +29,10 @@ class CommandCenter:
         self.numFalcons = 0
         self.level = 0
         self.score = 0
-        self.paused = False
-        self.muted = True
+        self.isPaused = False
+        self.isMuted = True
         self.frame = 0
-        self.radar = False
+        self.isRadar = False
         self.universes = list(Universe)
 
 
@@ -41,7 +41,7 @@ class CommandCenter:
         self.img = os.path.join(base_path, "resources", "imgs") + os.path.sep
 
         self.falcon = Falcon()
-        self.minimap = Radar()
+        self.radar = Radar()
 
         # TODO The following LinkedList<Movable> are examples of the Composite design pattern which is used to allow
         # compositions of objects to be treated uniformly. Here are the elements of the Composite design pattern:
@@ -65,8 +65,7 @@ class CommandCenter:
         self.opsQueue = GameOpsQueue()
         self.diffX = 0
         self.diffY = 0
-        self.universe = Universe.FREE_FLY
-        self.miniDimHash = {}
+
 
     # TODO This is an example of the Singleton design pattern. The Singleton ensures that a class has one (and only
     # one) instance on the heap and provides a global point of access at instance. This is useful when you need to
@@ -84,13 +83,13 @@ class CommandCenter:
         self.clearAll()
         self.level = 0
         self.score = 0
-        self.paused = False
-        self.radar = True
+        self.isPaused = False
+        self.isRadar = True
         self.numFalcons = 4
 
         self.createStarField()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
-        self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
+        self.opsQueue.enqueue(self.radar, GameOp.Action.ADD)
 
         self.falcon.decrementFalconNumAndSpawn()
 
