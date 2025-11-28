@@ -9,7 +9,7 @@ from pythonic.mvc.model.prime.Point import Point
 from PIL import ImageDraw
 
 
-class MiniMap(Sprite):
+class Radar(Sprite):
     MINI_MAP_PERCENT = 0.31
     PUMPKIN = Color.from_RGB(200, 100, 50)
     LIGHT_GRAY = Color.from_RGB(200, 200, 200)
@@ -19,7 +19,7 @@ class MiniMap(Sprite):
         self.team = Movable.Team.DEBRIS
         self.center = Point(0, 0)
         self.PUMPKIN = Color.from_RGB(200, 100, 50)
-        #self.aspectRatio = AspectRatio(1, 1)
+
 
     def move(self):
         pass
