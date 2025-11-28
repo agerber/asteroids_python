@@ -31,7 +31,7 @@ class GameFrame(tk.Tk):
         self.geometry(f"{width}x{height}")
 
         # Move it to the top-left corner
-        self.geometry(f"{width}x{height}+0+0")
+        self.geometry(f"{width}x{height}+40+40")
 
         # Bring the window to the front
         self.lift()
