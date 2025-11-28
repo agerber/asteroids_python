@@ -13,7 +13,7 @@ class ImageLoader:
         if cls.__instance is None:
             cls.__instance = super(ImageLoader, cls).__new__(cls)
             return cls.__instance
-        raise Exception(" one instance of CommandCenter is already created ")
+        raise Exception(" one instance of ImageLoader is already created ")
 
     def __init__(self):
         from pythonic.mvc.controller.CommandCenter import CommandCenter

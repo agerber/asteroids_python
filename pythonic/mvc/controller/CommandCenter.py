@@ -98,6 +98,7 @@ class CommandCenter:
         self.radar = True
         self.numFalcons = 4
         self.falcon.decrementFalconNumAndSpawn()
+        self.createStarField()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.minimap, GameOp.Action.ADD)
         self.miniDimHash[Universe.FREE_FLY] = Dimension(1, 1)
@@ -106,7 +107,7 @@ class CommandCenter:
         self.miniDimHash[Universe.HORIZONTAL] = Dimension(3,1)
         self.miniDimHash[Universe.VERTICAL] = Dimension(1, 3)
         self.miniDimHash[Universe.DARK] = Dimension(4, 4)
-        self.createStarField()
+
 
     def clearAll(self):
         self.movDebris.clear()
