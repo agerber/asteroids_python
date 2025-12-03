@@ -3,17 +3,15 @@ import random
 from typing import Dict
 from PIL import Image, ImageDraw
 
-from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.model.Sprite import Sprite
-from pythonic.mvc.model.prime.Color import Color
+from mvc.model.Movable import Movable
+from mvc.model.Sprite import Sprite
+from mvc.model.prime.Color import Color
 from enum import Enum
 import math
-import os
 
-from pythonic.mvc.model.prime.Constants import INITIAL_SPAWN_TIME, DIM
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.controller import ImageLoader
-
+from mvc.model.prime.Constants import INITIAL_SPAWN_TIME, DIM
+from mvc.model.prime.Point import Point
+from mvc.controller import ImageLoader
 
 
 class TurnState(Enum):
@@ -67,7 +65,7 @@ class Falcon(Sprite):
     # METHODS
 
     def move(self):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        from mvc.controller.CommandCenter import CommandCenter
 
         if not CommandCenter.getInstance().isFalconPositionFixed():
             super().move()
@@ -151,8 +149,8 @@ class Falcon(Sprite):
     # removing him from the movFriends list. Therefore, falcon is never null, which is a good thing.
     def decrementFalconNumAndSpawn(self):
         # import locally to avoid circular import
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
-        from pythonic.mvc.controller.Sound import Sound
+        from mvc.controller.CommandCenter import CommandCenter
+        from mvc.controller.Sound import Sound
         CommandCenter.getInstance().numFalcons -= 1
         if CommandCenter.getInstance().isGameOver(): return
         Sound.playSound( "shipspawn.wav")

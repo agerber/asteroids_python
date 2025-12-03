@@ -1,9 +1,9 @@
-from pythonic.mvc.controller.Sound import Sound
+from mvc.controller.Sound import Sound
 
-from pythonic.mvc.model.prime.Constants import MAX_SHIELD
-from pythonic.mvc.model.Floater import Floater
+from mvc.model.prime.Constants import MAX_SHIELD
+from mvc.model.Floater import Floater
 
-from pythonic.mvc.model.prime.Color import Color
+from mvc.model.prime.Color import Color
 
 
 class ShieldFloater(Floater):
@@ -13,7 +13,7 @@ class ShieldFloater(Floater):
         self.expiry = 260
 
     def removeFromGame(self, list):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        from mvc.controller.CommandCenter import CommandCenter
 
         super().removeFromGame(list)
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.

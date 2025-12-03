@@ -4,15 +4,15 @@ from PIL import Image, ImageOps,ImageDraw
 import math
 from scipy import ndimage as ndi
 
-from pythonic.mvc.controller.Utils import Utils
-from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.PolarPoint import PolarPoint
+from mvc.controller.Utils import Utils
+from mvc.model.Movable import Movable
+from mvc.model.prime.Point import Point
+from mvc.model.prime.PolarPoint import PolarPoint
 from functional import seq
 from abc import abstractmethod
-from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM
-from pythonic.mvc.controller.GameOp import GameOp
+from mvc.model.prime.Color import Color
+from mvc.model.prime.Constants import DIM
+from mvc.controller.GameOp import GameOp
 
 import random
 
@@ -71,7 +71,7 @@ class Sprite(Movable):
     # subclass renders as raster or vector.
 
     def move(self) -> None:
-        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
+        from mvc.controller.CommandCenter import CommandCenter
 
         scalerX = CommandCenter.getInstance().getUniDim().width
         scalerY = CommandCenter.getInstance().getUniDim().height
@@ -109,7 +109,7 @@ class Sprite(Movable):
 
     def expire(self):
         # imported in function to avoid circular import
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        from mvc.controller.CommandCenter import CommandCenter
         if self.expiry == 1:
             CommandCenter.getInstance().opsQueue.enqueue(self, GameOp.Action.REMOVE)
 

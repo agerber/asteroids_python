@@ -1,9 +1,9 @@
 
-from pythonic.mvc.controller.CommandCenter import CommandCenter
-from pythonic.mvc.controller.Sound import Sound
-from pythonic.mvc.model.Floater import Floater
-from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import MAX_NUKE
+from mvc.controller.CommandCenter import CommandCenter
+from mvc.controller.Sound import Sound
+from mvc.model.Floater import Floater
+from mvc.model.prime.Color import Color
+from mvc.model.prime.Constants import MAX_NUKE
 
 
 class NukeFloater(Floater):

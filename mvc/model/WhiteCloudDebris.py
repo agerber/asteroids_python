@@ -1,8 +1,6 @@
-from pythonic.mvc.controller.CommandCenter import CommandCenter
-from pythonic.mvc.model.Sprite import Sprite
-from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.controller.ImageLoader import ImageLoader
-import os
+from mvc.model.Sprite import Sprite
+from mvc.model.Movable import Movable
+from mvc.controller.ImageLoader import ImageLoader
 
 
 class WhiteCloudDebris(Sprite):

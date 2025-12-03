@@ -1,7 +1,6 @@
 import simpleaudio as sa
-import os
 import pygame
-from pythonic.mvc.controller.CommandCenter import CommandCenter
+from mvc.controller.CommandCenter import CommandCenter
 from concurrent.futures import ThreadPoolExecutor
 
 

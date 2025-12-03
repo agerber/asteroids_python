@@ -1,13 +1,11 @@
-import os
-
-from pythonic.mvc.controller.CommandCenter import CommandCenter
-from pythonic.mvc.controller.GameOp import GameOp
-from pythonic.mvc.controller.Sound import Sound
+from mvc.controller.CommandCenter import CommandCenter
+from mvc.controller.GameOp import GameOp
+from mvc.controller.Sound import Sound
 from pythonic.mvc.model.Brick import Brick
-from pythonic.mvc.model.Floater import Floater
-from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM
-from pythonic.mvc.model.prime.Point import Point
+from mvc.model.Floater import Floater
+from mvc.model.prime.Color import Color
+from mvc.model.prime.Constants import DIM
+from mvc.model.prime.Point import Point
 
 
 class NewWallFloater(Floater):

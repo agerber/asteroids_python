@@ -1,8 +1,8 @@
 from typing import List
 import math
 
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.PolarPoint import PolarPoint
+from mvc.model.prime.Point import Point
+from mvc.model.prime.PolarPoint import PolarPoint
 from functional import seq
 from PIL import Image
 

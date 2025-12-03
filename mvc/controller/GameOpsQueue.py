@@ -1,7 +1,6 @@
-from threading import Lock
-from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.controller.GameOp import GameOp
-from pythonic.mvc.model.prime.LinkedList import LinkedList
+from mvc.model.Movable import Movable
+from mvc.controller.GameOp import GameOp
+from mvc.model.prime.LinkedList import LinkedList
 
 
 class GameOpsQueue:

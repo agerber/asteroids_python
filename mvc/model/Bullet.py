@@ -1,13 +1,11 @@
-import os
 from math import cos, sin, radians
 
-from pythonic.mvc.controller.CommandCenter import CommandCenter
-from pythonic.mvc.controller.Sound import Sound
-from pythonic.mvc.model.Falcon import Falcon
-from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.model.Sprite import Sprite
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.Color import Color
+from mvc.controller.Sound import Sound
+from mvc.model.Falcon import Falcon
+from mvc.model.Movable import Movable
+from mvc.model.Sprite import Sprite
+from mvc.model.prime.Point import Point
+from mvc.model.prime.Color import Color
 
 
 class Bullet(Sprite):

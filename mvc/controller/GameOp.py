@@ -1,7 +1,7 @@
 from enum import Enum
 from dataclasses import dataclass
 
-from pythonic.mvc.model.Movable import Movable
+from mvc.model.Movable import Movable
 
 @dataclass
 class GameOp:

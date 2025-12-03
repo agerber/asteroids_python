@@ -1,9 +1,8 @@
 import os
-import sys
 import traceback
 
-from pythonic.mvc.model.Sprite import Sprite
-from PIL import Image, ImageOps,ImageDraw
+from PIL import Image
+
 
 class ImageLoader:
     __instance = None
@@ -16,7 +15,7 @@ class ImageLoader:
         raise Exception(" one instance of ImageLoader is already created ")
 
     def __init__(self):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        from mvc.controller.CommandCenter import CommandCenter
         rootDirectory = CommandCenter.getInstance().img
         localMap = {}
         try:

@@ -1,7 +1,7 @@
 from enum import Enum
 from abc import ABC, abstractmethod
 
-from pythonic.mvc.model.prime.Point import Point
+from mvc.model.prime.Point import Point
 
 # TODO This ABC is an example of the Facade design pattern which provides a simplified
 # interface to a complex subsystem or set of classes. It hides the complexity by offering a more straightforward and unified API.

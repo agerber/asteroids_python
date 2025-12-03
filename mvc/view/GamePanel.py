@@ -2,14 +2,13 @@ from typing import Tuple
 
 from PIL import ImageFont, ImageTk, ImageDraw
 
-from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
-from pythonic.mvc.controller.Utils import Utils
-from pythonic.mvc.model.prime.Constants import DIM
-from pythonic.mvc.model.prime.LinkedList import LinkedList
-from pythonic.mvc.model.prime.PolarPoint import PolarPoint
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.view.GameFrame import GameFrame
-from pythonic.mvc.model.prime.Color import Color
+from mvc.controller.CommandCenter import CommandCenter
+from mvc.controller.Utils import Utils
+from mvc.model.prime.Constants import DIM
+from mvc.model.prime.PolarPoint import PolarPoint
+from mvc.model.prime.Point import Point
+from mvc.view.GameFrame import GameFrame
+from mvc.model.prime.Color import Color
 from functional import seq
 import math
 
@@ -143,7 +142,7 @@ class GamePanel:
         self.gameFrame.contentFrame.pack()
 
     def drawNumberShipsRemaining(self, imgOff):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter
+        from mvc.controller.CommandCenter import CommandCenter
         numFalcons = CommandCenter.getInstance().numFalcons
         while numFalcons > 1:
             self.drawOneShip(imgOff, numFalcons)

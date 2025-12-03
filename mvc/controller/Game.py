@@ -1,26 +1,23 @@
-import os
 import time
 import threading
-from tkinter import TclError
 
-from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.model.Asteroid import Asteroid
-from pythonic.mvc.model.Nuke import Nuke
-from pythonic.mvc.model.NukeFloater import NukeFloater
-from pythonic.mvc.model.ShieldFloater import ShieldFloater
+from mvc.model.Movable import Movable
+from mvc.model.Asteroid import Asteroid
+from mvc.model.Nuke import Nuke
+from mvc.model.NukeFloater import NukeFloater
+from mvc.model.ShieldFloater import ShieldFloater
 #from pythonic.mvc.model.prime.Dimension import Dimension
-from pythonic.mvc.view.GamePanel import GamePanel
-from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
-from pythonic.mvc.model import Falcon
-from pythonic.mvc.model.Bullet import Bullet
-from pythonic.mvc.controller.GameOp import GameOp
-from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, SPAWN_NEW_WALL_FLOATER, \
-    MAX_SHIELD, MAX_NUKE, INITIAL_SPAWN_TIME
-from pythonic.mvc.model.prime.Point import Point
+from mvc.view.GamePanel import GamePanel
+from mvc.controller.CommandCenter import CommandCenter, Universe
+from mvc.model import Falcon
+from mvc.model.Bullet import Bullet
+from mvc.controller.GameOp import GameOp
+from mvc.model.prime.Color import Color
+from mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, INITIAL_SPAWN_TIME
+from mvc.model.prime.Point import Point
 from PIL import Image
 from Sound import Sound
-import sys, gc
+import sys
 
 
 # todo: refactor the code so that its in python style, and clean-up

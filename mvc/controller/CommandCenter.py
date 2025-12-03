@@ -1,16 +1,15 @@
 import os
-import random
 from enum import Enum
 from typing import Optional
 
 
-from pythonic.mvc.model.Falcon import Falcon
-from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
-from pythonic.mvc.controller.GameOp import GameOp
-from pythonic.mvc.model.Radar import Radar
-from pythonic.mvc.model.Star import Star
-from pythonic.mvc.model.prime.Dimension import Dimension
-from pythonic.mvc.model.prime.LinkedList import LinkedList
+from mvc.model.Falcon import Falcon
+from mvc.controller.GameOpsQueue import GameOpsQueue
+from mvc.controller.GameOp import GameOp
+from mvc.model.Radar import Radar
+from mvc.model.Star import Star
+from mvc.model.prime.Dimension import Dimension
+from mvc.model.prime.LinkedList import LinkedList
 
 import sys
 
@@ -81,7 +80,6 @@ class CommandCenter:
         return CommandCenter.__instance
 
     def initGame(self):
-        from pythonic.mvc.controller.Sound import Sound
         self.clearAll()
         self.level = 0
         self.score = 0

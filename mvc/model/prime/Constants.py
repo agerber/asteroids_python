@@ -1,4 +1,4 @@
-from pythonic.mvc.model.prime.Dimension import Dimension
+from mvc.model.prime.Dimension import Dimension
 import os
 
 def getEnvInt(varName: str):

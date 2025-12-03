@@ -1,9 +1,9 @@
 import random
 
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.Color import Color
-from pythonic.mvc.model.prime.Constants import DIM
-from pythonic.mvc.model.Movable import Movable
+from mvc.model.prime.Point import Point
+from mvc.model.prime.Color import Color
+from mvc.model.prime.Constants import DIM
+from mvc.model.Movable import Movable
 from PIL import ImageDraw
 
 
@@ -15,7 +15,7 @@ class Star(Movable):
         self.color = Color.from_RGB(bright, bright, bright)  # some gray value. stars are muted from 0-225 / 255
 
     def move(self):
-        from pythonic.mvc.controller.CommandCenter import CommandCenter, Universe
+        from mvc.controller.CommandCenter import CommandCenter
 
         if not CommandCenter.getInstance().isFalconPositionFixed():  return
             # right-bounds reached

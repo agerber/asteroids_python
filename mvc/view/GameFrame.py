@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from pythonic.mvc.model.prime.Constants import DIM
+from mvc.model.prime.Constants import DIM
 
 
 class GameFrame(tk.Tk):

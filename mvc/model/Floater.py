@@ -1,7 +1,7 @@
-from pythonic.mvc.model.Movable import Movable
-from pythonic.mvc.model.Sprite import Sprite
-from pythonic.mvc.model.prime.Point import Point
-from pythonic.mvc.model.prime.Color import Color
+from mvc.model.Movable import Movable
+from mvc.model.Sprite import Sprite
+from mvc.model.prime.Point import Point
+from mvc.model.prime.Color import Color
 
 
 class Floater(Sprite):
