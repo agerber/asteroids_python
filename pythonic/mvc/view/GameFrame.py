@@ -7,6 +7,7 @@ class GameFrame(tk.Tk):
 
     def __init__(self):
         super().__init__()
+        self.running = True
 
         # Create your content
         self.contentFrame = tk.Label(self, text="Game Window Loaded")
@@ -23,10 +24,6 @@ class GameFrame(tk.Tk):
         width = DIM.width
         height = DIM.height
 
-        # Debug printing so we see what DIM actually contains
-        print("Placing window:")
-        print("Width:", width, " Height:", height)
-
         # Make sure the window has a known size first
         self.geometry(f"{width}x{height}")
 
@@ -38,4 +35,14 @@ class GameFrame(tk.Tk):
         self.focus_force()
 
     def on_close(self):
+        self.running = False  # tell game loop to stop ASAP
+
+        try:
+            self.contentFrame.config(image='')
+            self.contentFrame.image = None
+        except:
+            pass
+
         self.destroy()
+
+

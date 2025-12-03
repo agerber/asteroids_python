@@ -1,6 +1,7 @@
 import os
 import time
 import threading
+from tkinter import TclError
 
 from pythonic.mvc.model.Movable import Movable
 from pythonic.mvc.model.Asteroid import Asteroid
@@ -65,19 +66,18 @@ class Game(threading.Thread):
 
     def run(self):
         startTime = time.time() * 1000.0
-        while threading.current_thread() == self.animationThread:
-            # we use a double-buffered off-screen image called imgOff
-            imgOff = Image.new(
-                "RGB", (DIM.width, DIM.height), Color.BLACK)
-
-            self.gamePanel.update(imgOff)
-            self.checkCollisions()
-            self.checkNewLevel()
-            self.checkFloaters()
-            # this method will execute add() and remove() callbacks on Movable objects
-            self.processGameOpsQueue()
-
+        while threading.current_thread() == self.animationThread and self.gamePanel.gameFrame.running:
             try:
+                # we use a double-buffered off-screen image called imgOff
+                imgOff = Image.new(
+                    "RGB", (DIM.width, DIM.height), Color.BLACK)
+                self.gamePanel.update(imgOff)
+
+                self.checkCollisions()
+                self.checkNewLevel()
+                self.checkFloaters()
+                # this method will execute add() and remove() callbacks on Movable objects
+                self.processGameOpsQueue()
                 startTime += Game.ANIMATION_DELAY
                 time.sleep(
                     max(0.0, round(startTime - time.time() * 1000) / 1000))

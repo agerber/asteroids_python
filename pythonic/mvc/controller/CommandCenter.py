@@ -3,6 +3,7 @@ import random
 from enum import Enum
 from typing import Optional
 
+
 from pythonic.mvc.model.Falcon import Falcon
 from pythonic.mvc.controller.GameOpsQueue import GameOpsQueue
 from pythonic.mvc.controller.GameOp import GameOp
@@ -80,12 +81,17 @@ class CommandCenter:
         return CommandCenter.__instance
 
     def initGame(self):
+        from pythonic.mvc.controller.Sound import Sound
         self.clearAll()
         self.level = 0
         self.score = 0
         self.isPaused = False
         self.isRadar = True
         self.numFalcons = 4
+
+        #
+        # Sound.playLoopSound("dr_loop.wav")
+        # self.isMuted = False
 
         self.createStarField()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
