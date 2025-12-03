@@ -15,7 +15,7 @@ def setDimFromEnv():
         return Dimension(width, height)
     except (ValueError, TypeError):
         # default fallback
-        return Dimension(900, 700)
+        return Dimension(1200, 700)
 
 DIM = setDimFromEnv()
 PIXELS = 400
