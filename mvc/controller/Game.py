@@ -128,6 +128,8 @@ class Game(threading.Thread):
                 mov.removeFromGame(list)
 
     def main(self):
+        Sound.playLoopSound("dr_loop.wav")
+        CommandCenter.getInstance().getInstance().isMuted = False
         self.gamePanel.gameFrame.mainloop()
 
     def checkNewLevel(self):
@@ -216,11 +218,13 @@ class Game(threading.Thread):
             falcon.thrusting = False
             Sound.stopLoopSound("whitenoise_loop.wav")
         elif keyCode == Game.MUTE:
-            CommandCenter.getInstance().getInstance().isMuted = not CommandCenter.getInstance().isMuted
-            if CommandCenter.getInstance().getInstance().isMuted:
+            if not CommandCenter.getInstance().getInstance().isMuted:
                 Sound.stopLoopSound("dr_loop.wav")
+                CommandCenter.getInstance().getInstance().isMuted = True
             else:
                 Sound.playLoopSound("dr_loop.wav")
+                CommandCenter.getInstance().getInstance().isMuted = False
+
         elif keyCode == Game.RADAR:
             CommandCenter.getInstance().isRadar = not CommandCenter.getInstance().isRadar
 

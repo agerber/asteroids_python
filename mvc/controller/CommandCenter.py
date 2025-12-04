@@ -86,11 +86,6 @@ class CommandCenter:
         self.isPaused = False
         self.isRadar = True
         self.numFalcons = 4
-
-        #
-        # Sound.playLoopSound("dr_loop.wav")
-        # self.isMuted = False
-
         self.createStarField()
         self.opsQueue.enqueue(self.falcon, GameOp.Action.ADD)
         self.opsQueue.enqueue(self.radar, GameOp.Action.ADD)
