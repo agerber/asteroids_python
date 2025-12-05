@@ -55,10 +55,6 @@ class Asteroid(Sprite):
         self.spawnSmallerAsteroidOrDebris(self)
         CommandCenter.getInstance().score += 10
 
-        if self.getSize() > 1:
-            Sound.playSound("pillow.wav")
-        else:
-            Sound.playSound("kapow.wav")
 
     def spawnSmallerAsteroidOrDebris(self, originalAsteroid):
         size = originalAsteroid.getSize()
@@ -66,12 +62,14 @@ class Asteroid(Sprite):
             CommandCenter.getInstance(). \
                 opsQueue. \
                 enqueue(WhiteCloudDebris(originalAsteroid), GameOp.Action.ADD)
+            Sound.playSound("pillow.wav")
         else:
             size += 2
             while size > 0:
                 CommandCenter.getInstance().opsQueue \
                     .enqueue(Asteroid(originalAsteroid), GameOp.Action.ADD)
                 size -= 1
+            Sound.playSound("kapow.wav")
 
     def __str__(self):
         return "Asteroid(" + str(self.value) + ")"
@@ -92,10 +90,10 @@ class Asteroid(Sprite):
             int(pp.r * PRECISION * math.cos(pp.theta))
         )
 
-        VERTICES = random.randint(25, 31)
+        NUM_VERTICES = random.randint(25, 31)
 
         return (
-            seq.range(VERTICES)
+            seq.range(NUM_VERTICES)
             .map(lambda _: polarPointSupplier())
             .sorted(key=sortByTheta)
             .map(polarToCartesian)
