@@ -38,6 +38,19 @@ class Movable(ABC):
     def getCenter(self) -> Point:
         pass
 
+
+    # TODO The following are examples of the Observer design pattern (Lifecycle Callbacks). Lifecycle
+    # Callbacks allow an object to perform specific actions at well-defined stages of its lifecycle. Lifecycle Callbacks encapsulate
+    # logic that would otherwise be scattered throughout other classes, thereby making the code more organized and easier to manage.
+    #
+    # Subject (Game): The Game class acts as the subject that triggers changes in the state of Movable objects in the
+    # processGameOpsQueue() method.
+    #
+    # Observer (Movable): Each Movable object implements the lifecycle methods (addToGame, removeFromGame). These methods are
+    # called by the Game's processGameOpsQueue() method to notify the Movable objects about their state changes (e.g.,
+    # being added to or removed from the game).
+
+
     # lifecycle callbacks when a movable object is added or removed from the game-space. This is your opportunity
     # to add sounds or other side effects.
     @abstractmethod

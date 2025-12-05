@@ -43,15 +43,9 @@ class Asteroid(Sprite):
             self.deltaX = ast_exploded.deltaX / 1.5 + self.somePosNegValue(5 + new_smaller_size * 2)
             self.deltaY = ast_exploded.deltaY / 1.5 + self.somePosNegValue(5 + new_smaller_size * 2)
 
+    # returns the log-base-2 of the ratio (1,2,4) , which is (0,1,2).... the size
     def getSize(self) -> int:
-        value = 0
-        if self.radius == self.LARGE_RADIUS:
-            value = 0
-        elif self.radius == self.LARGE_RADIUS / 2:
-            value = 1
-        elif self.radius == self.LARGE_RADIUS / 4:
-            value = 2
-        return value
+        return int(math.log2(self.LARGE_RADIUS / self.radius))
 
     def draw(self, imgOff):
         self.renderVector(imgOff)

@@ -73,8 +73,6 @@ class Falcon(Sprite):
         if self.invisible > 0: self.invisible -= 1
         if self.shield > 0: self.shield -= 1
         if self.nukeMeter > 0: self.nukeMeter -= 1
-        # The falcon is a convenient place to decrement the showLevel variable as the falcon
-        # move() method is being called every frame (~40ms); and the falcon reference is never null.
         if self.showLevel > 0: self.showLevel -= 1
 
         # adjust orientation
