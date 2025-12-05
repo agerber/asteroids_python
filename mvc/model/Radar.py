@@ -18,14 +18,14 @@ class Radar(Sprite):
         super().__init__()
         self.team = Movable.Team.DEBRIS
         self.center = Point(0, 0)
-        self.PUMPKIN = Color.from_RGB(200, 100, 50)
+
 
 
     def move(self):
         pass
 
     def draw(self, imgOff):
-
+        # import locally to avoid circ deps
         from mvc.model.Nuke import Nuke
         from mvc.model.NukeFloater import NukeFloater
         from mvc.controller.CommandCenter import CommandCenter

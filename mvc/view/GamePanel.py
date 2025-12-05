@@ -11,13 +11,19 @@ from mvc.view.GameFrame import GameFrame
 from mvc.model.prime.Color import Color
 from functional import seq
 import math
+import os
+from PIL import ImageFont
 
 
 class GamePanel:
     def __init__(self, dim):
 
-        self.fontNormal = ImageFont.load_default()
-        self.fontBig = ImageFont.load_default()  # ImageFont.truetype("SansSerif", 12)
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        FONT_PATH = os.path.join(base_dir, "..", "..", "resources", "font", "OpenSans-SemiBold.ttf")
+        FONT_PATH = os.path.normpath(FONT_PATH)
+
+        self.fontNormal = ImageFont.truetype(FONT_PATH, 14)
+        self.fontBig = ImageFont.truetype(FONT_PATH, 20)
 
         self.fontWidth = 0
         self.fontHeight = 0
