@@ -37,19 +37,19 @@ class Radar(Sprite):
         # get the graphic context
         g = ImageDraw.Draw(imgOff)
 
-        miniWidth = int(round(self.MINI_MAP_PERCENT * DIM.width ))
-        miniHeight = int(round(self.MINI_MAP_PERCENT * DIM.height))
+        radarW = int(round(self.MINI_MAP_PERCENT * DIM.width ))
+        radarH = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
 
         # draw the entire universe bounding box
-        g.rectangle((0, 0, miniWidth, miniHeight), outline=Color.GREY, fill=Color.BLACK)
+        g.rectangle((0, 0, radarW, radarH), outline=Color.GREY, fill=Color.BLACK)
 
-        miniViewPortWidth = miniWidth / CommandCenter.getInstance().getUniDim().width
-        miniViewPortHeight = miniHeight / CommandCenter.getInstance().getUniDim().height
+        viewPortWidth = radarW / CommandCenter.getInstance().getUniDim().width
+        viewPortHeight = radarH / CommandCenter.getInstance().getUniDim().height
 
         # draw the portal bounding box
-        g.rectangle((0, 0, miniViewPortWidth,
-                     miniViewPortHeight), outline=Color.GREY,fill=Color.BLACK)
+        g.rectangle((0, 0, viewPortWidth,
+                     viewPortHeight), outline=Color.GREY,fill=Color.BLACK)
 
         # draw foes blips
         for mov in CommandCenter.getInstance().movFoes:
