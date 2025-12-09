@@ -16,7 +16,7 @@ from mvc.model.prime.Color import Color
 from mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, INITIAL_SPAWN_TIME
 from mvc.model.prime.Point import Point
 from PIL import Image
-from Sound import Sound
+from SoundLoader import SoundLoader
 import sys
 
 
@@ -128,7 +128,7 @@ class Game(threading.Thread):
                 mov.removeFromGame(list)
 
     def main(self):
-        Sound.playLoopSound("dr_loop.wav")
+        SoundLoader.playLoopSound("dr_loop.wav")
         CommandCenter.getInstance().getInstance().isMuted = False
         self.gamePanel.gameFrame.mainloop()
 
@@ -199,7 +199,7 @@ class Game(threading.Thread):
             sys.exit(0)
         elif keyCode == Game.UP:
             falcon.thrusting = True
-            Sound.playLoopSound("whitenoise_loop.wav")
+            SoundLoader.playLoopSound("whitenoise_loop.wav")
         elif keyCode == Game.LEFT:
             falcon.turnState = Falcon.TurnState.LEFT
         elif keyCode == Game.RIGHT:
@@ -216,13 +216,13 @@ class Game(threading.Thread):
             falcon.turnState = Falcon.TurnState.IDLE
         elif keyCode == Game.UP:
             falcon.thrusting = False
-            Sound.stopLoopSound("whitenoise_loop.wav")
+            SoundLoader.stopLoopSound("whitenoise_loop.wav")
         elif keyCode == Game.MUTE:
             if not CommandCenter.getInstance().getInstance().isMuted:
-                Sound.stopLoopSound("dr_loop.wav")
+                SoundLoader.stopLoopSound("dr_loop.wav")
                 CommandCenter.getInstance().getInstance().isMuted = True
             else:
-                Sound.playLoopSound("dr_loop.wav")
+                SoundLoader.playLoopSound("dr_loop.wav")
                 CommandCenter.getInstance().getInstance().isMuted = False
 
         elif keyCode == Game.RADAR:

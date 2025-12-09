@@ -4,7 +4,7 @@ from mvc.controller.CommandCenter import CommandCenter
 from concurrent.futures import ThreadPoolExecutor
 
 
-class Sound:
+class SoundLoader:
     # static member
     soundExecutor = ThreadPoolExecutor(max_workers=5)
 

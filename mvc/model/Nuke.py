@@ -1,7 +1,7 @@
 from math import cos, sin, radians
 from PIL import ImageDraw
 from mvc.controller.CommandCenter import CommandCenter
-from mvc.controller.Sound import Sound
+from mvc.controller.SoundLoader import SoundLoader
 from mvc.model.Falcon import Falcon
 from mvc.model.Movable import Movable
 from mvc.model.Sprite import Sprite
@@ -58,7 +58,7 @@ class Nuke(Sprite):
         if (CommandCenter.getInstance().falcon.nukeMeter > 0):
             list.add(self)
             CommandCenter.getInstance().falcon.nukeMeter = 0
-            Sound.playSound("nuke.wav")
+            SoundLoader.playSound("nuke.wav")
 
     def removeFromGame(self, list):
         if (self.expiry == 0):

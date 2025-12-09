@@ -1,4 +1,4 @@
-from mvc.controller.Sound import Sound
+from mvc.controller.SoundLoader import SoundLoader
 
 from mvc.model.prime.Constants import MAX_SHIELD
 from mvc.model.Floater import Floater
@@ -18,5 +18,5 @@ class ShieldFloater(Floater):
         super().removeFromGame(list)
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):
-            Sound.playSound("shieldup.wav")
+            SoundLoader.playSound("shieldup.wav")
             CommandCenter.getInstance().falcon.shield = MAX_SHIELD

@@ -1,3 +1,4 @@
+import sys
 import tkinter as tk
 
 from mvc.model.prime.Constants import DIM
@@ -40,6 +41,7 @@ class GameFrame(tk.Tk):
         try:
             self.contentFrame.config(image='')
             self.contentFrame.image = None
+            sys.exit(0)
         except:
             pass
 

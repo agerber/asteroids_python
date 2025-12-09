@@ -1,6 +1,6 @@
 from math import cos, sin, radians
 
-from mvc.controller.Sound import Sound
+from mvc.controller.SoundLoader import SoundLoader
 from mvc.model.Falcon import Falcon
 from mvc.model.Movable import Movable
 from mvc.model.Sprite import Sprite
@@ -47,4 +47,4 @@ class Bullet(Sprite):
 
     def addToGame(self, list):
         super().addToGame(list)
-        Sound.playSound("thump.wav")
+        SoundLoader.playSound("thump.wav")

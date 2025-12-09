@@ -148,10 +148,10 @@ class Falcon(Sprite):
     def decrementFalconNumAndSpawn(self):
         # import locally to avoid circular import
         from mvc.controller.CommandCenter import CommandCenter
-        from mvc.controller.Sound import Sound
+        from mvc.controller.SoundLoader import SoundLoader
         CommandCenter.getInstance().numFalcons -= 1
         if CommandCenter.getInstance().isGameOver(): return
-        Sound.playSound( "shipspawn.wav")
+        SoundLoader.playSound("shipspawn.wav")
         self.shield = INITIAL_SPAWN_TIME
         self.invisible = INITIAL_SPAWN_TIME / 4
         self.center = Point(DIM.width / 2, DIM.height / 2)

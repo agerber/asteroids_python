@@ -3,7 +3,7 @@ import math
 
 from mvc.controller.CommandCenter import CommandCenter
 from mvc.controller.GameOp import GameOp
-from mvc.controller.Sound import Sound
+from mvc.controller.SoundLoader import SoundLoader
 from mvc.model.Sprite import Sprite
 from mvc.model.Movable import Movable
 from mvc.model.WhiteCloudDebris import WhiteCloudDebris
@@ -62,14 +62,14 @@ class Asteroid(Sprite):
             CommandCenter.getInstance(). \
                 opsQueue. \
                 enqueue(WhiteCloudDebris(originalAsteroid), GameOp.Action.ADD)
-            Sound.playSound("pillow.wav")
+            SoundLoader.playSound("pillow.wav")
         else:
             size += 2
             while size > 0:
                 CommandCenter.getInstance().opsQueue \
                     .enqueue(Asteroid(originalAsteroid), GameOp.Action.ADD)
                 size -= 1
-            Sound.playSound("kapow.wav")
+            SoundLoader.playSound("kapow.wav")
 
     def __str__(self):
         return "Asteroid(" + str(self.value) + ")"
