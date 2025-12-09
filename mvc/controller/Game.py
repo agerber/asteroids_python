@@ -109,9 +109,8 @@ class Game(threading.Thread):
         while len(CommandCenter.getInstance().opsQueue) > 0:
             gameOp = CommandCenter.getInstance().opsQueue.dequeue()
             mov = gameOp.movable
-            action = gameOp.action
-            list = None
 
+            list = None
             if mov.getTeam() == Movable.Team.FOE:
                 list = CommandCenter.getInstance().movFoes
             elif mov.getTeam() == Movable.Team.FRIEND:
@@ -122,14 +121,17 @@ class Game(threading.Thread):
                 list = CommandCenter.getInstance().movDebris
 
             # the following block executes the callbacks
+            action = gameOp.action
             if action == GameOp.Action.ADD:
                 mov.addToGame(list)
             else:
                 mov.removeFromGame(list)
 
     def main(self):
+        # start the theme music
         SoundLoader.playLoopSound("dr_loop.wav")
         CommandCenter.getInstance().getInstance().isMuted = False
+
         self.gamePanel.gameFrame.mainloop()
 
     def checkNewLevel(self):
@@ -165,14 +167,12 @@ class Game(threading.Thread):
         return asteroidFree
 
     def spawnBigAsteroids(self, num):
-         # num += 10
         while num > 0:
             CommandCenter.getInstance().opsQueue.enqueue(Asteroid(0), GameOp.Action.ADD)
             num -= 1
 
     def checkFloaters(self):
         self.spawnShieldFloater()
-        # self.spawnNewWallFloater()
         self.spawnNukeFloater()
 
     def spawnNukeFloater(self):

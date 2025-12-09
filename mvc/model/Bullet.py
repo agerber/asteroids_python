@@ -33,14 +33,13 @@ class Bullet(Sprite):
         self.deltaY = falcon.deltaY + vectorY
 
         # define the points on a cartesian grid
-        points = [
+        self.cartesians = [
             Point(0, 3),  # top point
             Point(1, -1),  # right bottom
             Point(0, 0),
             Point(-1, -1),  # left bottom
         ]
 
-        self.cartesians = points
 
     def draw(self, imgOff):
         self.renderVector(imgOff)

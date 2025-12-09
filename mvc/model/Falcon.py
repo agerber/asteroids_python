@@ -121,6 +121,7 @@ class Falcon(Sprite):
             imageState = ImageState.FALCON_THR if self.thrusting else ImageState.FALCON
 
         self.renderRaster(imgOff, self.rasterMap[imageState])
+
         # draw vector shield on top of raster
         if self.shield > 0 and imageState != ImageState.FALCON_INVISIBLE:
             self.drawShield(ImageDraw.Draw(imgOff))

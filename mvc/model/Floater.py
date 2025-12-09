@@ -17,7 +17,7 @@ class Floater(Sprite):
         self.radius = 50
 
         # define the points on a cartesian grid
-        points = [
+        self.cartesians = [
             Point(5, 5),
             Point(4, 0),
             Point(5, -5),
@@ -28,7 +28,6 @@ class Floater(Sprite):
             Point(0, 4)
         ]
 
-        self.cartesians = points
 
     def draw(self, imgOff):
         self.renderVector(imgOff)

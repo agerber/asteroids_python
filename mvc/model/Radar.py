@@ -10,6 +10,7 @@ from PIL import ImageDraw
 
 
 class Radar(Sprite):
+
     MINI_MAP_PERCENT = 0.31
     PUMPKIN = Color.from_RGB(200, 100, 50)
     LIGHT_GRAY = Color.from_RGB(200, 200, 200)
