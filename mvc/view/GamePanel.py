@@ -80,10 +80,10 @@ class GamePanel:
         formatted_uni = universe_str.replace('_', ' ')
         levelText = f"Level: [{CommandCenter.getInstance().level}] {formatted_uni}"
 
-        g.text((DIM.width - OFFSET_LEFT, 30 ), levelText, font=self.fontNormal,
+        g.text((DIM.width - OFFSET_LEFT, 10 ), levelText, font=self.fontNormal,
                fill=Color.WHITE)  # white color
         formatted_score = "{:,}".format(CommandCenter.getInstance().score)
-        g.text((DIM.width - OFFSET_LEFT, 30 * 2), f"Score: {formatted_score}",
+        g.text((DIM.width - OFFSET_LEFT, 30), f"Score: {formatted_score}",
                font=self.fontNormal,
                fill=Color.WHITE)  # white color
 
