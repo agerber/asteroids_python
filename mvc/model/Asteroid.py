@@ -53,7 +53,7 @@ class Asteroid(Sprite):
     def removeFromGame(self, list):
         super().removeFromGame(list)
         self.spawnSmallerAsteroidOrDebris(self)
-        CommandCenter.getInstance().score += 10
+        CommandCenter.getInstance().score += 10 * (self.getSize() +1)
 
 
     def spawnSmallerAsteroidOrDebris(self, originalAsteroid):

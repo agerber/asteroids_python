@@ -62,24 +62,36 @@ class Game(threading.Thread):
         self.main()
 
     def run(self):
-        startTime = time.time() * 1000.0
-        while threading.current_thread() == self.animationThread and self.gamePanel.gameFrame.running:
+        FRAME_MS = Game.ANIMATION_DELAY  # e.g. 16 ms for 60fps
+        FRAME_SEC = FRAME_MS / 1000.0  # convert to seconds
+
+        while (
+                threading.current_thread() == self.animationThread and
+                self.gamePanel.gameFrame.running
+        ):
+            frame_start = time.perf_counter()
+
             try:
-                # we use a double-buffered off-screen image called imgOff
-                imgOff = Image.new(
-                    "RGB", (DIM.width, DIM.height), Color.BLACK)
+                # Render to off-screen image
+                imgOff = Image.new("RGB", (DIM.width, DIM.height), Color.BLACK)
                 self.gamePanel.update(imgOff)
 
+                # Game logic
                 self.checkCollisions()
                 self.checkNewLevel()
                 self.checkFloaters()
-                # this method will execute add() and remove() callbacks on Movable objects
                 self.processGameOpsQueue()
-                startTime += Game.ANIMATION_DELAY
-                time.sleep(
-                    max(0.0, round(startTime - time.time() * 1000) / 1000))
-            except:
-                pass
+
+            except Exception as e:
+                # NEVER swallow exceptions silently
+                print("Animation loop error:", e)
+
+            # --- Frame timing ---
+            elapsed = time.perf_counter() - frame_start
+            sleep_time = FRAME_SEC - elapsed
+
+            if sleep_time > 0:
+                time.sleep(sleep_time)
 
     def checkCollisions(self):
 
