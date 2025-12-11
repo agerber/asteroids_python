@@ -75,12 +75,12 @@ class Asteroid(Sprite):
         return "Asteroid(" + str(self.value) + ")"
 
     def generateVertices(self):
-        MAX_RADIANS_X1000 = 6283
+        MAX_RADIANS_X1000 = math.pi * 2000.0
         PRECISION = 1000.0
 
         polarPointSupplier = lambda: PolarPoint(
             (800 + random.randint(0, 199)) / PRECISION,
-            random.randint(0, MAX_RADIANS_X1000 - 1) / PRECISION
+            random.randint(0, int(MAX_RADIANS_X1000)) / PRECISION
         )
 
         sortByTheta = lambda pp: pp.theta
