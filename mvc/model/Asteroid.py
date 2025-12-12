@@ -75,19 +75,21 @@ class Asteroid(Sprite):
         return "Asteroid(" + str(self.value) + ")"
 
     def generateVertices(self):
-        MAX_RADIANS_X1000 = math.pi * 2000.0
-        PRECISION = 1000.0
+        MAX_RADIANS = 2 * math.pi  # full circle
 
+        # Random radius ~0.8 to 1.0 (similar shape as original)
         polarPointSupplier = lambda: PolarPoint(
-            (800 + random.randint(0, 199)) / PRECISION,
-            random.randint(0, int(MAX_RADIANS_X1000)) / PRECISION
+            random.uniform(0.8, 1.0),  # r
+            random.uniform(0.0, MAX_RADIANS)  # theta
         )
 
+        # Sort by angle
         sortByTheta = lambda pp: pp.theta
 
+        # Convert polar → cartesian, scaling up for pixel coordinates
         polarToCartesian = lambda pp: Point(
-            int(pp.r * PRECISION * math.sin(pp.theta)),
-            int(pp.r * PRECISION * math.cos(pp.theta))
+            int(pp.r * 1000 * math.sin(pp.theta)),
+            int(pp.r * 1000 * math.cos(pp.theta))
         )
 
         NUM_VERTICES = random.randint(25, 31)
@@ -99,6 +101,7 @@ class Asteroid(Sprite):
             .map(polarToCartesian)
             .list()
         )
+
 
 
 
