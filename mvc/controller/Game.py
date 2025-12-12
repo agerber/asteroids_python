@@ -1,5 +1,6 @@
 import time
 import threading
+from tkinter import TclError
 
 from mvc.model.Movable import Movable
 from mvc.model.Asteroid import Asteroid
@@ -18,7 +19,7 @@ from mvc.model.prime.Point import Point
 from PIL import Image
 from SoundLoader import SoundLoader
 import sys
-
+from PIL import ImageTk
 
 # todo: refactor the code so that its in python style, and clean-up
 class Game(threading.Thread):
@@ -81,6 +82,9 @@ class Game(threading.Thread):
                 self.checkNewLevel()
                 self.checkFloaters()
                 self.processGameOpsQueue()
+
+            except TclError:
+                print("Window closed — exiting cleanly.")
 
             except Exception as e:
                 # NEVER swallow exceptions silently
@@ -242,3 +246,13 @@ class Game(threading.Thread):
 
 if __name__ == "__main__":
     game = Game()
+
+# Monkey-patch to silence exit errors
+def safe_del(self):
+    try:
+        if hasattr(self, "_PhotoImage__photo"):
+            self.__photo = getattr(self, "_PhotoImage__photo", None)
+    except Exception:
+        pass
+
+ImageTk.PhotoImage.__del__ = safe_del
