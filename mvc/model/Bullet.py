@@ -19,6 +19,7 @@ class Bullet(Sprite):
         self.radius = 11
 
         # everything is relative to the falcon ship that fired the bullet.
+        # Try removing the clone call, and run, then see how the falcon behaves!
         self.center = falcon.center.clone()
 
         # set the bullet orientation to the falcon (ship) orientation
