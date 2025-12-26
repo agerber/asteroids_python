@@ -41,6 +41,7 @@ class Game(threading.Thread):
     MUTE = 'm'  # m-key mute
     NUKE = 'f'  # f-key
     RADAR = 'a'
+    SMART = 'v'
 
     # for possible future use
     # HYPER = 68 # D key
@@ -233,6 +234,10 @@ class Game(threading.Thread):
         elif keyCode == Game.UP:
             falcon.thrusting = False
             SoundLoader.stopLoopSound("whitenoise_loop.wav")
+
+        elif keyCode == Game.SMART:
+            CommandCenter.getInstance().killAll()
+
         elif keyCode == Game.MUTE:
             if not CommandCenter.getInstance().getInstance().isMuted:
                 SoundLoader.stopLoopSound("dr_loop.wav")

@@ -92,6 +92,11 @@ class CommandCenter:
 
         self.falcon.decrementFalconNumAndSpawn()
 
+    def killAll(self):
+        for mov in self.movFoes:
+            self.opsQueue.enqueue(mov, GameOp.Action.REMOVE)
+
+
     def clearAll(self):
         self.movDebris.clear()
         self.movFriends.clear()
