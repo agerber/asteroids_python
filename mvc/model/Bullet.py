@@ -42,8 +42,8 @@ class Bullet(Sprite):
         ]
 
 
-    def draw(self, imgOff):
-        self.renderVector(imgOff)
+    def draw(self, g):
+        self.renderVector(g)
 
     def addToGame(self, list):
         super().addToGame(list)

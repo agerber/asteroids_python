@@ -29,8 +29,8 @@ class WhiteCloudDebris(Sprite):
         self.deltaY = explodingSprite.deltaY
         self.radius = int(explodingSprite.radius * 1.3)
 
-    def draw(self, imgOff):
-        self.renderRaster(imgOff, self.rasterMap[self.index])
+    def draw(self, g):
+        self.renderRaster(g, self.rasterMap[self.index])
         # hold the image for SLOW_MO frames to slow down the dust cloud animation
         # we already have a simple decrement-to-zero counter with expiry; see move() method of Sprite.
         if self.expiry % WhiteCloudDebris.SLOW_MO == 0:

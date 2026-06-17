@@ -13,10 +13,8 @@ from mvc.controller.CommandCenter import CommandCenter, Universe
 from mvc.model import Falcon
 from mvc.model.Bullet import Bullet
 from mvc.controller.GameOp import GameOp
-from mvc.model.prime.Color import Color
 from mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, INITIAL_SPAWN_TIME
 from mvc.model.prime.Point import Point
-from PIL import Image
 from SoundLoader import SoundLoader
 import sys
 from PIL import ImageTk
@@ -74,9 +72,9 @@ class Game(threading.Thread):
             frame_start = time.perf_counter()
 
             try:
-                # Render to off-screen image
-                imgOff = Image.new("RGB", (DIM.width, DIM.height), Color.BLACK)
-                self.gamePanel.update(imgOff)
+                # GamePanel.update() manages its own off-screen double-buffer
+                # (mirrors Java's GamePanel.update(Graphics g)).
+                self.gamePanel.update()
 
                 # Game logic
                 self.checkCollisions()

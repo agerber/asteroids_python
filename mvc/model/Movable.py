@@ -21,7 +21,7 @@ class Movable(ABC):
         pass
 
     @abstractmethod
-    def draw(self, imgOff):
+    def draw(self, g):
         pass
 
 

@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from PIL import ImageFont, ImageTk, ImageDraw
+from PIL import Image, ImageFont, ImageTk
 
 from mvc.controller.CommandCenter import CommandCenter
 from mvc.controller.Utils import Utils
@@ -8,11 +8,11 @@ from mvc.model.prime.Constants import DIM
 from mvc.model.prime.PolarPoint import PolarPoint
 from mvc.model.prime.Point import Point
 from mvc.view.GameFrame import GameFrame
+from mvc.view.Graphics import Graphics
 from mvc.model.prime.Color import Color
 from functional import seq
 import math
 import os
-from PIL import ImageFont
 
 
 class GamePanel:
@@ -72,20 +72,18 @@ class GamePanel:
         self.gameFrame.title("Game Base")
         self.gameFrame.resizable = False
 
-    def drawFalconStatus(self, imgOff):
-        g = ImageDraw.Draw(imgOff)
+    def drawFalconStatus(self, g):
         OFFSET_LEFT = 220
 
         universe_str = CommandCenter.getInstance().universe.name
         formatted_uni = universe_str.replace('_', ' ')
         levelText = f"Level: [{CommandCenter.getInstance().level}] {formatted_uni}"
 
-        g.text((DIM.width - OFFSET_LEFT, 10 ), levelText, font=self.fontNormal,
-               fill=Color.WHITE)  # white color
+        g.setColor(Color.WHITE)
+        g.setFont(self.fontNormal)
+        g.drawString(levelText, DIM.width - OFFSET_LEFT, 10)
         formatted_score = "{:,}".format(CommandCenter.getInstance().score)
-        g.text((DIM.width - OFFSET_LEFT, 30), f"Score: {formatted_score}",
-               font=self.fontNormal,
-               fill=Color.WHITE)  # white color
+        g.drawString(f"Score: {formatted_score}", DIM.width - OFFSET_LEFT, 30)
 
 
         statusArray = []
@@ -101,20 +99,26 @@ class GamePanel:
 
         # draw the statusArray strings to middle of screen. unpack the list to satisfy the var-args definition.
         if statusArray:
-            self.displayTextOnScreen(imgOff, *statusArray)
+            self.displayTextOnScreen(g, *statusArray)
 
         # draw PYTHON VERSION and the frame number to bottom left screen
-        g.text((self.fontWidth + 10, DIM.height - (self.fontHeight + 22)),
-               f"FRAME[PYTHON]:{CommandCenter.getInstance().frame}",
-               font=self.fontNormal,
-               fill=Color.WHITE)  # white color
+        g.drawString(f"FRAME[PYTHON]:{CommandCenter.getInstance().frame}",
+                     self.fontWidth + 10,
+                     DIM.height - (self.fontHeight + 22))
 
-    def update(self, imgOff):
+    # mirrors Java's GamePanel.update(Graphics g): creates an off-screen
+    # double-buffer, draws into its Graphics context, then blits the
+    # finished image to the on-screen tk Label in one swoop to avoid
+    # flickering.
+    def update(self):
+
+        imgOff = Image.new("RGB", (DIM.width, DIM.height), Color.BLACK)
+        g = Graphics(imgOff)
 
         CommandCenter.getInstance().incrementFrame()
 
         if CommandCenter.getInstance().isGameOver():
-            self.displayTextOnScreen(imgOff,
+            self.displayTextOnScreen(g,
                                      "GAME OVER",
                                      "use the arrow keys to turn and thrust",
                                      "use the space bar to fire",
@@ -126,35 +130,32 @@ class GamePanel:
                                      )
 
         elif CommandCenter.getInstance().isPaused:
-            self.displayTextOnScreen(imgOff, "Game Paused")
+            self.displayTextOnScreen(g, "Game Paused")
         else:
-            self.moveDrawMovables(imgOff,
+            self.moveDrawMovables(g,
                                   CommandCenter.getInstance().movDebris,
                                   CommandCenter.getInstance().movFloaters,
                                   CommandCenter.getInstance().movFoes,
                                   CommandCenter.getInstance().movFriends)
 
-            self.drawMeters(imgOff)
-            self.drawFalconStatus(imgOff)
-            self.drawNumberShipsRemaining(imgOff)
+            self.drawMeters(g)
+            self.drawFalconStatus(g)
+            self.drawNumberShipsRemaining(g)
 
-        # in one fell-swoop, we copy the off-screen-image to a new on-screen-image and show it for ~40ms. This is the
-        # double-buffering. If you attempt to draw directly on the gameFrame, you will see flickering.
-        imgOnScreen = ImageTk.PhotoImage(imgOff)
+        # blit the finished off-screen image onto the tk Label.
+        imgOnScreen = ImageTk.PhotoImage(g.image)
         self.gameFrame.contentFrame.configure(image=imgOnScreen)
         self.gameFrame.contentFrame.image = imgOnScreen
         self.gameFrame.contentFrame.pack()
 
-    def drawNumberShipsRemaining(self, imgOff):
+    def drawNumberShipsRemaining(self, g):
         from mvc.controller.CommandCenter import CommandCenter
         numFalcons = CommandCenter.getInstance().numFalcons
         while numFalcons > 1:
-            self.drawOneShip(imgOff, numFalcons)
+            self.drawOneShip(g, numFalcons)
             numFalcons -= 1
 
-    def drawOneShip(self, imgOff, offSet):
-
-        g = ImageDraw.Draw(imgOff)  # get graphics context from the off-screen-image
+    def drawOneShip(self, g, offSet):
 
         # rotate the ship 90 degrees
         DEGREES_90 = -90
@@ -187,47 +188,43 @@ class GamePanel:
 
         # 5: draw the polygon using the List of raw polars from above, applying mapping transforms as required
 
-        g.polygon(
+        g.setColor(Color.ORANGE)
+        g.drawPolygon(
             seq(polars)\
                 .map(rotatePolarByOrientation)\
                 .map(polarToCartesian)\
                 .map(adjustForLocation)\
                 .map(lambda point: (point.x, point.y))\
-                .list(),
-            outline=Color.ORANGE)
+                .list())
 
 
-    def drawOneMeter(self, imgOff, color: Tuple, offSet: int, percent: int):
-        # get the graphics (g) context of the off-screen-image
-        g = ImageDraw.Draw(imgOff)
-
+    def drawOneMeter(self, g, color: Tuple, offSet: int, percent: int):
         xValBase = DIM.width - (100 + 120 * offSet)
-        yValBase = DIM.height - 10
+        yValBase = DIM.height - 20
 
-        upperLeftPoint = (xValBase, yValBase - 10)
-        bottomRightFillPoint = ((xValBase + percent), yValBase)
-        bottomRightStrokePoint = ((xValBase + 100), yValBase)
+        g.setColor(color)
+        g.fillRect(xValBase, yValBase, percent, 10)
+        g.setColor(Color.GREY)
+        g.drawRect(xValBase, yValBase, 100, 10)
 
-        g.rectangle((upperLeftPoint, bottomRightFillPoint), fill=color)
-        g.rectangle((upperLeftPoint, bottomRightStrokePoint), outline=Color.GREY)
-
-    def drawMeters(self, imgOff):
+    def drawMeters(self, g):
 
         sheildValue = CommandCenter.getInstance().falcon.shield // 2
         nukeValue = CommandCenter.getInstance().falcon.nukeMeter // 6
-        self.drawOneMeter(imgOff, color=Color.CYAN, offSet=1, percent=sheildValue)
-        self.drawOneMeter(imgOff, color=Color.YELLOW, offSet=2, percent=nukeValue)
+        self.drawOneMeter(g, color=Color.CYAN, offSet=1, percent=sheildValue)
+        self.drawOneMeter(g, color=Color.YELLOW, offSet=2, percent=nukeValue)
 
-    def moveDrawMovables(self, imgOff, *teams):
+    def moveDrawMovables(self, g, *teams):
         for team in teams:
             for mov in team:
                 mov.move()
-                mov.draw(imgOff)
+                mov.draw(g)
 
     # var-args as lines
-    def displayTextOnScreen(self, imgOff, *lines):
+    def displayTextOnScreen(self, g, *lines):
+        g.setColor(Color.WHITE)
+        g.setFont(self.fontNormal)
         yVal = 0
         for line in lines:
-            ImageDraw.Draw(imgOff).text((DIM.width // 2 - len(line) * 2.5 - 10, 200 + yVal), line, font=self.fontNormal,
-                                        fill=Color.WHITE, align="center")
+            g.drawString(line, DIM.width // 2 - len(line) * 2.5 - 10, 200 + yVal)
             yVal += 40

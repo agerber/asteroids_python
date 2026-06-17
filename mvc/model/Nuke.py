@@ -1,5 +1,4 @@
 from math import cos, sin, radians
-from PIL import ImageDraw
 from mvc.controller.CommandCenter import CommandCenter
 from mvc.controller.SoundLoader import SoundLoader
 from mvc.model.Falcon import Falcon
@@ -34,12 +33,12 @@ class Nuke(Sprite):
         self.deltaX = falcon.deltaX + vectorX
         self.deltaY = falcon.deltaY + vectorY
 
-    def draw(self, imgOff):
-        # get the graphics context of the imgOff
-        g = ImageDraw.Draw(imgOff)
-        g.ellipse((self.getCenter().x - self.getRadius(), self.getCenter().y - self.getRadius(),
-                   self.getCenter().x + self.getRadius(), self.getCenter().y + self.getRadius())
-                  , outline=Color.YELLOW)
+    def draw(self, g):
+        g.setColor(Color.YELLOW)
+        g.drawOval(self.getCenter().x - self.getRadius(),
+                   self.getCenter().y - self.getRadius(),
+                   self.getRadius() * 2,
+                   self.getRadius() * 2)
 
     def move(self) -> None:
         super().move()

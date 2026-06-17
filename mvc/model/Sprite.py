@@ -1,6 +1,6 @@
 import dataclasses
 from typing import List, Dict, Any
-from PIL import Image, ImageOps,ImageDraw
+from PIL import Image, ImageOps
 import math
 from scipy import ndimage as ndi
 
@@ -115,7 +115,7 @@ class Sprite(Movable):
 
         self.expiry -= 1
 
-    def renderRaster(self, imgOff, bufferedImage):
+    def renderRaster(self, g, bufferedImage):
 
         if bufferedImage is None:
             return
@@ -138,17 +138,17 @@ class Sprite(Movable):
 
             transformed = ImageOps.flip(transformed)
             transformed = Utils.transparent(transformed)
-            imgOff.paste(transformed, (round(self.center.x - width / 2.0), round(self.center.y - height / 2.0)))
+            g.drawImage(transformed,
+                        round(self.center.x - width / 2.0),
+                        round(self.center.y - height / 2.0))
         except Exception as e:
             print(e.args)
 
-    def renderVector(self, imgOff):
-
-        g = ImageDraw.Draw(imgOff) # get graphics context from the off-screen-image
+    def renderVector(self, g):
 
         # To render this Sprite in vector mode, we need to, 1: convert raw cartesians to raw polars, 2: rotate polars
         # for orientation of sprite. 3: Convert back to cartesians 4: adjust for center-point (location).
-        # and 5: pass the points, along with color, to g.polygon().
+        # and 5: pass the points, along with color, to g.drawPolygon().
 
         # 1: convert raw cartesians to raw polars (used later in seq below).
         # The reason we convert cartesian-points to polar-points is that it's much easier to rotate polar-points
@@ -181,11 +181,11 @@ class Sprite(Movable):
         # where the output of one operation becomes the input for the next, forming a "pipeline" of transformations and
         # processing steps. This is a key concept in functional programming.
 
-        g.polygon(
+        g.setColor(self.color)
+        g.drawPolygon(
             seq(polars)\
                 .map(rotatePolarByOrientation)\
                 .map(polarToCartesian)\
                 .map(adjustForLocation)\
                 .map(lambda point: (point.x, point.y))\
-                .list(),
-            outline=self.color)
+                .list())

@@ -4,7 +4,6 @@ from mvc.model.prime.Point import Point
 from mvc.model.prime.Color import Color
 from mvc.model.prime.Constants import DIM
 from mvc.model.Movable import Movable
-from PIL import ImageDraw
 
 
 class Star(Movable):
@@ -38,11 +37,9 @@ class Star(Movable):
             self.center.x = int(round(new_x_pos))
             self.center.y =  int(round(new_y_pos))
 
-    def draw(self, imgOff):
-        # get the graphics context of the off-screen-image and draw to it
-        g = ImageDraw.Draw(imgOff)
-        g.ellipse((self.center.x, self.center.y,
-                   self.center.x + self.getRadius(), self.center.y + self.getRadius()), outline=self.color)
+    def draw(self, g):
+        g.setColor(self.color)
+        g.drawOval(self.center.x, self.center.y, self.getRadius(), self.getRadius())
 
     def getRadius(self) -> int:
         return 1

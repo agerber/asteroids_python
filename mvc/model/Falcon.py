@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import random
 from typing import Dict
-from PIL import Image, ImageDraw
+from PIL import Image
 
 from mvc.model.Movable import Movable
 from mvc.model.Sprite import Sprite
@@ -109,7 +109,7 @@ class Falcon(Sprite):
             else:
                 self.maxSpeedAttained = True
 
-    def draw(self, imgOff):
+    def draw(self, g):
 
 
         imageState = None
@@ -120,23 +120,28 @@ class Falcon(Sprite):
         else:
             imageState = ImageState.FALCON_THR if self.thrusting else ImageState.FALCON
 
-        self.renderRaster(imgOff, self.rasterMap[imageState])
+        self.renderRaster(g, self.rasterMap[imageState])
 
         # draw vector shield on top of raster
         if self.shield > 0 and imageState != ImageState.FALCON_INVISIBLE:
-            self.drawShield(ImageDraw.Draw(imgOff))
+            self.drawShield(g)
 
-        if (self.nukeMeter > 0):  self.drawNukeHalo(ImageDraw.Draw(imgOff))
+        if (self.nukeMeter > 0):  self.drawNukeHalo(g)
 
     def drawShield(self, g):
-        g.ellipse((self.getCenter().x - self.getRadius(), self.getCenter().y - self.getRadius(),
-                   self.getCenter().x + self.getRadius(), self.getCenter().y + self.getRadius())
-                  , outline=Color.CYAN)
+        g.setColor(Color.CYAN)
+        g.drawOval(self.getCenter().x - self.getRadius(),
+                   self.getCenter().y - self.getRadius(),
+                   self.getRadius() * 2,
+                   self.getRadius() * 2)
+
     def drawNukeHalo(self, g):
         if (self.invisible > 0): return
-        g.ellipse((self.getCenter().x - self.getRadius()+10, self.getCenter().y - self.getRadius()+10,
-                   self.getCenter().x + self.getRadius()-10, self.getCenter().y + self.getRadius()-10)
-                  , outline=Color.YELLOW)
+        g.setColor(Color.YELLOW)
+        g.drawOval(self.getCenter().x - self.getRadius() + 10,
+                   self.getCenter().y - self.getRadius() + 10,
+                   (self.getRadius() - 10) * 2,
+                   (self.getRadius() - 10) * 2)
 
     def removeFromGame(self, list):
         # The falcon is never actually removed from the game-space; instead we decrement numFalcons
@@ -150,6 +155,7 @@ class Falcon(Sprite):
         # import locally to avoid circular import
         from mvc.controller.CommandCenter import CommandCenter
         from mvc.controller.SoundLoader import SoundLoader
+
         CommandCenter.getInstance().numFalcons -= 1
         if CommandCenter.getInstance().isGameOver(): return
         SoundLoader.playSound("shipspawn.wav")

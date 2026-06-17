@@ -6,7 +6,6 @@ from mvc.model.Movable import Movable
 from mvc.model.prime.Color import Color
 from mvc.model.prime.Constants import DIM
 from mvc.model.prime.Point import Point
-from PIL import ImageDraw
 
 
 class Radar(Sprite):
@@ -25,7 +24,7 @@ class Radar(Sprite):
     def move(self):
         pass
 
-    def draw(self, imgOff):
+    def draw(self, g):
         # import locally to avoid circ deps
         from mvc.model.Nuke import Nuke
         from mvc.model.NukeFloater import NukeFloater
@@ -35,22 +34,24 @@ class Radar(Sprite):
 
         if not (CommandCenter.getInstance().isRadar): return
 
-        # get the graphic context
-        g = ImageDraw.Draw(imgOff)
-
         radarW = int(round(self.MINI_MAP_PERCENT * DIM.width ))
         radarH = int(round(self.MINI_MAP_PERCENT * DIM.height))
 
 
-        # draw the entire universe bounding box
-        g.rectangle((0, 0, radarW, radarH), outline=Color.GREY, fill=Color.BLACK)
+        # draw the entire universe bounding box (black fill, grey border)
+        g.setColor(Color.BLACK)
+        g.fillRect(0, 0, radarW, radarH)
+        g.setColor(Color.GREY)
+        g.drawRect(0, 0, radarW, radarH)
 
-        viewPortWidth = radarW / CommandCenter.getInstance().getUniDim().width
-        viewPortHeight = radarH / CommandCenter.getInstance().getUniDim().height
+        viewPortWidth = int(radarW / CommandCenter.getInstance().getUniDim().width)
+        viewPortHeight = int(radarH / CommandCenter.getInstance().getUniDim().height)
 
         # draw the portal bounding box
-        g.rectangle((0, 0, viewPortWidth,
-                     viewPortHeight), outline=Color.GREY,fill=Color.BLACK)
+        g.setColor(Color.BLACK)
+        g.fillRect(0, 0, viewPortWidth, viewPortHeight)
+        g.setColor(Color.GREY)
+        g.drawRect(0, 0, viewPortWidth, viewPortHeight)
 
         # draw foes blips
         for mov in CommandCenter.getInstance().movFoes:
@@ -59,22 +60,25 @@ class Radar(Sprite):
 
             if asteroid.getSize() == 0:
                 # large
-                g.ellipse((translatedPoint.x - 3, translatedPoint.y - 3, translatedPoint.x + 3, translatedPoint.y + 3), fill=Color.WHITE)
+                g.setColor(Color.WHITE)
+                g.fillOval(translatedPoint.x - 3, translatedPoint.y - 3, 6, 6)
             elif asteroid.getSize() == 1:
                 # medium
-                g.ellipse((translatedPoint.x - 3, translatedPoint.y - 3, translatedPoint.x + 3, translatedPoint.y + 3))
+                g.setColor(Color.WHITE)
+                g.drawOval(translatedPoint.x - 3, translatedPoint.y - 3, 6, 6)
             else:
                 # small or default
-                g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2))
+                g.setColor(Color.WHITE)
+                g.drawOval(translatedPoint.x - 2, translatedPoint.y - 2, 4, 4)
 
 
         # draw floaters blips
         for mov in CommandCenter.getInstance().movFloaters:
             translatedPoint = self.translatePoint(mov.getCenter())
-            color = Color.YELLOW if isinstance(mov, NukeFloater) else Color.CYAN
-            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=color)
+            g.setColor(Color.YELLOW if isinstance(mov, NukeFloater) else Color.CYAN)
+            g.fillOval(translatedPoint.x - 2, translatedPoint.y - 2, 4, 4)
 
-        # draw freinds blips
+        # draw friends blips
         for mov in CommandCenter.getInstance().movFriends:
             if isinstance(mov, Falcon) and CommandCenter.getInstance().falcon.shield > 0:
                 color = Color.CYAN
@@ -83,7 +87,8 @@ class Radar(Sprite):
             else:
                 color = self.PUMPKIN
             translatedPoint = self.translatePoint(mov.getCenter())
-            g.ellipse((translatedPoint.x - 2, translatedPoint.y - 2, translatedPoint.x + 2, translatedPoint.y + 2), fill=color)
+            g.setColor(color)
+            g.fillOval(translatedPoint.x - 2, translatedPoint.y - 2, 4, 4)
 
     def translatePoint(self, mov):
         from mvc.controller.CommandCenter import CommandCenter

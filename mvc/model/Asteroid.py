@@ -47,8 +47,8 @@ class Asteroid(Sprite):
     def getSize(self) -> int:
         return int(math.log2(self.LARGE_RADIUS / self.radius))
 
-    def draw(self, imgOff):
-        self.renderVector(imgOff)
+    def draw(self, g):
+        self.renderVector(g)
 
     def removeFromGame(self, list):
         super().removeFromGame(list)
