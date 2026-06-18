@@ -36,7 +36,9 @@ class CommandCenter:
         self.universes = list(Universe)
 
 
-        base_path = os.path.sep.join(os.getcwd().split(os.path.sep)[:-2])
+        # Anchor resource paths to the package layout, not the CWD, so the
+        # game runs from any working directory (e.g. `uv run main.py`).
+        base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
         self.snd = os.path.join(base_path, "resources", "sounds") + os.path.sep
         self.img = os.path.join(base_path, "resources", "imgs") + os.path.sep
 

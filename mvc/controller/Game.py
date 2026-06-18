@@ -15,7 +15,7 @@ from mvc.model.Bullet import Bullet
 from mvc.controller.GameOp import GameOp
 from mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, INITIAL_SPAWN_TIME
 from mvc.model.prime.Point import Point
-from SoundLoader import SoundLoader
+from mvc.controller.SoundLoader import SoundLoader
 import sys
 from PIL import ImageTk
 
