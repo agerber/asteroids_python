@@ -1,6 +1,6 @@
-ignore/
-.idea
+.idea/
+.venv/
+__pycache__/
 *.pyc
-src/__pycache__/
-src/util/__pycache__/
-venv
+.DS_Store
+ignore/
