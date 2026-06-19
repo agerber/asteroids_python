@@ -52,6 +52,9 @@ class Game(threading.Thread):
 
     def __init__(self):
         super().__init__()
+        # one-shot pygame/mixer bootstrap; needs CommandCenter constructed first.
+        CommandCenter.getInstance()
+        SoundLoader.init()
         #self.DIM = self.setDimFromEnv()
         self.gamePanel = GamePanel(DIM)
         self.gamePanel.gameFrame.bind("<KeyPress>", self.keyPressed)

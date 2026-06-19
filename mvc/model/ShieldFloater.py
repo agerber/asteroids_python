@@ -1,4 +1,5 @@
 from mvc.controller.SoundLoader import SoundLoader
+from mvc.controller.CommandCenter import CommandCenter
 
 from mvc.model.prime.Constants import MAX_SHIELD
 from mvc.model.Floater import Floater
@@ -13,8 +14,6 @@ class ShieldFloater(Floater):
         self.expiry = 260
 
     def removeFromGame(self, list):
-        from mvc.controller.CommandCenter import CommandCenter
-
         super().removeFromGame(list)
         # if expiry > 0, then this remove was the result of a collision w/Falcon, and not natural mortality.
         if (self.expiry > 0):

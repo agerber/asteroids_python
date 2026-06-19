@@ -4,6 +4,7 @@ from mvc.model.prime.Point import Point
 from mvc.model.prime.Color import Color
 from mvc.model.prime.Constants import DIM
 from mvc.model.Movable import Movable
+from mvc.controller.CommandCenter import CommandCenter
 
 
 class Star(Movable):
@@ -14,8 +15,6 @@ class Star(Movable):
         self.color = Color.from_RGB(bright, bright, bright)  # some gray value. stars are muted from 0-225 / 255
 
     def move(self):
-        from mvc.controller.CommandCenter import CommandCenter
-
         if not CommandCenter.getInstance().isFalconPositionFixed():  return
             # right-bounds reached
         if self.center.x > DIM.width:

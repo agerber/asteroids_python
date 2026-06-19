@@ -6,6 +6,10 @@ from mvc.model.Movable import Movable
 from mvc.model.prime.Color import Color
 from mvc.model.prime.Constants import DIM
 from mvc.model.prime.Point import Point
+from mvc.model.Nuke import Nuke
+from mvc.model.NukeFloater import NukeFloater
+from mvc.model.Asteroid import Asteroid
+from mvc.controller.CommandCenter import CommandCenter
 
 
 class Radar(Sprite):
@@ -25,13 +29,6 @@ class Radar(Sprite):
         pass
 
     def draw(self, g):
-        # import locally to avoid circ deps
-        from mvc.model.Nuke import Nuke
-        from mvc.model.NukeFloater import NukeFloater
-        from mvc.controller.CommandCenter import CommandCenter
-        from mvc.model.Asteroid import Asteroid
-
-
         if not (CommandCenter.getInstance().isRadar): return
 
         radarW = int(round(self.MINI_MAP_PERCENT * DIM.width ))
@@ -91,8 +88,6 @@ class Radar(Sprite):
             g.fillOval(translatedPoint.x - 2, translatedPoint.y - 2, 4, 4)
 
     def translatePoint(self, mov):
-        from mvc.controller.CommandCenter import CommandCenter
-
         return Point(int(round(self.MINI_MAP_PERCENT * mov.x / CommandCenter.getInstance().getUniDim().width )),
                      int(round(self.MINI_MAP_PERCENT * mov.y / CommandCenter.getInstance().getUniDim().height )))
 

@@ -1,21 +1,29 @@
 import simpleaudio as sa
 import pygame
-from mvc.controller.CommandCenter import CommandCenter
 from concurrent.futures import ThreadPoolExecutor
 
 
 class SoundLoader:
     # static member
     soundExecutor = ThreadPoolExecutor(max_workers=5)
+    soundDictionary = {}
+    _initialized = False
 
-    # use pygame to play/stop loops
-    pygame.mixer.init()
-
-    # load looping clips
-    thrustClip = pygame.mixer.Sound(CommandCenter.getInstance().snd + "whitenoise_loop.wav")
-    backgroundClip = pygame.mixer.Sound(CommandCenter.getInstance().snd + "dr_loop.wav")
-    # put them into dictionary
-    soundDictionary = {"whitenoise_loop.wav": thrustClip, "dr_loop.wav": backgroundClip}
+    # Eager pygame/mixer setup is deferred out of the class body so that
+    # importing this module no longer forces CommandCenter to construct.
+    # Call SoundLoader.init() once at startup, after CommandCenter exists.
+    @classmethod
+    def init(cls):
+        if cls._initialized:
+            return
+        from mvc.controller.CommandCenter import CommandCenter
+        pygame.mixer.init()
+        snd = CommandCenter.getInstance().snd
+        cls.soundDictionary = {
+            "whitenoise_loop.wav": pygame.mixer.Sound(snd + "whitenoise_loop.wav"),
+            "dr_loop.wav":          pygame.mixer.Sound(snd + "dr_loop.wav"),
+        }
+        cls._initialized = True
 
     @classmethod
     def playLoopSound(cls, name):
@@ -27,6 +35,7 @@ class SoundLoader:
 
     @classmethod
     def playSound(cls, name):
+        from mvc.controller.CommandCenter import CommandCenter
 
         def run(fileName):
             try:
@@ -37,7 +46,3 @@ class SoundLoader:
 
         # pass the above lambda to thread-pool, along with the path to file
         cls.soundExecutor.submit(run, name)
-
-# if __name__ == "__main__":
-#     cwd = "/".join(os.getcwd().split('/')[:-2])
-#     Sound.clipForLoopFactory(cwd+"/resources/sounds/whitenoise.wav")

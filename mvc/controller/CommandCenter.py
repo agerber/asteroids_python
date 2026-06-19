@@ -3,11 +3,8 @@ from enum import Enum
 from typing import Optional
 
 
-from mvc.model.Falcon import Falcon
 from mvc.controller.GameOpsQueue import GameOpsQueue
 from mvc.controller.GameOp import GameOp
-from mvc.model.Radar import Radar
-from mvc.model.Star import Star
 from mvc.model.prime.Dimension import Dimension
 from mvc.model.prime.LinkedList import LinkedList
 
@@ -25,6 +22,10 @@ class CommandCenter:
         raise Exception(" one instance of CommandCenter is already created ")
 
     def __init__(self):
+        # Imported here (not at module top) to break the import cycle with
+        # Falcon/Radar — both reference CommandCenter for runtime state.
+        from mvc.model.Falcon import Falcon
+        from mvc.model.Radar import Radar
 
         self.numFalcons = 0
         self.level = 0
@@ -106,6 +107,7 @@ class CommandCenter:
         self.movFloaters.clear()
 
     def createStarField(self):
+        from mvc.model.Star import Star
         count = 100
         while (count > 0):
             self.opsQueue.enqueue(Star(), GameOp.Action.ADD)

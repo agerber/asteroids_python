@@ -149,7 +149,6 @@ class GamePanel:
         self.gameFrame.contentFrame.pack()
 
     def drawNumberShipsRemaining(self, g):
-        from mvc.controller.CommandCenter import CommandCenter
         numFalcons = CommandCenter.getInstance().numFalcons
         while numFalcons > 1:
             self.drawOneShip(g, numFalcons)

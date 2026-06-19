@@ -12,6 +12,8 @@ import math
 from mvc.model.prime.Constants import INITIAL_SPAWN_TIME, DIM
 from mvc.model.prime.Point import Point
 from mvc.controller import ImageLoader
+from mvc.controller.CommandCenter import CommandCenter
+from mvc.controller.SoundLoader import SoundLoader
 
 
 class TurnState(Enum):
@@ -52,8 +54,6 @@ class Falcon(Sprite):
         self.radius = Falcon.MIN_RADIUS
         # We use a dictionary that has a seek-time of O(1)
         # Using enums as keys is safer b/c we know the value exists when we reference the consts later in code.
-        #avoid circular import
-        #from pythonic.mvc.controller.CommandCenter import CommandCenter
         self.rasterMap: Dict[ImageState, Image.Image] = {
             ImageState.FALCON_INVISIBLE: None,
             ImageState.FALCON: ImageLoader.ImageLoader.getInstance().IMAGES['falcon125'],
@@ -65,8 +65,6 @@ class Falcon(Sprite):
     # METHODS
 
     def move(self):
-        from mvc.controller.CommandCenter import CommandCenter
-
         if not CommandCenter.getInstance().isFalconPositionFixed():
             super().move()
 
@@ -152,10 +150,6 @@ class Falcon(Sprite):
     # this method is called when a falcon dies. It allows you to re-initialize the falcon settings without
     # removing him from the movFriends list. Therefore, falcon is never null, which is a good thing.
     def decrementFalconNumAndSpawn(self):
-        # import locally to avoid circular import
-        from mvc.controller.CommandCenter import CommandCenter
-        from mvc.controller.SoundLoader import SoundLoader
-
         CommandCenter.getInstance().numFalcons -= 1
         if CommandCenter.getInstance().isGameOver(): return
         SoundLoader.playSound("shipspawn.wav")

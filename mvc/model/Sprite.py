@@ -13,6 +13,7 @@ from abc import abstractmethod
 from mvc.model.prime.Color import Color
 from mvc.model.prime.Constants import DIM
 from mvc.controller.GameOp import GameOp
+from mvc.controller.CommandCenter import CommandCenter
 
 import random
 
@@ -71,8 +72,6 @@ class Sprite(Movable):
     # subclass renders as raster or vector.
 
     def move(self) -> None:
-        from mvc.controller.CommandCenter import CommandCenter
-
         scalerX = CommandCenter.getInstance().getUniDim().width
         scalerY = CommandCenter.getInstance().getUniDim().height
 
@@ -108,8 +107,6 @@ class Sprite(Movable):
         return random_number if random_number % 2 == 0 else -random_number
 
     def expire(self):
-        # imported in function to avoid circular import
-        from mvc.controller.CommandCenter import CommandCenter
         if self.expiry == 1:
             CommandCenter.getInstance().opsQueue.enqueue(self, GameOp.Action.REMOVE)
 
