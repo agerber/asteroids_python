@@ -1,12 +1,11 @@
-import simpleaudio as sa
 import pygame
-from concurrent.futures import ThreadPoolExecutor
 
 
 class SoundLoader:
     # static member
-    soundExecutor = ThreadPoolExecutor(max_workers=5)
     soundDictionary = {}
+    # one-shot sounds, loaded lazily and cached (keyed by filename)
+    _oneShotCache = {}
     _initialized = False
 
     # Eager pygame/mixer setup is deferred out of the class body so that
@@ -18,6 +17,8 @@ class SoundLoader:
             return
         from mvc.controller.CommandCenter import CommandCenter
         pygame.mixer.init()
+        # give one-shot effects (explosions, bullets, spawns) room to overlap
+        pygame.mixer.set_num_channels(32)
         snd = CommandCenter.getInstance().snd
         cls.soundDictionary = {
             "whitenoise_loop.wav": pygame.mixer.Sound(snd + "whitenoise_loop.wav"),
@@ -33,16 +34,17 @@ class SoundLoader:
     def stopLoopSound(cls, name):
         cls.soundDictionary.get(name).stop()
 
+    # Fire-and-forget one-shot effect. pygame.mixer.Sound.play() is
+    # non-blocking and grabs a free channel on its own, so no thread pool is
+    # needed; the Sound object is cached after first load.
     @classmethod
     def playSound(cls, name):
         from mvc.controller.CommandCenter import CommandCenter
-
-        def run(fileName):
-            try:
-                wavSound = sa.WaveObject.from_wave_file(CommandCenter.getInstance().snd + fileName)
-                wavSound.play()
-            except Exception as e:
-                pass
-
-        # pass the above lambda to thread-pool, along with the path to file
-        cls.soundExecutor.submit(run, name)
+        try:
+            sound = cls._oneShotCache.get(name)
+            if sound is None:
+                sound = pygame.mixer.Sound(CommandCenter.getInstance().snd + name)
+                cls._oneShotCache[name] = sound
+            sound.play()
+        except Exception:
+            pass
