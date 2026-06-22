@@ -1,50 +1,32 @@
-import sys
-import tkinter as tk
-
-from mvc.model.prime.Constants import DIM
+import pygame
 
 
-class GameFrame(tk.Tk):
+# Thin wrapper around the pygame display surface. The whole frame is drawn
+# off-screen into a PIL image (see GamePanel.update); GameFrame's only job is
+# to get that finished image onto the screen as fast as possible. Tk's
+# PhotoImage path capped us at ~10 fps because Tk re-composites the entire
+# ~840k-pixel window every frame on macOS; pushing the same bytes through
+# SDL/pygame is ~40x cheaper, so the display is no longer the bottleneck.
+class GameFrame:
 
     def __init__(self):
-        super().__init__()
         self.running = True
+        self.screen = None
 
-        # Create your content
-        self.contentFrame = tk.Label(self, text="Game Window Loaded")
-        self.contentFrame.pack(fill=tk.BOTH, expand=True)
+    # Create the window. Mirrors the old tk geometry/title/resizable setup.
+    def setup(self, width, height, title="Game Base"):
+        pygame.display.init()
+        self.screen = pygame.display.set_mode((width, height))
+        pygame.display.set_caption(title)
 
-        # Force window placement AFTER it's created
-        self.after(0, self.force_placement)
+    # Blit a finished RGB PIL image to the screen in one swoop. frombuffer
+    # shares the PIL bytes with no copy; flip() presents the back buffer.
+    def blit(self, pil_image):
+        surface = pygame.image.frombuffer(
+            pil_image.tobytes(), pil_image.size, pil_image.mode
+        )
+        self.screen.blit(surface, (0, 0))
+        pygame.display.flip()
 
-        # Bind close
-        self.protocol("WM_DELETE_WINDOW", self.on_close)
-
-    def force_placement(self):
-        """Guaranteed macOS-safe placement after Tk finishes initializing."""
-        width = DIM.width
-        height = DIM.height
-
-        # Make sure the window has a known size first
-        self.geometry(f"{width}x{height}")
-
-        # Move it to the top-left corner
-        self.geometry(f"{width}x{height}+40+40")
-
-        # Bring the window to the front
-        self.lift()
-        self.focus_force()
-
-    def on_close(self):
-        self.running = False  # tell game loop to stop ASAP
-
-        try:
-            self.contentFrame.config(image='')
-            self.contentFrame.image = None
-            sys.exit(0)
-        except:
-            pass
-
-        self.destroy()
-
-
+    def on_closing(self):
+        self.running = False

@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from PIL import Image, ImageFont, ImageTk
+from PIL import Image, ImageFont
 
 from mvc.controller.CommandCenter import CommandCenter
 from mvc.controller.Utils import Utils
@@ -67,10 +67,7 @@ class GamePanel:
         self.pntShipsRemaining.append(Point(1, 6))
         self.pntShipsRemaining.append(Point(0, 9))
 
-        self.gameFrame.geometry(
-            str(dim.width) + 'x' + str(dim.height))  # instead of setsize
-        self.gameFrame.title("Game Base")
-        self.gameFrame.resizable = False
+        self.gameFrame.setup(dim.width, dim.height, "Game Base")
 
     def drawFalconStatus(self, g):
         OFFSET_LEFT = 220
@@ -142,11 +139,8 @@ class GamePanel:
             self.drawFalconStatus(g)
             self.drawNumberShipsRemaining(g)
 
-        # blit the finished off-screen image onto the tk Label.
-        imgOnScreen = ImageTk.PhotoImage(g.image)
-        self.gameFrame.contentFrame.configure(image=imgOnScreen)
-        self.gameFrame.contentFrame.image = imgOnScreen
-        self.gameFrame.contentFrame.pack()
+        # blit the finished off-screen image onto the screen in one swoop.
+        self.gameFrame.blit(g.image)
 
     def drawNumberShipsRemaining(self, g):
         numFalcons = CommandCenter.getInstance().numFalcons

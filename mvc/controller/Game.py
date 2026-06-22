@@ -1,6 +1,4 @@
-import time
-import threading
-from tkinter import TclError
+import pygame
 
 from mvc.model.Movable import Movable
 from mvc.model.Asteroid import Asteroid
@@ -16,11 +14,9 @@ from mvc.controller.GameOp import GameOp
 from mvc.model.prime.Constants import DIM, SPAWN_SHIELD_FLOATER, SPAWN_NUKE_FLOATER, INITIAL_SPAWN_TIME
 from mvc.model.prime.Point import Point
 from mvc.controller.SoundLoader import SoundLoader
-import sys
-from PIL import ImageTk
 
 # todo: refactor the code so that its in python style, and clean-up
-class Game(threading.Thread):
+class Game:
     # ===============================================
     # FIELDS
     # ===============================================
@@ -28,18 +24,18 @@ class Game(threading.Thread):
     ANIMATION_DELAY = 40  # milliseconds between frames
     FRAMES_PER_SECOND = 1000 // ANIMATION_DELAY
 
-    # key-codes
-    PAUSE = 'p'  # p key
-    QUIT = 'q'  # q key
-    LEFT = 'Left'  # rotate left; left arrow
-    RIGHT = 'Right'  # rotate right; right arrow
-    UP = 'Up'  # thrust; up arrow
-    START = 's'  # s key
-    FIRE = 'space'  # space key
-    MUTE = 'm'  # m-key mute
-    NUKE = 'f'  # f-key
-    RADAR = 'a'
-    SMART = 'v'
+    # key-codes (pygame key constants)
+    PAUSE = pygame.K_p  # p key
+    QUIT = pygame.K_q  # q key
+    LEFT = pygame.K_LEFT  # rotate left; left arrow
+    RIGHT = pygame.K_RIGHT  # rotate right; right arrow
+    UP = pygame.K_UP  # thrust; up arrow
+    START = pygame.K_s  # s key
+    FIRE = pygame.K_SPACE  # space key
+    MUTE = pygame.K_m  # m-key mute
+    NUKE = pygame.K_f  # f-key
+    RADAR = pygame.K_a
+    SMART = pygame.K_v
 
     # for possible future use
     # HYPER = 68 # D key
@@ -51,53 +47,11 @@ class Game(threading.Thread):
     # ===============================================
 
     def __init__(self):
-        super().__init__()
         # one-shot pygame/mixer bootstrap; needs CommandCenter constructed first.
         CommandCenter.getInstance()
         SoundLoader.init()
         #self.DIM = self.setDimFromEnv()
         self.gamePanel = GamePanel(DIM)
-        self.gamePanel.gameFrame.bind("<KeyPress>", self.keyPressed)
-        self.gamePanel.gameFrame.bind("<KeyRelease>", self.keyReleased)
-        self.animationThread = self
-        self.animationThread.daemon = True  ## kills thread with main thread
-        self.animationThread.start()
-        self.main()
-
-    def run(self):
-        FRAME_MS = Game.ANIMATION_DELAY  # e.g. 16 ms for 60fps
-        FRAME_SEC = FRAME_MS / 1000.0  # convert to seconds
-
-        while (
-                threading.current_thread() == self.animationThread and
-                self.gamePanel.gameFrame.running
-        ):
-            frame_start = time.perf_counter()
-
-            try:
-                # GamePanel.update() manages its own off-screen double-buffer
-                # (mirrors Java's GamePanel.update(Graphics g)).
-                self.gamePanel.update()
-
-                # Game logic
-                self.checkCollisions()
-                self.checkNewLevel()
-                self.checkFloaters()
-                self.processGameOpsQueue()
-
-            except TclError:
-                print("Window closed — exiting cleanly.")
-
-            except Exception as e:
-                # NEVER swallow exceptions silently
-                print("Animation loop error:", e)
-
-            # --- Frame timing ---
-            elapsed = time.perf_counter() - frame_start
-            sleep_time = FRAME_SEC - elapsed
-
-            if sleep_time > 0:
-                time.sleep(sleep_time)
 
     def checkCollisions(self):
 
@@ -145,12 +99,43 @@ class Game(threading.Thread):
             else:
                 mov.removeFromGame(list)
 
+    # The frame loop is driven by pygame: poll input events, advance and
+    # draw one frame, then sleep to cap the rate at FRAMES_PER_SECOND.
     def main(self):
         # start the theme music
         SoundLoader.playLoopSound("dr_loop.wav")
         CommandCenter.getInstance().getInstance().isMuted = False
 
-        self.gamePanel.gameFrame.mainloop()
+        clock = pygame.time.Clock()
+        gameFrame = self.gamePanel.gameFrame
+
+        while gameFrame.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameFrame.running = False
+                elif event.type == pygame.KEYDOWN:
+                    self.keyPressed(event.key)
+                elif event.type == pygame.KEYUP:
+                    self.keyReleased(event.key)
+
+            if not gameFrame.running:
+                break
+
+            try:
+                self.gamePanel.update()
+                self.checkCollisions()
+                self.checkNewLevel()
+                self.checkFloaters()
+                self.processGameOpsQueue()
+            except Exception as e:
+                import traceback
+                print("Animation loop error:", e)
+                traceback.print_exc()
+                break
+
+            clock.tick(Game.FRAMES_PER_SECOND)
+
+        pygame.quit()
 
     def checkNewLevel(self):
 
@@ -204,9 +189,8 @@ class Game(threading.Thread):
     def stopLoopingSounds(self, *sounds):
         [sound.stop() for sound in sounds if hasattr(sound, "stop")]
 
-    def keyPressed(self, event):
+    def keyPressed(self, keyCode):
         falcon = CommandCenter.getInstance().falcon
-        keyCode = event.keysym
         # print(keyCode)
         if keyCode == Game.START and CommandCenter.getInstance().isGameOver():
             CommandCenter.getInstance().initGame()
@@ -214,7 +198,7 @@ class Game(threading.Thread):
         if keyCode == Game.PAUSE:
             CommandCenter.getInstance().isPaused = not CommandCenter.getInstance().isPaused
         elif keyCode == Game.QUIT:
-            sys.exit(0)
+            self.gamePanel.gameFrame.running = False
         elif keyCode == Game.UP:
             falcon.thrusting = True
             SoundLoader.playLoopSound("whitenoise_loop.wav")
@@ -223,9 +207,8 @@ class Game(threading.Thread):
         elif keyCode == Game.RIGHT:
             falcon.turnState = Falcon.TurnState.RIGHT
 
-    def keyReleased(self, event):
+    def keyReleased(self, keyCode):
         falcon = CommandCenter.getInstance().falcon
-        keyCode = event.keysym
         if keyCode == Game.FIRE:
             CommandCenter.getInstance().opsQueue.enqueue(Bullet(falcon), GameOp.Action.ADD)
         elif keyCode == Game.NUKE:
@@ -252,13 +235,4 @@ class Game(threading.Thread):
 
 if __name__ == "__main__":
     game = Game()
-
-# Monkey-patch to silence exit errors
-def safe_del(self):
-    try:
-        if hasattr(self, "_PhotoImage__photo"):
-            self.__photo = getattr(self, "_PhotoImage__photo", None)
-    except Exception:
-        pass
-
-ImageTk.PhotoImage.__del__ = safe_del
+    game.main()

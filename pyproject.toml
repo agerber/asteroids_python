@@ -3,7 +3,7 @@ name = "asteroids-python"
 version = "0.1.0"
 description = "Python port of the _08final Asteroids reference game from agerber/proJava"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
     "pillow>=10.0",
     "scipy>=1.11",

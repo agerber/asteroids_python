@@ -1,8 +1,7 @@
 import dataclasses
 from typing import List, Dict, Any
-from PIL import Image, ImageOps
+from PIL import Image
 import math
-from scipy import ndimage as ndi
 
 from mvc.controller.Utils import Utils
 from mvc.model.Movable import Movable
@@ -121,20 +120,17 @@ class Sprite(Movable):
         height = self.radius * 2
 
         try:
-            scaleX = width * 1.0 / bufferedImage.size[0]
-            scaleY = height * 1.0 / bufferedImage.size[1]
-            transformed = bufferedImage
-            transformed = transformed.resize((int(bufferedImage.size[0] * scaleX),
-                                              int(bufferedImage.size[1] * scaleY)))
-
+            # PIL's native resize+rotate is an order of magnitude faster than
+            # the scipy.ndimage round-trip (PIL→numpy→rotate→PIL) used here
+            # before, and the result is already an alpha-correct PIL image so
+            # no extra flip/transparent passes are needed.
+            transformed = bufferedImage.resize((width, height))
             if self.orientation != 0:
-                transformed = ndi.rotate(transformed, self.orientation, reshape=False)
-
-            if not isinstance(transformed, Image.Image):
-                transformed = Image.fromarray(transformed.astype("uint8"), "RGBA")
-
-            transformed = ImageOps.flip(transformed)
-            transformed = Utils.transparent(transformed)
+                # PIL rotates counter-clockwise for positive angles, the
+                # opposite of the old scipy-rotate + vertical-flip path (and
+                # of the vector renderer's screen-down y-axis). Negate so
+                # raster sprites spin the same direction as before.
+                transformed = transformed.rotate(-self.orientation)
             g.drawImage(transformed,
                         round(self.center.x - width / 2.0),
                         round(self.center.y - height / 2.0))

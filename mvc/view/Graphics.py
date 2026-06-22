@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from PIL import Image, ImageDraw
 
 
@@ -10,6 +11,14 @@ from PIL import Image, ImageDraw
 # together and presents the same Java-style API so the Movable.draw(g)
 # contract is a direct, faithful port.
 class Graphics:
+
+    # LRU cache of pre-rasterized text glyphs, keyed by (text, font_id,
+    # color). FreeType glyph rasterization through PIL.ImageDraw.text is
+    # the dominant per-frame cost after the Tk bitmap transfer; caching
+    # makes stable HUD strings (level, status) effectively free and keeps
+    # ever-changing ones (frame counter) bounded.
+    _TEXT_CACHE_CAP = 256
+    _textCache: "OrderedDict[tuple, Image.Image]" = OrderedDict()
 
     def __init__(self, image: Image.Image):
         self._image = image
@@ -55,7 +64,23 @@ class Graphics:
         self._draw.polygon(list(points), fill=self._color)
 
     def drawString(self, text, x, y):
-        self._draw.text((x, y), text, font=self._font, fill=self._color)
+        key = (text, id(self._font), self._color)
+        cache = Graphics._textCache
+        glyph = cache.get(key)
+        if glyph is None:
+            bbox = self._draw.textbbox((0, 0), text, font=self._font)
+            w = max(1, bbox[2] - bbox[0] + 2)
+            h = max(1, bbox[3] - bbox[1] + 2)
+            glyph = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            ImageDraw.Draw(glyph).text(
+                (-bbox[0], -bbox[1]), text, font=self._font, fill=self._color
+            )
+            cache[key] = glyph
+            if len(cache) > Graphics._TEXT_CACHE_CAP:
+                cache.popitem(last=False)
+        else:
+            cache.move_to_end(key)
+        self._image.paste(glyph, (int(x), int(y)), glyph)
 
     # Mirrors Graphics.drawImage(img, x, y, observer). Caller supplies the
     # top-left corner; alpha is honored when present.

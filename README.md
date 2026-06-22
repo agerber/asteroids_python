@@ -12,8 +12,9 @@ context — not a buffered image.
 Uses [uv](https://docs.astral.sh/uv/) for dependency management.
 
 ```bash
+brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf python-tk@3.14
 uv sync           # create .venv and install pinned deps from pyproject.toml + uv.lock
-uv run main.py    # launch the game
+uv run main.py    # launch the game, or run game from the gui
 ```
 
 Controls:
