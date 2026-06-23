@@ -119,3 +119,46 @@ GamePanel.update()
    |--- drawMeters(g) / drawFalconStatus(g) / drawNumberShipsRemaining(g)
    '--- blit image via ImageTk.PhotoImage onto tk Label
 ```
+
+
+```
+================================================================================
+                  Every Animation Cycle (approximately 40ms)
+================================================================================
+
+┌─────────────────────────────┐  ┌──────────────────────────────┐  ┌──────────────────┐
+│ Enqueue to GameOpsQueue     │  │ Process GameOpsQueue         │  │ Callbacks        │
+│ Location: Game class        │  │ (Dequeue)                    │  │ Location:        │
+│                             │  │ Location: Game class         │  │ Movable models   │
+├─────────────────────────────┤  ├──────────────────────────────┤  ├──────────────────┤
+│                             │  │  ┌──────────┐  ┌──────────┐  │  │                  │
+│ • expire                    │  │  │ movable  │  │ action   │  │  │ addToGame(list)  │
+│                             │  │  └──────────┘  └──────────┘  │  │                  │
+├─────────────────────────────┤  │                              │  ├──────────────────┤
+│                             │  │  ┌──────────┐  ┌──────────┐  │  │                  │
+│ • collision                 │  │  │ movable  │  │ action   │  │  │ removeFromGame   │
+│                             │  │  └──────────┘  └──────────┘  │  │ (list)           │
+├─────────────────────────────┤  │                              │  │                  │
+│                             │  │  ┌──────────┐  ┌──────────┐  │  │                  │
+│ • user-action (e.g. fire)   │  │  │ movable  │  │ action   │  │  │                  │
+│                             │  │  └──────────┘  └──────────┘  │  │                  │
+│                             │  │                              │  │                  │
+│                             │  │           ...                │  │                  │
+│                             │  │                              │  │                  │
+└─────────────────────────────┘  └──────────────────────────────┘  └──────────────────┘
+
+Example calling syntax:        Example calling syntax:          Example calling syntax:
+
+CommandCenter.getInstance()     NOT APPLICABLE                   @Override
+  .getOpsQueue()                                                 public void addToGame
+  .enqueue(new Bullet(falcon),                                     (LinkedList<Movable>
+            GameOp.Action.ADD);                                      list) {
+                                                                   super.addToGame(list);
+                                                                   Sound.playSound
+                                                                     ("thump.wav");
+                                                                 }
+
+================================================================================
+```
+
+
